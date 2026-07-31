@@ -1,0 +1,2362 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BBRF-PT — Long Bitcoin. Long Portugal.</title>
+<meta name="description" content="Um fundo imobiliário garantido por Bitcoin. O Bitcoin nunca é vendido.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="en" href="https://eytan.com/pitches/bbrf-pt.html">
+<link rel="alternate" hreflang="fr" href="https://eytan.com/pitches/bbrf-pt-fr.html">
+<link rel="alternate" hreflang="pt" href="https://eytan.com/pitches/bbrf-pt-pt.html">
+<style>
+:root {
+  --btc: #F7931A;
+  --btc2: #E8820E;
+  --btc3: rgba(247,147,26,0.15);
+  --green: #00FF88;
+  --green2: rgba(0,255,136,0.12);
+  --red: #FF4444;
+  --blue: #00B4FF;
+  --bg: #030d18;
+  --bg2: #061220;
+  --bg3: #091828;
+  --surface: #0d2035;
+  --surface2: #112540;
+  --border: rgba(255,255,255,0.06);
+  --border-btc: rgba(247,147,26,0.25);
+  --text: #F0F6FF;
+  --text2: #7BA8CC;
+  --text3: #3D6080;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg); color:var(--text);
+  font-size:16px; line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before{
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity:0.4;
+}
+
+/* ── GRID LINES ── */
+.grid-bg{
+  position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.025;
+  background-image:
+    linear-gradient(rgba(247,147,26,0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(247,147,26,0.5) 1px, transparent 1px);
+  background-size:80px 80px;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 2.5rem; height:60px;
+  background:rgba(3,13,24,0.92);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(20px);
+}
+.nav-logo{
+  font-family:'Space Mono',monospace; font-size:.9rem; font-weight:700;
+  color:var(--btc); text-decoration:none; letter-spacing:.06em;
+}
+.nav-logo span{color:rgba(247,147,26,.4);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{
+  font-size:.72rem; font-weight:500; color:var(--text3);
+  text-decoration:none; letter-spacing:.08em; text-transform:uppercase;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--btc);}
+.nav-right{display:flex;align-items:center;gap:.8rem;}
+.nav-cta{
+  background:var(--btc); color:#000; border:none; border-radius:6px;
+  padding:.45rem 1.2rem; font-size:.78rem; font-weight:700;
+  cursor:pointer; text-decoration:none; transition:all .2s;
+  letter-spacing:.03em;
+}
+.nav-cta:hover{background:#ffaa44;transform:translateY(-1px);}
+.lang-toggle{display:flex;border:1px solid var(--border-btc);border-radius:6px;overflow:hidden;font-family:'Space Mono',monospace;font-size:.68rem;}
+.lang-toggle a{padding:.35rem .7rem;color:var(--text3);text-decoration:none;transition:all .2s;letter-spacing:.05em;}
+.lang-toggle a:hover{color:var(--btc);}
+.lang-toggle a.active{background:var(--btc);color:#000;font-weight:700;}
+.theme-toggle{background:none;border:1px solid var(--border-btc);width:32px;height:30px;border-radius:6px;cursor:pointer;font-size:.8rem;line-height:1;display:flex;align-items:center;justify-content:center;transition:all .2s;padding:0;}
+.theme-toggle:hover{background:var(--btc3);transform:translateY(-1px);}
+/* ── AUDIENCE GATE ── */
+#aud-gate{position:fixed;inset:0;z-index:10000;background:rgba(3,13,24,0.96);backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center;padding:1.5rem;}
+[data-theme="light"] #aud-gate{background:rgba(247,248,250,0.97);}
+.aud-box{max-width:880px;width:100%;text-align:center;}
+.aud-kicker{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--btc);margin-bottom:1rem;}
+.aud-box h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--text);margin-bottom:.8rem;}
+.aud-box .sub{color:var(--text2);font-size:.95rem;margin-bottom:2.5rem;}
+.aud-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.aud-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:2rem 1.5rem;cursor:pointer;
+  transition:transform .2s,border-color .2s;text-decoration:none;display:block;}
+.aud-card:hover{transform:translateY(-4px);border-color:var(--btc);}
+.aud-ic{font-size:2rem;margin-bottom:.8rem;}
+.aud-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.4rem;}
+.aud-card p{font-size:.78rem;color:var(--text3);line-height:1.55;}
+@media(max-width:700px){.aud-grid{grid-template-columns:1fr;}}
+
+/* ── TICKER BAR ── */
+.ticker-bar{
+  position:fixed; top:60px; left:0; right:0; z-index:99;
+  height:32px; background:var(--bg2);
+  border-bottom:1px solid var(--border-btc);
+  display:flex; align-items:center; overflow:hidden;
+}
+.ticker-track{
+  display:flex; gap:0; animation:ticker 30s linear infinite;
+  white-space:nowrap;
+}
+.ticker-item{
+  font-family:'Space Mono',monospace; font-size:.7rem;
+  color:var(--text3); padding:0 2rem; border-right:1px solid var(--border);
+}
+.ticker-item .up{color:var(--green);}
+.ticker-item .label{color:var(--text3);}
+.ticker-item .val{color:var(--text2);}
+@keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh; display:flex; flex-direction:column;
+  justify-content:center; align-items:center; text-align:center;
+  padding:10rem 2rem 6rem; position:relative;
+}
+.hero::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(247,147,26,.08) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 30% at 20% 80%, rgba(0,180,255,.05) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 30% at 80% 70%, rgba(0,255,136,.04) 0%, transparent 55%);
+}
+.hero-inner{position:relative;z-index:1;max-width:1000px;}
+
+.hero-stamp{
+  display:inline-flex; align-items:center; gap:.6rem;
+  font-family:'Space Mono',monospace; font-size:.65rem;
+  letter-spacing:.15em; text-transform:uppercase; color:var(--btc);
+  border:1px solid var(--border-btc); border-radius:4px;
+  padding:.35rem 1rem; margin-bottom:2.5rem;
+}
+.stamp-dot{width:6px;height:6px;border-radius:50%;background:var(--btc);animation:blink 1.5s ease infinite;}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 6px var(--btc);}50%{opacity:.3;box-shadow:none;}}
+
+.hero-h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(3rem,8vw,7.5rem);
+  font-weight:700; line-height:1; letter-spacing:-.03em;
+  margin-bottom:1.5rem;
+}
+.hero-h1 .line1{color:var(--text); display:block;}
+.hero-h1 .line2{color:var(--text2); display:block;}
+.hero-h1 .line3{
+  color:var(--btc); display:block;
+  text-shadow:0 0 40px rgba(247,147,26,.4), 0 0 80px rgba(247,147,26,.15);
+}
+
+.hero-deck{
+  font-size:1.1rem; color:var(--text2); max-width:600px; margin:0 auto 3.5rem;
+  font-weight:300; line-height:1.8;
+}
+.hero-deck strong{color:var(--text);font-weight:600;}
+
+/* ── STAT ROW ── */
+.stat-row{
+  display:grid; grid-template-columns:repeat(5,1fr);
+  gap:0; background:var(--surface);
+  border:1px solid var(--border-btc); border-radius:12px;
+  overflow:hidden; margin-bottom:2.5rem;
+}
+.stat-cell{
+  padding:1.4rem 1rem; text-align:center;
+  border-right:1px solid var(--border);
+  position:relative;
+}
+.stat-cell:last-child{border-right:none;}
+.stat-cell::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--btc),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.stat-cell:hover::before{opacity:1;}
+.stat-num{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(1.4rem,2.5vw,2rem); font-weight:700;
+  color:var(--btc); line-height:1; display:block; margin-bottom:.3rem;
+}
+.stat-label{font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;font-weight:500;}
+.stat-sub{font-size:.72rem;color:var(--text2);margin-top:.2rem;}
+
+.hero-disclaimer{
+  font-size:.72rem; color:var(--text3); max-width:580px; margin:0 auto;
+  line-height:1.6; border-top:1px solid var(--border); padding-top:1.5rem;
+}
+.hero-disclaimer strong{color:var(--btc);}
+
+/* ── SECTION BASE ── */
+.section{padding:7rem 2rem;max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+.section-wide{padding:7rem 2rem;max-width:1200px;margin:0 auto;position:relative;z-index:1;}
+.stripe{background:var(--bg2);padding:7rem 0;}
+.stripe .section{padding-top:0;padding-bottom:0;}
+
+.eyebrow{
+  font-family:'Space Mono',monospace; font-size:.65rem;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--btc);
+  margin-bottom:1rem; display:flex; align-items:center; gap:.8rem;
+}
+.eyebrow::before{content:'//';opacity:.4;}
+
+.section-h{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2rem,4.5vw,3.8rem); font-weight:700;
+  line-height:1.08; letter-spacing:-.02em; margin-bottom:1.25rem;
+}
+.section-h .accent{color:var(--btc);}
+.section-h .dim{color:var(--text2);}
+.lead{
+  font-size:1rem; color:var(--text2); max-width:640px;
+  font-weight:400; line-height:1.85; margin-bottom:3rem;
+}
+
+/* ── NEVER SOLD BANNER ── */
+.never-sold{
+  background:linear-gradient(135deg, rgba(247,147,26,.08), rgba(247,147,26,.03));
+  border:1px solid var(--border-btc); border-radius:14px;
+  padding:2rem 2.5rem; margin-bottom:2.5rem;
+  display:flex; align-items:center; gap:2rem;
+}
+.never-sold-icon{font-size:2.5rem;flex-shrink:0;}
+.never-sold h3{
+  font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:700;
+  color:var(--btc); margin-bottom:.35rem;
+}
+.never-sold p{font-size:.9rem;color:var(--text2);line-height:1.7;}
+
+/* ── THREE LEGS ── */
+.legs{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.leg{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; padding:2rem; position:relative; overflow:hidden;
+  transition:transform .3s, border-color .3s;
+}
+.leg:hover{transform:translateY(-6px);}
+.leg-btc{border-top:3px solid var(--btc);}
+.leg-btc:hover{border-color:var(--btc);}
+.leg-usd{border-top:3px solid #FF4444;}
+.leg-usd:hover{border-color:#FF4444;}
+.leg-re{border-top:3px solid var(--green);}
+.leg-re:hover{border-color:var(--green);}
+.leg-glow{
+  position:absolute; top:-60px; left:50%; transform:translateX(-50%);
+  width:200px; height:200px; border-radius:50%; filter:blur(60px); opacity:.08;
+  pointer-events:none;
+}
+.leg-btc .leg-glow{background:var(--btc);}
+.leg-usd .leg-glow{background:#FF4444;}
+.leg-re .leg-glow{background:var(--green);}
+.leg-num{
+  font-family:'Space Mono',monospace; font-size:3.5rem; font-weight:700;
+  line-height:1; margin-bottom:1rem; opacity:.1;
+}
+.leg-btc .leg-num{color:var(--btc);}
+.leg-usd .leg-num{color:#FF4444;}
+.leg-re .leg-num{color:var(--green);}
+.leg-tag{
+  font-family:'Space Mono',monospace; font-size:.62rem;
+  letter-spacing:.12em; text-transform:uppercase;
+  padding:.2rem .55rem; border-radius:4px;
+  display:inline-block; margin-bottom:1rem;
+}
+.leg-btc .leg-tag{background:rgba(247,147,26,.1);color:var(--btc);}
+.leg-usd .leg-tag{background:rgba(255,68,68,.1);color:#FF6666;}
+.leg-re .leg-tag{background:rgba(0,255,136,.1);color:var(--green);}
+.leg h3{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:.7rem;}
+.leg p{font-size:.88rem;color:var(--text2);line-height:1.75;}
+.leg-stat{
+  margin-top:1.4rem; padding-top:1.2rem; border-top:1px solid var(--border);
+  font-family:'Space Mono',monospace; font-size:.72rem; color:var(--text3);
+}
+.leg-stat strong{font-size:1.1rem;}
+.leg-btc .leg-stat strong{color:var(--btc);}
+.leg-usd .leg-stat strong{color:#FF6666;}
+.leg-re .leg-stat strong{color:var(--green);}
+
+/* ── ENGINE VISUALIZER ── */
+.engine-flow{
+  display:grid; grid-template-columns:1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+  align-items:center; gap:.5rem; margin:2.5rem 0;
+  background:var(--surface); border:1px solid var(--border-btc);
+  border-radius:14px; padding:2rem;
+}
+.engine-node{
+  background:var(--bg3); border:1px solid var(--border);
+  border-radius:10px; padding:1rem; text-align:center;
+}
+.engine-node.highlight{
+  border-color:var(--btc); background:rgba(247,147,26,.06);
+}
+.engine-node-icon{font-size:1.6rem;margin-bottom:.4rem;}
+.engine-node-label{font-size:.68rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-family:'Space Mono',monospace;}
+.engine-node-val{font-size:.85rem;font-weight:700;color:var(--text);margin-top:.2rem;}
+.engine-arrow{color:var(--btc);font-size:1.2rem;text-align:center;font-weight:700;}
+
+/* ── RETURN SCENARIOS ── */
+.scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.scenario{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; padding:2rem; position:relative; overflow:hidden;
+  transition:transform .3s, border-color .3s;
+}
+.scenario:hover{transform:translateY(-4px);}
+.scenario.base{
+  border-color:var(--border-btc);
+  background:linear-gradient(135deg,rgba(247,147,26,.06),var(--surface));
+}
+.scenario-tag{
+  font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;padding:.2rem .6rem;border-radius:4px;
+  display:inline-block;margin-bottom:1.2rem;
+}
+.conservative .scenario-tag{background:rgba(255,255,255,.05);color:var(--text3);}
+.base .scenario-tag{background:rgba(247,147,26,.12);color:var(--btc);}
+.upside .scenario-tag{background:rgba(0,255,136,.1);color:var(--green);}
+.scenario-num{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:3.5rem;font-weight:800;line-height:1;margin-bottom:.3rem;
+}
+.conservative .scenario-num{color:var(--text2);}
+.base .scenario-num{color:var(--btc);text-shadow:0 0 30px rgba(247,147,26,.3);}
+.upside .scenario-num{color:var(--green);text-shadow:0 0 30px rgba(0,255,136,.2);}
+.scenario-multiple{
+  font-family:'Space Mono',monospace;font-size:.85rem;margin-bottom:1.4rem;
+}
+.conservative .scenario-multiple{color:var(--text3);}
+.base .scenario-multiple{color:var(--btc);}
+.upside .scenario-multiple{color:var(--green);}
+
+/* ── RETURN BAR ── */
+.return-bar-wrap{margin-bottom:1rem;}
+.return-bar-label{display:flex;justify-content:space-between;font-size:.72rem;color:var(--text3);margin-bottom:.4rem;}
+.return-bar{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
+.return-bar-fill{height:100%;border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform 1s ease;}
+.conservative .return-bar-fill{background:var(--text2);}
+.base .return-bar-fill{background:var(--btc);box-shadow:0 0 8px rgba(247,147,26,.4);}
+.upside .return-bar-fill{background:var(--green);box-shadow:0 0 8px rgba(0,255,136,.3);}
+.return-bar-fill.animate{transform:scaleX(1);}
+
+/* ── RAISE TIERS ── */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.tier{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; padding:2rem; position:relative; overflow:hidden;
+  transition:transform .3s;
+}
+.tier:hover{transform:translateY(-4px);}
+.tier.hot{
+  border-color:var(--border-btc);
+  background:linear-gradient(135deg,rgba(247,147,26,.07),var(--surface));
+}
+.tier::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--border);}
+.tier.hot::before{background:linear-gradient(90deg,var(--btc),var(--green));}
+.tier-label{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.5rem;}
+.tier-amount{
+  font-family:'Space Grotesk',sans-serif;font-size:3rem;font-weight:800;
+  color:var(--btc);line-height:1;margin-bottom:1.5rem;
+}
+.tier-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.85rem;
+}
+.tier-row:last-child{border-bottom:none;}
+.tier-key{color:var(--text3);}
+.tier-val{font-weight:700;color:var(--text);}
+.tier-sub{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--btc);}
+
+/* ── STRUCTURE GRID ── */
+.struct-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem;}
+.struct-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem;border-left:3px solid;
+  transition:transform .3s, border-color .3s;
+}
+.struct-card:hover{transform:translateY(-3px);}
+.struct-card.c1{border-left-color:var(--btc);}
+.struct-card.c2{border-left-color:var(--blue);}
+.struct-card.c3{border-left-color:var(--green);}
+.struct-card.c4{border-left-color:#FF4444;}
+.struct-card.c5{border-left-color:#AA88FF;}
+.struct-card.c6{border-left-color:var(--text3);}
+.struct-tag{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.5rem;}
+.struct-card h4{font-size:.95rem;font-weight:700;margin-bottom:.4rem;}
+.struct-card p{font-size:.8rem;color:var(--text2);line-height:1.6;}
+
+/* ── TERMS TABLE ── */
+.terms-wrap{
+  background:var(--surface);border:1px solid var(--border-btc);
+  border-radius:14px;overflow:hidden;margin-top:2rem;
+}
+.terms-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+.terms-table th{
+  text-align:left;padding:.7rem 1.2rem;
+  background:rgba(247,147,26,.07);
+  font-family:'Space Mono',monospace;font-size:.62rem;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--btc);
+}
+.terms-table td{
+  padding:.9rem 1.2rem;border-bottom:1px solid var(--border);vertical-align:top;
+}
+.terms-table tr:last-child td{border-bottom:none;}
+.terms-table tr:hover td{background:rgba(255,255,255,.02);}
+.terms-table td:first-child{
+  font-family:'Space Mono',monospace;font-size:.75rem;
+  color:var(--text3);white-space:nowrap;width:35%;
+}
+
+/* ── COMP TABLE ── */
+.comp-wrap{overflow-x:auto;margin-top:2rem;}
+.comp-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.comp-table thead tr{background:rgba(247,147,26,.06);}
+.comp-table th{
+  padding:.7rem 1rem;text-align:center;
+  font-family:'Space Mono',monospace;color:var(--text3);
+  font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;
+}
+.comp-table th:first-child{text-align:left;}
+.comp-table td{padding:.85rem 1rem;border-bottom:1px solid var(--border);text-align:center;vertical-align:middle;}
+.comp-table td:first-child{text-align:left;font-weight:600;}
+.comp-table tr:last-child td{border-bottom:none;}
+.comp-table tr.us{background:rgba(247,147,26,.04);}
+.comp-table tr.us td:first-child{color:var(--btc);}
+.chk{color:var(--green);font-size:1rem;}
+.xmark{color:var(--border2);opacity:.3;font-size:.9rem;}
+
+/* ── DEAL FLOW ── */
+.deal-steps{display:grid;grid-template-columns:1fr;gap:0;margin-top:2rem;}
+.deal-step{
+  display:grid;grid-template-columns:56px 1fr;
+  gap:1.5rem;padding:1.4rem 0;border-bottom:1px solid var(--border);
+  align-items:start;
+}
+.deal-step:last-child{border-bottom:none;}
+.deal-num{
+  width:44px;height:44px;border-radius:10px;flex-shrink:0;
+  background:var(--btc3);border:1px solid var(--border-btc);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-weight:700;font-size:.85rem;color:var(--btc);
+}
+.deal-step h4{font-size:.95rem;font-weight:700;margin-bottom:.25rem;}
+.deal-step p{font-size:.85rem;color:var(--text2);}
+
+/* ── WORKED EXAMPLE ── */
+.worked-ex{
+  background:var(--surface);border:1px solid var(--border-btc);
+  border-radius:14px;overflow:hidden;margin-top:2rem;
+}
+.worked-ex-head{
+  background:rgba(247,147,26,.07);border-bottom:1px solid var(--border-btc);
+  padding:1rem 1.5rem;
+}
+.worked-ex-head .label{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--btc);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem;}
+.worked-ex-head h3{font-size:1rem;font-weight:700;}
+.worked-ex-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));}
+.we-cell{padding:1.1rem 1.3rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+.we-cell:last-child{border-right:none;}
+.we-label{font-family:'Space Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:.3rem;}
+.we-val{font-size:.92rem;font-weight:700;color:var(--text);}
+.we-note{font-size:.72rem;color:var(--text3);margin-top:.15rem;}
+
+/* ── OPEN ITEMS ── */
+.open-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:2rem;}
+.open-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:1.4rem;
+  transition:border-color .3s;
+}
+.open-card:hover{border-color:var(--border-btc);}
+.open-n{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--btc);margin-bottom:.4rem;}
+.open-card h4{font-size:.9rem;font-weight:700;margin-bottom:.3rem;}
+.open-card p{font-size:.78rem;color:var(--text2);line-height:1.6;}
+
+/* ── ROADMAP ── */
+.roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2rem;}
+.road-step{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:1.8rem;text-align:center;
+  position:relative;
+  transition:transform .3s,border-color .3s;
+}
+.road-step:hover{transform:translateY(-4px);border-color:var(--border-btc);}
+.road-num{
+  width:48px;height:48px;border-radius:12px;
+  background:var(--btc);color:#000;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-weight:700;font-size:1rem;
+  margin:0 auto 1rem;
+}
+.road-step h4{font-size:.95rem;font-weight:700;margin-bottom:.5rem;}
+.road-step p{font-size:.8rem;color:var(--text2);line-height:1.6;}
+
+/* ── TEAM ── */
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem;}
+.team-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:2rem;
+  border-left:3px solid;transition:transform .3s;
+}
+.team-card:hover{transform:translateY(-3px);}
+.team-card.t1{border-left-color:var(--btc);}
+.team-card.t2{border-left-color:#AA88FF;}
+.team-role{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.6rem;}
+.team-card.t1 .team-role{color:var(--btc);}
+.team-card.t2 .team-role{color:#AA88FF;}
+.team-card h3{font-size:1.4rem;font-weight:800;margin-bottom:.3rem;}
+.team-card p{font-size:.87rem;color:var(--text2);line-height:1.7;}
+.team-card .brings{margin-top:1rem;font-family:'Space Mono',monospace;font-size:.68rem;color:var(--text3);}
+
+/* ── PILOT SECTION ── */
+.pilot-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem;}
+.pilot-stat{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem;
+  transition:border-color .3s;
+}
+.pilot-stat:hover{border-color:var(--border-btc);}
+.pilot-stat-label{font-family:'Space Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:.4rem;}
+.pilot-stat-val{font-size:1.15rem;font-weight:800;color:var(--text);}
+.pilot-stat-sub{font-size:.78rem;color:var(--text3);margin-top:.2rem;}
+.pilot-links{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;}
+
+/* ── HIGHLIGHT BOX ── */
+.hi-box{
+  background:rgba(247,147,26,.05);border:1px solid var(--border-btc);
+  border-radius:12px;padding:1.5rem 1.8rem;margin-top:1.5rem;
+}
+.hi-box h4{color:var(--btc);font-size:.95rem;font-weight:700;margin-bottom:.4rem;}
+.hi-box p{font-size:.88rem;color:var(--text2);line-height:1.7;}
+
+/* ── CTA ── */
+.cta-section{
+  background:linear-gradient(135deg, rgba(247,147,26,.08), rgba(0,255,136,.04));
+  border:1px solid var(--border-btc);
+  border-radius:20px;padding:4rem 3rem;text-align:center;margin-top:2rem;
+  position:relative;overflow:hidden;
+}
+.cta-section::before{
+  content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(247,147,26,.12),transparent 70%);
+  pointer-events:none;
+}
+.cta-h{
+  font-family:'Space Grotesk',sans-serif;font-size:2.8rem;font-weight:800;
+  line-height:1.1;margin-bottom:1rem;position:relative;
+}
+.cta-h span{color:var(--btc);}
+.cta-p{font-size:1rem;color:var(--text2);max-width:480px;margin:0 auto 2.5rem;position:relative;}
+.cta-buttons{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;position:relative;}
+.btn-fire{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:var(--btc);color:#000;font-weight:800;font-size:.9rem;
+  padding:.85rem 2.2rem;border-radius:10px;text-decoration:none;
+  transition:all .2s;letter-spacing:.02em;
+}
+.btn-fire:hover{background:#ffaa44;transform:translateY(-2px);box-shadow:0 10px 30px rgba(247,147,26,.3);}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:.6rem;
+  border:1px solid var(--border-btc);color:var(--btc);font-weight:600;font-size:.9rem;
+  padding:.85rem 2.2rem;border-radius:10px;text-decoration:none;
+  transition:all .2s;
+}
+.btn-ghost:hover{background:rgba(247,147,26,.08);transform:translateY(-2px);}
+
+/* ── CONTACTS ── */
+.contacts{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;margin-top:2rem;position:relative;}
+.contact-p h4{font-size:.95rem;font-weight:700;margin-bottom:.2rem;}
+.contact-p p{font-size:.82rem;color:var(--text3);}
+.contact-p a{color:var(--btc);text-decoration:none;}
+.contact-p a:hover{text-decoration:underline;}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border);padding:2.5rem 2rem;
+  text-align:center;color:var(--text3);font-size:.75rem;position:relative;z-index:1;
+}
+footer p+p{margin-top:.4rem;}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+
+/* ── VIZ / CHARTS ── */
+.chart-wrap{
+  background:var(--surface);border:1px solid var(--border-btc);
+  border-radius:16px;padding:2rem;margin-bottom:1.5rem;
+}
+.chart-label{
+  font-family:'Space Mono',monospace;font-size:.62rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--btc);
+  margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;
+}
+.chart-label::before{content:'//';opacity:.4;}
+.chart-h{
+  font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:800;
+  line-height:1.15;margin-bottom:.3rem;
+}
+.chart-note{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--text3);margin-bottom:1.5rem;}
+.chart-c{position:relative;height:340px;}
+.chart-c.sm{height:260px;}
+.chart-insight{
+  margin-top:1rem;padding:.75rem 1rem;
+  background:rgba(247,147,26,.04);border-left:3px solid var(--btc);
+  border-radius:0 8px 8px 0;font-size:.82rem;color:var(--text2);line-height:1.7;
+}
+.chart-insight strong{color:var(--btc);}
+.viz-duo{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:0;}
+.donut-ring{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1rem;}
+.donut-svg{width:230px;height:230px;display:block;}
+.donut-legend{display:flex;flex-direction:column;gap:.7rem;margin-top:1.2rem;width:100%;max-width:260px;}
+.donut-leg-item{display:flex;align-items:center;gap:.6rem;font-size:.82rem;color:var(--text2);}
+.donut-leg-swatch{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.engine-svg-box{
+  background:var(--surface);border:1px solid var(--border-btc);
+  border-radius:16px;padding:1.5rem 1rem;overflow:hidden;margin:2rem 0;
+}
+.engine-svg-box svg{width:100%;height:auto;display:block;}
+.portfolio-wrap{margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border);}
+
+/* ── STRESS TEST ── */
+.stress-card{
+  background:var(--surface);border:1px solid var(--border-btc);
+  border-radius:16px;padding:2.5rem;margin-top:2rem;
+}
+.stress-slider-label{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:.6rem;font-size:.82rem;color:var(--text2);
+}
+.stress-slider-label span:last-child{
+  font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:800;color:var(--btc);
+}
+.btc-slider{
+  width:100%;-webkit-appearance:none;appearance:none;
+  height:4px;background:rgba(255,255,255,0.06);border-radius:2px;outline:none;cursor:pointer;
+  margin-bottom:.5rem;
+}
+.btc-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+  background:var(--btc);cursor:pointer;border:3px solid var(--bg);
+  box-shadow:0 0 12px rgba(247,147,26,.5);transition:box-shadow .2s;
+}
+.btc-slider::-webkit-slider-thumb:hover{box-shadow:0 0 20px rgba(247,147,26,.7);}
+.stress-range-labels{
+  display:flex;justify-content:space-between;
+  font-family:'Space Mono',monospace;font-size:.68rem;color:var(--text3);
+  margin-bottom:2rem;
+}
+.stress-range-labels span:nth-child(2){color:var(--text2);font-weight:700;}
+.stress-metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.8rem;
+}
+.stress-metric{
+  background:var(--bg3);padding:1.2rem 1rem;text-align:center;
+}
+.stress-metric-label{font-family:'Space Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:.4rem;}
+.stress-metric-val{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:800;color:var(--text);line-height:1;margin-bottom:.2rem;transition:color .3s;}
+.stress-metric-sub{font-size:.72rem;color:var(--text3);}
+/* LTV Gauge */
+.stress-gauge-wrap{margin-bottom:1.5rem;}
+.stress-gauge-bar{
+  position:relative;height:16px;background:rgba(255,255,255,0.04);
+  border-radius:8px;overflow:hidden;margin-bottom:.5rem;
+}
+.stress-gauge-fill{
+  height:100%;border-radius:8px;transition:width .4s ease, background .4s ease;
+  width:40%;background:var(--green);
+}
+.stress-trigger-line{
+  position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,0.2);
+}
+.stress-trigger-line::after{
+  content:attr(data-label);position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+  font-family:'Space Mono',monospace;font-size:.58rem;color:rgba(255,255,255,0.3);white-space:nowrap;
+}
+.stress-gauge-labels{
+  display:flex;justify-content:space-between;
+  font-family:'Space Mono',monospace;font-size:.62rem;color:var(--text3);
+}
+/* Status pill */
+.stress-status{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.3rem .8rem;border-radius:6px;font-size:.8rem;font-weight:700;
+  font-family:'Space Mono',monospace;transition:all .3s;
+}
+/* Waterfall */
+.stress-waterfall{
+  background:var(--bg3);border-radius:10px;padding:1.2rem 1.4rem;
+  font-size:.82rem;color:var(--text2);line-height:1.75;
+  transition:all .3s;border-left:3px solid var(--border);
+}
+.stress-waterfall strong{color:var(--btc);}
+.stress-waterfall.warn{border-left-color:#FFB84D;}
+.stress-waterfall.warn strong{color:#FFB84D;}
+.stress-waterfall.danger{border-left-color:#FF4444;}
+.stress-waterfall.danger strong{color:#FF4444;}
+
+/* ── HARD QUESTIONS ── */
+.hq-grid{display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:2rem;}
+.hq-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:1.8rem;
+  border-left:3px solid var(--border-btc);
+  transition:border-color .3s, transform .3s;
+}
+.hq-card:hover{border-left-color:var(--btc);transform:translateX(4px);}
+.hq-num{
+  font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--btc);margin-bottom:.5rem;
+}
+.hq-q{
+  font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;
+  margin-bottom:.9rem;color:var(--text);
+}
+.hq-a{font-size:.87rem;color:var(--text2);line-height:1.8;}
+.hq-a strong{color:var(--text);}
+.hq-a .verdict{
+  display:inline-block;margin-top:.7rem;padding:.25rem .7rem;
+  border-radius:5px;font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;
+  letter-spacing:.05em;
+}
+.verdict.ok{background:rgba(0,255,136,.1);color:var(--green);}
+.verdict.partial{background:rgba(255,184,77,.1);color:#FFB84D;}
+.verdict.open{background:rgba(247,147,26,.12);color:var(--btc);}
+
+/* ── FORMATION PLAN ── */
+.plan-steps{display:grid;grid-template-columns:1fr;gap:0;margin-top:1.8rem;}
+.plan-step{
+  display:grid;grid-template-columns:180px 1fr;gap:1.5rem;
+  padding:1.3rem 0;border-bottom:1px solid var(--border);align-items:start;
+}
+.plan-step:last-child{border-bottom:none;}
+.plan-date{
+  font-family:'Space Mono',monospace;font-size:.72rem;color:var(--btc);
+  font-weight:700;padding-top:.2rem;letter-spacing:.03em;
+}
+.plan-step h4{font-size:.95rem;font-weight:700;margin-bottom:.25rem;}
+.plan-step p{font-size:.84rem;color:var(--text2);}
+.plan-owner{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text3);margin-top:.3rem;}
+
+/* ── PDF MODAL ── */
+#pdf-modal{
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0.88);backdrop-filter:blur(8px);
+  flex-direction:column;align-items:center;justify-content:center;padding:1rem;
+}
+.pdf-modal-box{
+  background:#0a1928;border:1px solid rgba(247,147,26,0.2);
+  border-radius:18px;width:100%;max-width:600px;
+  box-shadow:0 32px 80px rgba(0,0,0,0.7),0 0 60px rgba(247,147,26,0.05);
+  overflow:hidden;
+}
+.pdf-modal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.4rem;border-bottom:1px solid rgba(255,255,255,0.07);
+  background:#060f1c;
+}
+.pdf-modal-head-left{display:flex;align-items:center;gap:.75rem;}
+.pdf-modal-head-icon{
+  width:38px;height:38px;background:rgba(247,147,26,.12);border:1px solid rgba(247,147,26,.25);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;
+}
+.pdf-modal-head-title{font-weight:700;font-size:.9rem;color:var(--text);}
+.pdf-modal-head-sub{font-size:.72rem;color:var(--text3);margin-top:.1rem;font-family:'Space Mono',monospace;}
+.pdf-modal-close{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  color:var(--text3);cursor:pointer;width:34px;height:34px;border-radius:8px;
+  font-size:1rem;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.pdf-modal-close:hover{color:var(--text);border-color:rgba(255,255,255,0.25);}
+.pdf-modal-body{padding:1.5rem 1.4rem;}
+/* Cover preview */
+.pdf-cover{
+  background:linear-gradient(135deg,rgba(247,147,26,0.07),rgba(0,180,255,0.04));
+  border:1px solid rgba(247,147,26,0.12);border-radius:12px;
+  padding:1.4rem;margin-bottom:1.4rem;
+  display:flex;align-items:center;gap:1.2rem;
+}
+.pdf-cover-thumb{
+  width:64px;height:88px;border-radius:6px;flex-shrink:0;
+  background:linear-gradient(160deg,var(--bg3),#0a1520);
+  border:1px solid rgba(247,147,26,0.2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;
+  font-family:'Space Grotesk',sans-serif;
+}
+.pdf-cover-thumb-logo{font-size:1.3rem;color:var(--btc);}
+.pdf-cover-thumb-text{font-size:.45rem;color:var(--text3);font-family:'Space Mono',monospace;letter-spacing:.05em;}
+.pdf-cover-meta h3{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:.2rem;color:var(--btc);}
+.pdf-cover-meta p{font-size:.8rem;color:var(--text2);margin-bottom:.5rem;}
+.pdf-cover-stats{display:flex;gap:1rem;flex-wrap:wrap;}
+.pdf-cover-stat{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text3);}
+.pdf-cover-stat strong{color:var(--text2);}
+/* Contents list */
+.pdf-contents{margin-bottom:1.4rem;}
+.pdf-contents-label{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.7rem;}
+.pdf-contents-grid{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;}
+.pdf-contents-item{font-size:.78rem;color:var(--text2);display:flex;align-items:flex-start;gap:.45rem;}
+.pdf-contents-item::before{content:'✓';color:var(--green);font-size:.7rem;flex-shrink:0;margin-top:.1rem;}
+/* Actions */
+.pdf-actions{display:flex;gap:.8rem;flex-wrap:wrap;}
+.pdf-print-btn{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:.6rem;
+  background:var(--btc);color:#000;font-weight:800;font-size:.88rem;
+  padding:.8rem 1.4rem;border-radius:10px;border:none;cursor:pointer;
+  transition:all .2s;letter-spacing:.02em;
+}
+.pdf-print-btn:hover{background:#ffaa44;transform:translateY(-1px);box-shadow:0 8px 24px rgba(247,147,26,.3);}
+.pdf-cancel-btn{
+  padding:.8rem 1.4rem;border-radius:10px;border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.04);color:var(--text3);font-size:.88rem;
+  cursor:pointer;transition:all .2s;
+}
+.pdf-cancel-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.2);}
+.pdf-tip{
+  margin-top:1rem;font-size:.72rem;color:var(--text3);line-height:1.65;
+  padding:.7rem 1rem;background:rgba(255,255,255,0.02);border-radius:8px;
+  font-family:'Space Mono',monospace;
+}
+.pdf-tip strong{color:var(--text2);}
+
+/* ── LIGHT THEME ── */
+:root[data-theme="light"]{
+  --btc:#B85F00; --btc2:#9E5200; --btc3:rgba(184,95,0,0.08);
+  --green:#00875A; --red:#DC2626; --blue:#0077CC;
+  --bg:#f7f8fa; --bg2:#eef1f5; --bg3:#e8ecf1;
+  --surface:#ffffff; --surface2:#f4f6f9;
+  --border:rgba(10,30,50,0.10); --border-btc:rgba(184,95,0,0.28);
+  --text:#111827; --text2:#374151; --text3:#6b7280;
+}
+[data-theme="light"] body::before{opacity:.15;}
+[data-theme="light"] .grid-bg{opacity:.05;}
+[data-theme="light"] nav{background:rgba(255,255,255,0.92);}
+[data-theme="light"] .hero-h1 .line3{text-shadow:none;}
+[data-theme="light"] .stat-num{text-shadow:none;}
+[data-theme="light"] .base .scenario-num,[data-theme="light"] .upside .scenario-num{text-shadow:none;}
+[data-theme="light"] .nav-cta,[data-theme="light"] .btn-fire,[data-theme="light"] .road-num{color:#fff;}
+[data-theme="light"] .nav-cta:hover,[data-theme="light"] .btn-fire:hover{background:#9E5200;}
+[data-theme="light"] .lang-toggle a.active{color:#fff;}
+[data-theme="light"] #pdfFloatBtn{color:#fff !important;}
+[data-theme="light"] .leg,[data-theme="light"] .scenario,[data-theme="light"] .tier,[data-theme="light"] .struct-card,[data-theme="light"] .hq-card,[data-theme="light"] .team-card,[data-theme="light"] .open-card,[data-theme="light"] .pilot-stat,[data-theme="light"] .chart-wrap,[data-theme="light"] .stress-card,[data-theme="light"] .terms-wrap,[data-theme="light"] .worked-ex,[data-theme="light"] .road-step{box-shadow:0 1px 3px rgba(15,30,50,0.06);}
+[data-theme="light"] .engine-svg-box{background:#0a1928;border-color:rgba(247,147,26,0.3);}
+[data-theme="light"] .donut-ring{background:#0a1928;border-radius:14px;}
+[data-theme="light"] .donut-ring .donut-leg-item{color:#9db8d2;}
+[data-theme="light"] .leg-glow{opacity:.05;}
+[data-theme="light"] .leg-usd{border-top-color:#DC2626;}
+[data-theme="light"] .leg-usd .leg-tag{color:#DC2626;background:rgba(220,38,38,.08);}
+[data-theme="light"] .leg-usd .leg-stat strong{color:#DC2626;}
+[data-theme="light"] .struct-card.c4{border-left-color:#DC2626;}
+[data-theme="light"] .struct-card.c5{border-left-color:#7C5CD6;}
+[data-theme="light"] .team-card.t2{border-left-color:#7C5CD6;}
+[data-theme="light"] .team-card.t2 .team-role{color:#7C5CD6;}
+[data-theme="light"] .verdict.partial{background:rgba(180,83,9,.09);color:#B45309;}
+[data-theme="light"] .stress-waterfall.warn{border-left-color:#B45309;}
+[data-theme="light"] .stress-waterfall.warn strong{color:#B45309;}
+[data-theme="light"] .stress-waterfall.danger strong{color:#DC2626;}
+[data-theme="light"] .stress-gauge-wrap span[style*="00FF88"]{color:#00875A !important;}
+[data-theme="light"] .stress-gauge-wrap span[style*="FFB84D"]{color:#B45309 !important;}
+[data-theme="light"] .stress-gauge-wrap span[style*="FF4444"]{color:#DC2626 !important;}
+[data-theme="light"] .hi-box strong[style*="FFB84D"]{color:#B45309 !important;}
+[data-theme="light"] .hi-box strong[style*="FF4444"]{color:#DC2626 !important;}
+[data-theme="light"] .stress-trigger-line{background:rgba(0,0,0,0.2);}
+[data-theme="light"] .stress-trigger-line::after{color:rgba(0,0,0,0.35);}
+[data-theme="light"] .stress-gauge-bar{background:rgba(0,0,0,0.06);}
+[data-theme="light"] .return-bar{background:rgba(0,0,0,0.08);}
+[data-theme="light"] .btc-slider{background:rgba(0,0,0,0.12);}
+[data-theme="light"] .btc-slider::-webkit-slider-thumb{border-color:#fff;}
+[data-theme="light"] .never-sold{background:linear-gradient(135deg, rgba(184,95,0,.07), rgba(184,95,0,.02));}
+[data-theme="light"] .cta-section{background:linear-gradient(135deg, rgba(184,95,0,.07), rgba(0,135,90,.05));}
+[data-theme="light"] .comp-table tr.us{background:rgba(184,95,0,.05);}
+
+/* ── PRINT CSS ── */
+@media print{
+  /* Light-theme variable overrides */
+  :root{
+    --btc:#B85F00;
+    --btc2:#9E5200;
+    --btc3:rgba(184,95,0,0.08);
+    --green:#006633;
+    --blue:#005599;
+    --bg:#ffffff;
+    --bg2:#f7f8fa;
+    --bg3:#f0f2f4;
+    --surface:#f4f6f9;
+    --surface2:#edf0f4;
+    --border:rgba(0,0,0,0.09);
+    --border-btc:rgba(184,95,0,0.2);
+    --text:#111827;
+    --text2:#374151;
+    --text3:#6b7280;
+  }
+
+  /* Global reset */
+  *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{ background:#fff !important; color:#111827; }
+  body::before,.grid-bg{ display:none !important; }
+
+  /* Hide interactive / screen-only elements */
+  nav,
+  .ticker-bar,
+  #pdf-modal,
+  .engine-svg-box,
+  .btc-slider,
+  .stress-range-labels,
+  .stress-gauge-wrap,
+  .stress-metrics,
+  #waterfallMsg,
+  .stress-card .stress-slider-label,
+  .hero::after,
+  .leg-glow,
+  .cta-section .cta-buttons,
+  .contacts,
+  .pilot-links,
+  #pdfFloatBtn,
+  #aud-gate{ display:none !important; }
+
+  /* Page setup */
+  @page{ size:A4; margin:14mm 12mm; }
+
+  /* Layout fixes */
+  .hero{ min-height:auto; padding:3rem 2rem 2.5rem; page-break-after:always; }
+  .stripe,.section,.section-wide{ padding:2rem 1rem; page-break-inside:avoid; }
+  .reveal{ opacity:1 !important; transform:none !important; }
+  .return-bar-fill{ transform:scaleX(1) !important; }
+
+  /* Surface colours go light */
+  .chart-wrap,
+  .never-sold,
+  .leg,
+  .scenario,
+  .tier,
+  .struct-card,
+  .terms-wrap,
+  .hq-card,
+  .team-card,
+  .deal-step,
+  .plan-step,
+  .stress-card,
+  .worked-ex,
+  .hi-box,
+  .engine-svg-box,
+  .portfolio-wrap,
+  .pilot-stat{ background:#f4f6f9 !important; border-color:rgba(0,0,0,0.1) !important; }
+
+  /* Chart sizing */
+  .chart-c{ height:240px; }
+  .chart-c.sm{ height:190px; }
+
+  /* Ticker/nav bar space fix */
+  body{ padding-top:0 !important; }
+  .hero{ padding-top:2.5rem !important; }
+
+  /* Text contrast fixes */
+  .eyebrow,.chart-label{ color:#B85F00 !important; }
+  .section-h .accent{ color:#B85F00 !important; }
+  .stat-num,.tier-amount,.scenario-num{ color:#B85F00 !important; text-shadow:none !important; }
+  .hero-h1 .line3,.hero-h1 .line1{ color:#111827 !important; text-shadow:none !important; }
+  .hero-h1 .line2{ color:#374151 !important; }
+  .hero-deck strong{ color:#111827 !important; }
+  .stamp-dot{ box-shadow:none !important; }
+  .hero-stamp{ border-color:rgba(184,95,0,0.3) !important; }
+  .donut-svg,.engine-svg-box svg{ display:none; }
+  .never-sold h3{ color:#B85F00 !important; }
+  .verdict.ok{ background:rgba(0,102,51,0.08) !important; }
+  .verdict.partial{ background:rgba(184,95,0,0.08) !important; }
+  .hq-card:hover{ transform:none !important; }
+
+  /* Comp table */
+  .comp-table th{ background:rgba(184,95,0,0.06) !important; }
+  .comp-table tr.us td:first-child{ color:#B85F00 !important; }
+  .chk{ color:#006633 !important; }
+  .btn-fire,.btn-ghost,.nav-cta{ display:none !important; }
+  .donut-ring{ background:transparent !important; }
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .legs,.scenarios,.tiers,.roadmap,.struct-grid,.team-grid,.viz-duo{grid-template-columns:1fr;}
+  .engine-flow{display:none;}
+  .stat-row{grid-template-columns:repeat(3,1fr);}
+  .nav-links{display:none;}
+}
+@media(max-width:600px){
+  .stat-row{grid-template-columns:1fr 1fr;}
+  .pilot-grid{grid-template-columns:1fr;}
+  .roadmap{grid-template-columns:1fr 1fr;}
+  .ticker-bar{display:none;}
+  .hero{padding-top:8rem;}
+  .chart-c{height:220px;}
+  .chart-c.sm{height:200px;}
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('bbrf-theme')||'dark');}catch(e){}</script>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<!-- AUDIENCE GATE -->
+<div id="aud-gate">
+  <div class="aud-box">
+    <div class="aud-kicker">BBRF-PT · Bitcoin-Backed Real-Estate Fund — Portugal</div>
+    <h2>Qual é o seu perfil?</h2>
+    <p class="sub">Mostramos-lhe a versão escrita para a forma como investe.</p>
+    <div class="aud-grid">
+      <a class="aud-card" href="#" onclick="pickAudience('crypto');return false;">
+        <div class="aud-ic">₿</div><h3>Detenho Bitcoin</h3><p>A tese da reserva, o motor de alavancagem e a camada on-chain — na íntegra.</p>
+      </a>
+      <a class="aud-card" href="bbrf-pt-private-pt.html" onclick="pickAudience('trad');">
+        <div class="aud-ic">🏛️</div><h3>Sou um investidor tradicional</h3><p>Estrutura, instrumento, quadro de risco, comissões e governação — primeiro.</p>
+      </a>
+      <a class="aud-card" href="bbrf-pt-partners-pt.html" onclick="pickAudience('partner');">
+        <div class="aud-ic">🤝</div><h3>Sou um profissional imobiliário</h3><p>Traga negócios ou introduções — o programa de parceiros.</p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-track" id="ticker">
+    <span class="ticker-item"><span class="label">BTC/USD </span><span class="val" id="btcPrice">a carregar...</span> <span class="up" id="btcChange"></span></span>
+    <span class="ticker-item"><span class="label">ANGARIAÇÃO-ALVO BBRF-PT </span><span class="val">€25M – €100M</span></span>
+    <span class="ticker-item"><span class="label">TICKET MÍNIMO </span><span class="val">€50,000</span></span>
+    <span class="ticker-item"><span class="label">RESERVA BITCOIN </span><span class="val up">NUNCA VENDIDA</span></span>
+    <span class="ticker-item"><span class="label">ATIVO PILOTO </span><span class="val">PEBBLE STONE FARM · 1 000 HA</span></span>
+    <span class="ticker-item"><span class="label">RETORNO CASO BASE </span><span class="val up">~6× / 10 ANOS</span></span>
+    <span class="ticker-item"><span class="label">ESTRUTURA </span><span class="val">SOPARFI LUX · PREFERENCIAIS CONVERTÍVEIS</span></span>
+    <span class="ticker-item"><span class="label">IDENTIDADE ON-CHAIN </span><span class="val">bbrf-pt.eth</span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item"><span class="label">BTC/USD </span><span class="val" id="btcPrice2">—</span></span>
+    <span class="ticker-item"><span class="label">ANGARIAÇÃO-ALVO BBRF-PT </span><span class="val">€25M – €100M</span></span>
+    <span class="ticker-item"><span class="label">TICKET MÍNIMO </span><span class="val">€50,000</span></span>
+    <span class="ticker-item"><span class="label">RESERVA BITCOIN </span><span class="val up">NUNCA VENDIDA</span></span>
+    <span class="ticker-item"><span class="label">ATIVO PILOTO </span><span class="val">PEBBLE STONE FARM · 1 000 HA</span></span>
+    <span class="ticker-item"><span class="label">RETORNO CASO BASE </span><span class="val up">~6× / 10 ANOS</span></span>
+    <span class="ticker-item"><span class="label">ESTRUTURA </span><span class="val">SOPARFI LUX · PREFERENCIAIS CONVERTÍVEIS</span></span>
+    <span class="ticker-item"><span class="label">IDENTIDADE ON-CHAIN </span><span class="val">bbrf-pt.eth</span></span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">BBRF<span>-PT</span></a>
+  <ul class="nav-links">
+    <li><a href="#thesis">Tese</a></li>
+    <li><a href="#engine">Motor</a></li>
+    <li><a href="#pilot">Piloto</a></li>
+    <li><a href="#returns">Retornos</a></li>
+    <li><a href="#raise">Angariação</a></li>
+    <li><a href="#structure">Estrutura</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="showAudienceGate(true)" aria-label="Escolher perfil" title="Escolher perfil">👤</button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark">☀️</button>
+    <div class="lang-toggle"><a href="bbrf-pt.html">EN</a><a href="bbrf-pt-fr.html">FR</a><a href="bbrf-pt-pt.html" class="active">PT</a></div>
+    <a class="nav-cta" href="mailto:eytan@benzeno.com?subject=BBRF-PT%20%E2%80%94%20Pedido%20de%20investidor">Investir →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-stamp"><span class="stamp-dot"></span> Confidencial · Apenas investidores profissionais · Uma iniciativa Bittrees · bbrf-pt.eth · Junho 2026</div>
+
+    <h1 class="hero-h1">
+      <span class="line1">Long Bitcoin.</span>
+      <span class="line2">Cobrir o Dólar.</span>
+      <span class="line3">Long Portugal.</span>
+    </h1>
+
+    <p class="hero-deck">
+      Tem Bitcoin. Não o quer vender.
+      Quer exposição a ativos reais europeus, rendimento em euros, e uma estrutura que compõe os três em simultâneo.
+      <strong>O Bitcoin é dado em garantia — nunca vendido — para pedir emprestados euros que adquirem imobiliário português.</strong>
+      O spread entre o que o Bitcoin faz e o que custa o financiamento — é esse o trade.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-cell">
+        <span class="stat-num" data-count="25" data-prefix="€" data-suffix="M">€0M</span>
+        <div class="stat-label">Angariação mín.</div>
+        <div class="stat-sub">Limiar de viabilidade</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num" data-count="100" data-prefix="€" data-suffix="M">€0M</span>
+        <div class="stat-label">Teto máx.</div>
+        <div class="stat-sub">A visão completa</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num" data-count="6" data-suffix="×">0×</span>
+        <div class="stat-label">Retorno base</div>
+        <div class="stat-sub">Ilustrativo · 10 anos</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num" data-count="60" data-suffix="%">0%</span>
+        <div class="stat-label">Reserva BTC</div>
+        <div class="stat-sub">Nunca vendida</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num" data-count="11" data-prefix="€" data-suffix="M">€0M</span>
+        <div class="stat-label">Ativo piloto</div>
+        <div class="stat-sub">Pebble Stone Farm</div>
+      </div>
+    </div>
+
+    <p class="hero-disclaimer">
+      <strong>Importante:</strong> Apenas para investidores profissionais e bem informados. Não é um prospeto nem uma oferta de valores mobiliários.
+      Os cenários de retorno são ilustrativos — não são previsões. O capital está em risco, incluindo perda total.
+    </p>
+  </div>
+</div>
+
+<!-- THESIS -->
+<div class="stripe" id="thesis">
+  <div class="section">
+    <div class="eyebrow">01 — A Tese dos Três Pilares</div>
+    <h2 class="section-h">Três apostas.<br><span class="accent">Uma só máquina.</span></h2>
+    <p class="lead">Cada pilar cobre os outros. Em conjunto formam uma estrutura cujo retorno estrutural é o spread entre a valorização de longo prazo do Bitcoin e um custo de financiamento baixo e regulado — a compor sobre um pano de fundo de desvalorização do dólar.</p>
+
+    <div class="never-sold reveal">
+      <div class="never-sold-icon">₿</div>
+      <div>
+        <h3>O Bitcoin nunca é vendido.</h3>
+        <p>Não é um fundo que compra Bitcoin e o vende para comprar imóveis. A reserva Bitcoin é dada em garantia através de canais institucionais regulados para pedir emprestados euros a ~2–5% ao ano. O Bitcoin compõe intocado em custódia multisig regulada. Esse spread — valorização do Bitcoin vs custo de financiamento — é o motor.</p>
+      </div>
+    </div>
+
+    <div class="legs">
+      <div class="leg leg-btc reveal reveal-delay-1">
+        <div class="leg-glow"></div>
+        <div class="leg-num">01</div>
+        <div class="leg-tag">Ativo de reserva · Nunca vendido</div>
+        <h3>Long Bitcoin.</h3>
+        <p>O ativo monetário mais duro alguma vez criado. A continuação da monetização — absorvendo capitalização do ouro, ganhando posições em reservas soberanas — é credível num horizonte de dez anos. Historicamente 40–60% de CAGR em ciclos de quatro anos. O risco principal é regulatório, não estrutural.</p>
+        <div class="leg-stat">CAGR histórico em ciclos de 4 anos <strong>40–60%</strong> vs custo de financiamento <strong>~3,5%</strong></div>
+      </div>
+      <div class="leg leg-usd reveal reveal-delay-2">
+        <div class="leg-glow"></div>
+        <div class="leg-num">02</div>
+        <div class="leg-tag">Cobertura Dólar · Denominado em Euros</div>
+        <h3>Cobrir o dólar.</h3>
+        <p>Com cerca de 39 biliões de dólares de dívida federal americana e da ordem de 1 bilião de dólares de juros por trimestre, o caminho de menor resistência a longo prazo é a desvalorização monetária, não o colapso. Ativos reais denominados em euros oferecem proteção estrutural. Pedir dólares emprestados a um custo baixo e regulado contra uma reserva Bitcoin converte essa tese numa posição financiável.</p>
+        <div class="leg-stat">Dívida federal <strong>$39T</strong> · Juros <strong>~$1T/trimestre</strong> · Desvalorização, não colapso</div>
+      </div>
+      <div class="leg leg-re reveal reveal-delay-3">
+        <div class="leg-glow"></div>
+        <div class="leg-num">03</div>
+        <div class="leg-tag">Ativo real · Gerador de rendimento</div>
+        <h3>Long Portugal.</h3>
+        <p>Lisboa a €5–6K/m² vs Paris a €10–12K. Oferta condicionada pelo licenciamento. Infraestrutura turística madura. Rendimentos de arrendamento de 3–5% líquidos. Denominado em euros e gerador de rendimento — uma cobertura natural da tese de desvalorização do dólar. Subavaliado e com oferta condicionada.</p>
+        <div class="leg-stat">Lisboa <strong>€5–6K/m²</strong> vs Paris <strong>€10–12K</strong> · Rendimento líquido <strong>3–5%</strong></div>
+      </div>
+    </div>
+
+
+    <!-- DOLLAR DECAY DIVIDEND CHART -->
+    <div class="chart-wrap reveal" style="margin-top:2.5rem;">
+      <div class="chart-label">O Dividendo da Desvalorização do Dólar — Caso base €50M · Empréstimo €12M · Ilustrativo</div>
+      <div class="chart-h">Peça emprestado numa moeda que se desvaloriza.<br><span style="color:var(--green)">O seu empréstimo encolhe em termos reais todos os anos.</span></div>
+      <div class="chart-note">Empréstimo nominal em dívida (o que deve) vs valor real em poder de compra desse empréstimo (ajustado a −7%/ano de desvalorização do dólar) · Ilustrativo · Não é uma previsão</div>
+      <div class="chart-c" style="height:280px;">
+        <canvas id="dollarChart"></canvas>
+      </div>
+      <div class="chart-insight">Um empréstimo nominal em dólares de €12M contraído na origem vale apenas <strong>€5,8M em termos reais EUR no ano 10</strong> — a 7%/ano de desvalorização do dólar. A <strong style="color:var(--green)">área verde representa €6,2M de erosão em termos reais do lado do passivo</strong>. Se a tese de desvalorização se concretizar, é estrutural e direcional.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ENGINE -->
+<div class="section" id="engine">
+  <div class="eyebrow">02 — O Motor de Alavancagem</div>
+  <h2 class="section-h">Pedir emprestado contra Bitcoin.<br><span class="accent">Comprar imobiliário português.</span><br><span class="dim">Repetir.</span></h2>
+  <p class="lead">A reserva Bitcoin não é vendida para financiar aquisições — é dada em garantia através de canais regulados para pedir emprestados euros, que adquirem imobiliário português. A posição Bitcoin compõe intocada.</p>
+
+  <div class="engine-svg-box reveal">
+    <svg viewBox="0 0 1100 240" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glo-o" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glo-g" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <path id="fp1" d="M 172 110 L 218 110"/>
+        <path id="fp2" d="M 382 110 L 428 110"/>
+        <path id="fp3" d="M 592 110 L 638 110"/>
+        <path id="fp4" d="M 802 110 L 848 110"/>
+        <path id="rp"  d="M 1090 110 C 1090 205 10 205 10 110"/>
+      </defs>
+      <!-- Return arc (bottom, visible) -->
+      <path d="M 1090 110 C 1090 205 10 205 10 110" fill="none" stroke="rgba(0,255,136,0.1)" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <!-- Forward connector lines -->
+      <line x1="172" y1="110" x2="218" y2="110" stroke="rgba(247,147,26,0.2)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <line x1="382" y1="110" x2="428" y2="110" stroke="rgba(247,147,26,0.2)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <line x1="592" y1="110" x2="638" y2="110" stroke="rgba(247,147,26,0.2)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <line x1="802" y1="110" x2="848" y2="110" stroke="rgba(247,147,26,0.2)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <!-- Node 1: BTC Reserve -->
+      <rect x="10" y="70" width="162" height="80" rx="12" fill="rgba(247,147,26,0.07)" stroke="rgba(247,147,26,0.45)" stroke-width="1.5"/>
+      <text x="91" y="103" text-anchor="middle" fill="#F7931A" font-family="Space Grotesk,sans-serif" font-size="22" font-weight="700">₿</text>
+      <text x="91" y="121" text-anchor="middle" fill="#F7931A" font-family="Space Mono,monospace" font-size="8.5" letter-spacing="1.5">RESERVA BTC</text>
+      <text x="91" y="137" text-anchor="middle" fill="rgba(247,147,26,0.4)" font-family="Space Mono,monospace" font-size="7.5">NUNCA VENDIDA</text>
+      <!-- Node 2: USD Loan -->
+      <rect x="218" y="70" width="164" height="80" rx="12" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <text x="300" y="103" text-anchor="middle" fill="#FFA044" font-family="Space Grotesk,sans-serif" font-size="20" font-weight="700">$</text>
+      <text x="300" y="121" text-anchor="middle" fill="#7BA8CC" font-family="Space Mono,monospace" font-size="8.5" letter-spacing="1.2">EMPRÉSTIMO USD</text>
+      <text x="300" y="137" text-anchor="middle" fill="#3D6080" font-family="Space Mono,monospace" font-size="7.5">~2–5% APR</text>
+      <!-- Node 3: EUR Swap -->
+      <rect x="428" y="70" width="164" height="80" rx="12" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <text x="510" y="103" text-anchor="middle" fill="#AAAAFF" font-family="Space Grotesk,sans-serif" font-size="20" font-weight="700">€</text>
+      <text x="510" y="121" text-anchor="middle" fill="#7BA8CC" font-family="Space Mono,monospace" font-size="8.5" letter-spacing="1.2">SWAP EUR</text>
+      <text x="510" y="137" text-anchor="middle" fill="#3D6080" font-family="Space Mono,monospace" font-size="7.5">CANAIS REGULADOS</text>
+      <!-- Node 4: PT Property -->
+      <rect x="638" y="70" width="164" height="80" rx="12" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <text x="720" y="103" text-anchor="middle" fill="#7BA8CC" font-family="Space Grotesk,sans-serif" font-size="19">🏠</text>
+      <text x="720" y="121" text-anchor="middle" fill="#7BA8CC" font-family="Space Mono,monospace" font-size="8.5" letter-spacing="1.2">IMÓVEIS PT</text>
+      <text x="720" y="137" text-anchor="middle" fill="#3D6080" font-family="Space Mono,monospace" font-size="7.5">SPV POR ATIVO</text>
+      <!-- Node 5: Rental Yield -->
+      <rect x="848" y="70" width="242" height="80" rx="12" fill="rgba(0,255,136,0.04)" stroke="rgba(0,255,136,0.22)" stroke-width="1.5"/>
+      <text x="969" y="103" text-anchor="middle" fill="#00FF88" font-family="Space Grotesk,sans-serif" font-size="19" font-weight="700">💶</text>
+      <text x="969" y="121" text-anchor="middle" fill="#00FF88" font-family="Space Mono,monospace" font-size="8.5" letter-spacing="1.2">RENDAS</text>
+      <text x="969" y="137" text-anchor="middle" fill="rgba(0,255,136,0.45)" font-family="Space Mono,monospace" font-size="7.5">SERVE O EMPRÉSTIMO</text>
+      <!-- Return label -->
+      <text x="550" y="222" text-anchor="middle" fill="rgba(0,255,136,0.3)" font-family="Space Mono,monospace" font-size="7.5">← as rendas servem o empréstimo · o bitcoin compõe intocado →</text>
+      <!-- Forward particles: BTC→USD -->
+      <circle r="4.5" fill="#F7931A" filter="url(#glo-o)"><animateMotion dur="0.65s" repeatCount="indefinite" begin="0s"><mpath href="#fp1"/></animateMotion></circle>
+      <circle r="3" fill="#F7931A" filter="url(#glo-o)" opacity="0.5"><animateMotion dur="0.65s" repeatCount="indefinite" begin="0.32s"><mpath href="#fp1"/></animateMotion></circle>
+      <!-- USD→EUR -->
+      <circle r="4.5" fill="#FFA044" filter="url(#glo-o)"><animateMotion dur="0.65s" repeatCount="indefinite" begin="0.1s"><mpath href="#fp2"/></animateMotion></circle>
+      <circle r="3" fill="#FFA044" filter="url(#glo-o)" opacity="0.5"><animateMotion dur="0.65s" repeatCount="indefinite" begin="0.42s"><mpath href="#fp2"/></animateMotion></circle>
+      <!-- EUR→PT RE -->
+      <circle r="4.5" fill="#AAAAFF" filter="url(#glo-g)"><animateMotion dur="0.65s" repeatCount="indefinite" begin="0.2s"><mpath href="#fp3"/></animateMotion></circle>
+      <circle r="3" fill="#AAAAFF" filter="url(#glo-g)" opacity="0.5"><animateMotion dur="0.65s" repeatCount="indefinite" begin="0.52s"><mpath href="#fp3"/></animateMotion></circle>
+      <!-- PT RE→Yield -->
+      <circle r="4.5" fill="#00FF88" filter="url(#glo-g)"><animateMotion dur="0.65s" repeatCount="indefinite" begin="0.3s"><mpath href="#fp4"/></animateMotion></circle>
+      <circle r="3" fill="#00FF88" filter="url(#glo-g)" opacity="0.5"><animateMotion dur="0.65s" repeatCount="indefinite" begin="0.62s"><mpath href="#fp4"/></animateMotion></circle>
+      <!-- Return arc: Yield→BTC -->
+      <circle r="4.5" fill="#00FF88" filter="url(#glo-g)" opacity="0.8"><animateMotion dur="3.2s" repeatCount="indefinite" begin="0s"><mpath href="#rp"/></animateMotion></circle>
+      <circle r="3.5" fill="#00FF88" filter="url(#glo-g)" opacity="0.45"><animateMotion dur="3.2s" repeatCount="indefinite" begin="1.6s"><mpath href="#rp"/></animateMotion></circle>
+    </svg>
+  </div>
+
+  <div class="hi-box reveal">
+    <h4>A promessa não é «alavancagem grátis».</h4>
+    <p>O custo de financiamento é real (~2–5% ao ano) e está incluído em todas as ilustrações de retorno. A tese é que o spread entre a valorização de longo prazo do Bitcoin e um custo de financiamento baixo e regulado é <strong>estrutural e persistente ao longo de um ciclo.</strong> Um LTV prudente é mantido em permanência. A saúde do colateral é monitorizada em contínuo com gatilhos de redução de risco definidos.</p>
+  </div>
+
+  <h3 style="font-size:1.3rem;font-weight:700;margin:3rem 0 .5rem;">Um negócio, de ponta a ponta.</h3>
+  <div class="deal-steps reveal">
+    <div class="deal-step"><div class="deal-num">01</div><div><h4>Entrada de capital</h4><p>O investidor subscreve ações preferenciais convertíveis. O registo de ações (e o espelho on-chain via bbrf-pt.eth) regista a participação.</p></div></div>
+    <div class="deal-step"><div class="deal-num">02</div><div><h4>Reserva alocada</h4><p>~60% do capital comprometido é alocado à reserva Bitcoin em custódia institucional regulada. O Bitcoin não é vendido.</p></div></div>
+    <div class="deal-step"><div class="deal-num">03</div><div><h4>Financiamento prudente</h4><p>Euros pedidos emprestados contra a reserva a um LTV prudente através de crédito regulado. ~2–5% ao ano, indicativo.</p></div></div>
+    <div class="deal-step"><div class="deal-num">04</div><div><h4>A assessoria origina o negócio</h4><p>Um assessor imobiliário institucional de topo identifica um negócio e prepara o dossier completo de subscrição — localização, rendimento líquido, condições de financiamento garantido por BTC, cenários de saída.</p></div></div>
+    <div class="deal-step"><div class="deal-num">05</div><div><h4>O comité de investimento aprova</h4><p>Aquisição aprovada segundo critérios definidos. Uma avaliação portuguesa independente confirma o preço. Decisão e fundamentação publicadas aos investidores e registadas on-chain.</p></div></div>
+    <div class="deal-step"><div class="deal-num">06</div><div><h4>A SPV fecha o ativo</h4><p>A sociedade operacional portuguesa fecha o ativo numa Lda. SPV dedicada. Isolamento limpo de responsabilidades e opcionalidade de alienação por ativo.</p></div></div>
+    <div class="deal-step"><div class="deal-num">07</div><div><h4>O rendimento flui para os investidores</h4><p>A renda líquida é distribuída periodicamente em EUR/EURC após o dividendo preferencial e os custos. O Bitcoin compõe intocado.</p></div></div>
+  </div>
+
+  <div class="worked-ex reveal">
+    <div class="worked-ex-head">
+      <div class="label">Exemplo prático · apenas ilustrativo</div>
+      <h3>Um apartamento em Lisboa — os números</h3>
+    </div>
+    <div class="worked-ex-body">
+      <div class="we-cell"><div class="we-label">Ativo</div><div class="we-val">Apartamento em Lisboa</div><div class="we-note">~4,2% líquido após gestão</div></div>
+      <div class="we-cell"><div class="we-label">Preço</div><div class="we-val">€750 000</div><div class="we-note">IMT + custos: ~€65K</div></div>
+      <div class="we-cell"><div class="we-label">Empréstimo BTC</div><div class="we-val">~€400 000</div><div class="we-note">~3,5% ao ano, indicativo</div></div>
+      <div class="we-cell"><div class="we-label">Capital próprio</div><div class="we-val">~€415 000</div><div class="we-note">Cobre preço + custos</div></div>
+      <div class="we-cell"><div class="we-label">Renda anual</div><div class="we-val" style="color:var(--green);">~€31,500</div><div class="we-note">4,2% × €750K</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- DATA & VISUALIZATIONS -->
+<div class="section" id="data">
+  <div class="eyebrow">03 — Os Dados</div>
+  <h2 class="section-h">O spread<br><span class="accent">é o trade.</span></h2>
+  <p class="lead">Em ciclos sustentados de quatro anos, o Bitcoin valorizou historicamente na ordem de 40–60% ao ano — histórico, não uma previsão. O custo de pedir emprestado contra a reserva é de ~2–5% ao ano. O spread entre essas linhas — ao longo de dez anos — é o retorno estrutural.</p>
+
+  <!-- SPREAD CHART -->
+  <div class="chart-wrap reveal">
+    <div class="chart-label">Valorização do BTC vs Custo do Capital — Visão a 10 anos</div>
+    <div class="chart-h">Uma linha dispara para a lua.<br>Tudo o resto fica plano.</div>
+    <div class="chart-note">Indexado a 1× no ano 0 · Pressupostos de CAGR ilustrativos · Não é uma previsão · Tudo no mesmo eixo</div>
+    <div class="chart-c">
+      <canvas id="spreadChart"></canvas>
+    </div>
+    <div class="chart-insight">
+      <strong>O trade num só número:</strong> mesmo a um CAGR prudente de 30%, o BTC atinge 13,8× em 10 anos enquanto o custo de financiamento compõe apenas até 1,4×. Esse spread é o retorno estrutural.
+    </div>
+  </div>
+
+  <!-- DONUT + RETURNS SIDE BY SIDE -->
+  <div class="viz-duo">
+    <div class="chart-wrap reveal reveal-delay-1">
+      <div class="chart-label">Alocação de capital por €1M comprometido</div>
+      <div class="chart-h">60 / 40.</div>
+      <div class="chart-note">Alocação indicativa — política de rácio finalizada na constituição · Reserva BTC nunca vendida · Imobiliário alocado via empréstimo garantido por BTC</div>
+      <div class="donut-ring">
+        <svg class="donut-svg" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="dg-o" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="4" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <circle cx="120" cy="120" r="96" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="26"/>
+          <circle id="btcArc" cx="120" cy="120" r="96" fill="none"
+            stroke="#F7931A" stroke-width="26" stroke-linecap="butt"
+            stroke-dasharray="0 603.2" stroke-dashoffset="0"
+            transform="rotate(-90 120 120)" filter="url(#dg-o)"/>
+          <circle id="reArc" cx="120" cy="120" r="96" fill="none"
+            stroke="#00FF88" stroke-width="26" stroke-linecap="butt"
+            stroke-dasharray="0 603.2" stroke-dashoffset="0"
+            transform="rotate(-90 120 120)"/>
+          <text x="120" y="106" text-anchor="middle" fill="#F7931A" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="800">60%</text>
+          <text x="120" y="122" text-anchor="middle" fill="#3D6080" font-family="Space Mono,monospace" font-size="8">₿ RESERVA BTC</text>
+          <text x="120" y="144" text-anchor="middle" fill="#00FF88" font-family="Space Grotesk,sans-serif" font-size="22" font-weight="700">40%</text>
+          <text x="120" y="159" text-anchor="middle" fill="#3D6080" font-family="Space Mono,monospace" font-size="8">ALOCAÇÃO IMOB.</text>
+        </svg>
+        <div class="donut-legend">
+          <div class="donut-leg-item"><div class="donut-leg-swatch" style="background:#F7931A;box-shadow:0 0 6px rgba(247,147,26,.5);"></div>Reserva Bitcoin — nunca vendida, em custódia multisig regulada</div>
+          <div class="donut-leg-item"><div class="donut-leg-swatch" style="background:#00FF88;box-shadow:0 0 6px rgba(0,255,136,.4);"></div>Alocação imobiliária — alavancada ~2–3× via empréstimo garantido por BTC</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-wrap reveal reveal-delay-2">
+      <div class="chart-label">Cenários de Retorno · Compromisso de €1M · 10 anos</div>
+      <div class="chart-h">Um trade.<br>Três resultados.</div>
+      <div class="chart-note">Ilustrativo · Custo de financiamento deduzido · Não é uma previsão</div>
+      <div class="chart-c sm">
+        <canvas id="returnsChart"></canvas>
+      </div>
+      <div class="chart-insight">O cenário prudente assume BTC ×6 em 10 anos. O base assume ×10. O otimista assume ×15. A valorização do imobiliário português e um rendimento líquido de 3–5% compõem nos três. <strong>O custo de financiamento é deduzido em todos os casos.</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- PILOT -->
+<div class="stripe" id="pilot">
+  <div class="section">
+    <div class="eyebrow">04 — A Aquisição Piloto</div>
+    <h2 class="section-h">Pebble Stone Farm.<br><span class="accent">1 000 hectares.</span><br><span class="dim">11 milhões de euros.</span></h2>
+    <p class="lead">A primeira aquisição está identificada — não é hipotética. A Pebble Stone Farm é uma herdade de caça de 1 000 hectares no Alentejo. É a SPV de prova de conceito através da qual toda a estrutura é comprovada de ponta a ponta antes da abertura da angariação institucional.</p>
+
+    <div class="pilot-grid reveal">
+      <div class="pilot-stat">
+        <div class="pilot-stat-label">Localização</div>
+        <div class="pilot-stat-val">Alentejo, Portugal</div>
+        <div class="pilot-stat-sub">A principal região de caça e agricultura de Portugal</div>
+      </div>
+      <div class="pilot-stat">
+        <div class="pilot-stat-label">Preço</div>
+        <div class="pilot-stat-val">~€11M / ~$12M</div>
+        <div class="pilot-stat-sub">Off-market · escala institucional · título único</div>
+      </div>
+      <div class="pilot-stat">
+        <div class="pilot-stat-label">Área</div>
+        <div class="pilot-stat-val">1 000 hectares</div>
+        <div class="pilot-stat-sub">~2 471 acres de herdade no Alentejo</div>
+      </div>
+      <div class="pilot-stat">
+        <div class="pilot-stat-label">Fontes de receita</div>
+        <div class="pilot-stat-val">Caça · Agricultura</div>
+        <div class="pilot-stat-sub">+ Opcionalidade hoteleira futura</div>
+      </div>
+      <div class="pilot-stat">
+        <div class="pilot-stat-label">Structure</div>
+        <div class="pilot-stat-val">SPV piloto (Lda.)</div>
+        <div class="pilot-stat-sub">Prova de conceito antes da abertura da angariação institucional</div>
+      </div>
+      <div class="pilot-stat">
+        <div class="pilot-stat-label">Papel estratégico</div>
+        <div class="pilot-stat-val">Prova da estrutura completa</div>
+        <div class="pilot-stat-sub">Jurídico · custódia · governação · rendimento — de ponta a ponta</div>
+      </div>
+    </div>
+    <div class="pilot-links">
+      <a href="properties/pebble-stone/brochure.html" target="_blank" class="btn-fire" style="font-size:.82rem;padding:.6rem 1.4rem;">Ver brochura da propriedade →</a>
+      <a href="properties/pebble-stone/gallery.html" target="_blank" class="btn-ghost" style="font-size:.82rem;padding:.6rem 1.4rem;">Galeria aérea</a>
+    </div>
+  </div>
+</div>
+
+<!-- RETURNS -->
+<div class="section" id="returns">
+  <div class="eyebrow">05 — Ilustração de Retornos</div>
+  <h2 class="section-h">Três motores.<br><span class="accent">Dez anos.</span><br><span class="dim">Uma máquina de compor.</span></h2>
+  <p class="lead">Os retornos resultam da valorização do Bitcoin em reserva, da valorização do imobiliário português e do rendimento de arrendamento. Ilustrado sobre um compromisso de €1M. Não são previsões.</p>
+
+  <div class="scenarios">
+    <div class="scenario conservative reveal reveal-delay-1">
+      <div class="scenario-tag">Prudente</div>
+      <div class="scenario-num" data-count="2.8" data-prefix="~€" data-suffix="M">~€0M</div>
+      <div class="scenario-multiple">≈ 2,8× sobre €1M · 10 anos</div>
+      <div class="return-bar-wrap">
+        <div class="return-bar-label"><span>BTC ×6</span><span>RE ×1.8</span></div>
+        <div class="return-bar"><div class="return-bar-fill" style="width:30%"></div></div>
+      </div>
+    </div>
+    <div class="scenario base reveal reveal-delay-2">
+      <div class="scenario-tag">⭐ Caso Base</div>
+      <div class="scenario-num" data-count="6" data-prefix="~€" data-suffix="M">~€0M</div>
+      <div class="scenario-multiple">≈ 6× sobre €1M · 10 anos</div>
+      <div class="return-bar-wrap">
+        <div class="return-bar-label"><span>BTC ×10</span><span>RE ×2.3</span></div>
+        <div class="return-bar"><div class="return-bar-fill" style="width:63%"></div></div>
+      </div>
+    </div>
+    <div class="scenario upside reveal reveal-delay-3">
+      <div class="scenario-tag">🚀 Otimista</div>
+      <div class="scenario-num" data-count="9.5" data-prefix="~€" data-suffix="M">~€0M</div>
+      <div class="scenario-multiple">≈ 9,5× sobre €1M · 10 anos</div>
+      <div class="return-bar-wrap">
+        <div class="return-bar-label"><span>BTC ×15</span><span>RE ×2.8</span></div>
+        <div class="return-bar"><div class="return-bar-fill" style="width:100%"></div></div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:.75rem;color:var(--text3);margin-top:1.5rem;padding:1rem 1.25rem;background:var(--surface);border-radius:8px;line-height:1.65;">Apenas ilustrativo — não é uma previsão, projeção ou garantia. Cada cenário assume que o Bitcoin compõe, que o imobiliário português valoriza, que a alavancagem se mantém disponível ao custo modelado e que o ambiente regulatório se mantém praticável. Cada um pode falhar isoladamente ou em conjunto. O custo de financiamento (~2–5% ao ano) é deduzido da alavancagem de aquisição. O capital está em risco, incluindo perda total.</p>
+</div>
+
+<!-- RISK & STRESS TESTING -->
+<div class="stripe" id="risk">
+  <div class="section">
+    <div class="eyebrow">06 — Risco &amp; Testes de Esforço</div>
+    <h2 class="section-h">Cada pilar comporta risco real.<br><span class="accent">Tudo é testado sob esforço.</span></h2>
+    <p class="lead">Um quadro quantitativo completo de testes de esforço é construído e divulgado aos investidores antes de qualquer capital ser mobilizado. Cada categoria recebe uma simulação de Monte Carlo e um cenário determinístico de pior caso; o resultado é uma adenda de risco concisa entregue a cada investidor antes do compromisso — uma precondição do capital institucional, não uma opção.</p>
+    <div class="struct-grid reveal" style="grid-template-columns:1fr 1fr;">
+      <div class="struct-card c4"><div class="struct-tag">Mercado</div><h4>Quedas, modeladas</h4><p>Quedas do Bitcoin a −50% / −70% / −85% modeladas contra o LTV do colateral; stress combinado (BTC −70% + imobiliário português estagnado três anos + EUR/USD −15%); análise de cascata e de trajetória de recuperação.</p></div>
+      <div class="struct-card c1"><div class="struct-tag">Operacional</div><h4>Custódia &amp; contrapartes</h4><p>Violação de custódia, comprometimento de chaves multisig, falha da contraparte de crédito, erro de oráculo ou avaliação, exploit de smart contract na camada de transparência. Cada um com resposta definida, cobertura de seguro quando disponível e protocolo de recuperação.</p></div>
+      <div class="struct-card c2"><div class="struct-tag">Regulatório</div><h4>As regras podem mudar</h4><p>Alterações às regras luxemburguesas ou portuguesas, requalificação como valores mobiliários, de-risking bancário dos canais em euros. Mitigações: estruturação prudente, mecanismos de recurso e uma liquidação ordenada que permite aos investidores sair de forma organizada.</p></div>
+      <div class="struct-card c3"><div class="struct-tag">Liquidez &amp; Contraparte</div><h4>Concentração gerida</h4><p>Concentração de credores diversificada entre contrapartes reguladas; pressão de resgate gerida pelo lock-up e por janelas de resgate limitadas; liquidez ao nível dos ativos gerida por SPV.</p></div>
+    </div>
+    <div class="stress-card reveal" style="margin-top:2.5rem;">
+      <div class="chart-label" style="margin-bottom:1.2rem;">Interativo — Modelo LTV · Caso base €50M · Parâmetros indicativos</div>
+      <div class="stress-slider-label">
+        <span>Preço do Bitcoin (EUR)</span>
+        <span id="btcPriceDisplay">€85,714</span>
+      </div>
+      <input type="range" id="btcSlider" min="5" max="100" value="100" step="1" class="btc-slider">
+      <div class="stress-range-labels">
+        <span>−95%</span>
+        <span id="changeDisplay" style="color:var(--green)">Preço atual (0%)</span>
+        <span>0%</span>
+      </div>
+      <div class="stress-metrics">
+        <div class="stress-metric">
+          <div class="stress-metric-label">Valor da reserva</div>
+          <div class="stress-metric-val" id="reserveVal">€30.0M</div>
+          <div class="stress-metric-sub">350 BTC × preço</div>
+        </div>
+        <div class="stress-metric">
+          <div class="stress-metric-label">Empréstimo em dívida</div>
+          <div class="stress-metric-val">€12.0M</div>
+          <div class="stress-metric-sub">Fixo até ser reembolsado</div>
+        </div>
+        <div class="stress-metric">
+          <div class="stress-metric-label">Rácio LTV</div>
+          <div class="stress-metric-val" id="ltvVal">40.0%</div>
+          <div class="stress-metric-sub">Empréstimo ÷ Reserva</div>
+        </div>
+        <div class="stress-metric">
+          <div class="stress-metric-label">Estado da estrutura</div>
+          <div class="stress-metric-val" id="statusVal" style="font-size:1rem;"><span class="stress-status" style="background:rgba(0,255,136,.12);color:#00FF88;">● SEGURO</span></div>
+          <div class="stress-metric-sub" id="statusSub">Margem até à redução de risco</div>
+        </div>
+      </div>
+      <div class="stress-gauge-wrap">
+        <div style="display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:.62rem;color:var(--text3);margin-bottom:.4rem;">
+          <span>LTV 0%</span>
+          <span style="color:#00FF88;">SEGURO &lt;65%</span>
+          <span style="color:#FFB84D;">VIGILÂNCIA 65–85%</span>
+          <span style="color:#FF4444;">MARGIN CALL &gt;85%</span>
+          <span>100%+</span>
+        </div>
+        <div class="stress-gauge-bar">
+          <div class="stress-gauge-fill" id="gaugeFill"></div>
+          <div class="stress-trigger-line" style="left:65%" data-label="65%"></div>
+          <div class="stress-trigger-line" style="left:85%" data-label="85%"></div>
+        </div>
+      </div>
+      <div class="stress-waterfall" id="waterfallMsg">
+        <strong>Estado: ZONA SEGURA.</strong> A estrutura opera dentro dos parâmetros de conceção. Nenhuma ação de redução de risco necessária.
+      </div>
+      <p class="small-note" style="font-size:.7rem;color:var(--text3);margin-top:1rem;">Modelo ilustrativo. Os níveis de gatilho e as respostas são indicativos; a política de LTV definitiva e o protocolo de redução de risco são documentados com as contrapartes de crédito antes de o capital ser mobilizado.</p>
+    </div>
+    <div class="hi-box reveal" style="margin-top:2rem;">
+      <h4>LTV prudente, monitorizado em contínuo.</h4>
+      <p>Um LTV prudente é mantido em permanência para preservar uma margem contra quedas; a saúde do colateral é monitorizada em contínuo, com ações de redução de risco definidas — o imobiliário é desalavancado primeiro; a reserva é o último recurso. O quadro completo é divulgado antes de qualquer capital ser mobilizado.</p>
+    </div>
+  </div>
+</div>
+
+<!-- RAISE -->
+<div class="stripe" id="raise">
+  <div class="section">
+    <div class="eyebrow">07 — Angariação de Capital</div>
+    <h2 class="section-h">Três patamares.<br><span class="accent">Um único flywheel.</span></h2>
+    <p class="lead">€25M no mínimo — abaixo disso, os custos fixos excedem o alfa estrutural. A estrutura compõe: cada aquisição aprofunda a carteira, faz crescer a reserva Bitcoin e conquista melhor acesso a negócios e melhores condições de financiamento para a seguinte.</p>
+
+    <div class="tiers">
+      <div class="tier reveal reveal-delay-1">
+        <div class="tier-label">Mínimo — Viabilidade institucional</div>
+        <div class="tier-amount">€25M</div>
+        <div class="tier-row"><span class="tier-key">Reserva BTC (~60%)</span><div><div class="tier-val">€15M</div><div class="tier-sub">~175 BTC</div></div></div>
+        <div class="tier-row"><span class="tier-key">Alocação imob. (~40%)</span><div><div class="tier-val">€10M</div><div class="tier-sub">€20–30M alavancado</div></div></div>
+        <div class="tier-row"><span class="tier-key">Carteira a 10 anos</span><div class="tier-val">€120–160M</div></div>
+      </div>
+      <div class="tier hot reveal reveal-delay-2">
+        <div class="tier-label">⭐ Objetivo caso base</div>
+        <div class="tier-amount">€50M</div>
+        <div class="tier-row"><span class="tier-key">Reserva BTC (~60%)</span><div><div class="tier-val">€30M</div><div class="tier-sub">~350 BTC</div></div></div>
+        <div class="tier-row"><span class="tier-key">Alocação imob. (~40%)</span><div><div class="tier-val">€20M</div><div class="tier-sub">€50–70M alavancado</div></div></div>
+        <div class="tier-row"><span class="tier-key">Carteira a 10 anos</span><div class="tier-val">€280–380M</div></div>
+      </div>
+      <div class="tier reveal reveal-delay-3">
+        <div class="tier-label">Visão — Teto máximo</div>
+        <div class="tier-amount">€100M</div>
+        <div class="tier-row"><span class="tier-key">Reserva BTC (~60%)</span><div><div class="tier-val">€60M</div><div class="tier-sub">~700 BTC</div></div></div>
+        <div class="tier-row"><span class="tier-key">Alocação imob. (~40%)</span><div><div class="tier-val">€40M</div><div class="tier-sub">€100–140M alavancado</div></div></div>
+        <div class="tier-row"><span class="tier-key">Carteira a 10 anos</span><div class="tier-val">€600–850M</div></div>
+      </div>
+    </div>
+
+    <div class="portfolio-wrap reveal">
+      <div class="chart-label">Valor da Carteira em Escala — Projeção a 10 anos</div>
+      <div class="chart-h">A escala não é linear.<br><span style="color:var(--btc)">É exponencial.</span></div>
+      <div class="chart-note">Valor ilustrativo da carteira (€M) por patamar de angariação · Reserva BTC a compor + valorização imobiliária alavancada + reinvestimento das rendas · Não é uma previsão</div>
+      <div class="chart-c">
+        <canvas id="portfolioChart"></canvas>
+      </div>
+      <div class="chart-insight"><strong>Uma angariação 4× maior produz uma carteira a 10 anos ~5× maior.</strong> Cada euro adicional angariado compõe via reserva Bitcoin, desbloqueia negócios maiores e mais bem financiados, e conquista melhores condições de alavancagem à escala institucional. É o flywheel em números.</div>
+    </div>
+
+    <h3 style="font-size:1.1rem;font-weight:700;margin:3rem 0 1rem;">Com quem estamos a falar.</h3>
+    <div class="struct-grid">
+      <div class="struct-card c1">
+        <div class="struct-tag">Family Offices Bitcoin-nativos</div>
+        <h4>Tickets €1M–€5M</h4>
+        <p>LU · IL · PT · EAU. Querem exposição a ativos reais sem vender o stack. Já pensam em termos de BTC. Este é o instrumento deles.</p>
+      </div>
+      <div class="struct-card c2">
+        <div class="struct-tag">Tesourarias Institucionais &amp; de Protocolos</div>
+        <h4>Tickets €500K–€2M</h4>
+        <p>Procuram exposição a ativos reais com reporte on-chain transparente. A preferencial convertível é uma estrutura familiar.</p>
+      </div>
+      <div class="struct-card c3">
+        <div class="struct-tag">Particulares Qualificados Cripto-nativos</div>
+        <h4>Tickets €50K–€100K</h4>
+        <p>Apenas profissionais/bem informados. Imobiliário português fracionado com rendimento em euros e uma reserva BTC que podem acompanhar.</p>
+      </div>
+    </div>
+
+    <h3 style="font-size:1.1rem;font-weight:700;margin:3rem 0 1rem;">O caminho até €25M.</h3>
+    <div class="struct-grid reveal">
+      <div class="struct-card c1"><div class="struct-tag">Mercado primário</div><h4>Liderado do Luxemburgo</h4><p>Investidores profissionais e family offices luxemburgueses, estendidos a Israel, Portugal e EAU através das redes dos fundadores.</p></div>
+      <div class="struct-card c2"><div class="struct-tag">Canais</div><h4>Colocação licenciada</h4><p>Redes family-office e cripto-nativas dos fundadores; um agente de colocação licenciado em cada jurisdição (success fee de 1–2%); eventos seletivos de family offices e ativos digitais; um motor de conteúdos focado.</p></div>
+      <div class="struct-card c3"><div class="struct-tag">A conta</div><h4>25–50 investidores</h4><p>3–5 compromissos-âncora de €2–5M garantidos primeiro; ~150 conversas qualificadas com 20–30% de conversão; tickets médios €500K–€1M; 6–9 meses do primeiro ao último closing. Teto de €100M.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- STRUCTURE -->
+<div class="section" id="structure">
+  <div class="eyebrow">08 — A Estrutura</div>
+  <h2 class="section-h">Uma estrutura societária.<br><span class="dim">Não um esquema de tokens.</span></h2>
+  <p class="lead">Os investidores detêm ações preferenciais convertíveis de uma holding luxemburguesa. A camada on-chain é um recurso de transparência e identidade — não o título legal. O Bitcoin nunca é detido numa exchange.</p>
+  <div class="engine-svg-box reveal" style="margin:2rem 0 2.5rem;">
+    <svg viewBox="0 0 1100 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="sg-o" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <path id="stp1" d="M 190 130 L 295 130"/>
+        <path id="stp2" d="M 575 105 C 640 75 670 68 730 68"/>
+        <path id="stp3" d="M 575 155 C 640 190 670 198 730 198"/>
+        <path id="stp4" d="M 915 198 L 955 198"/>
+      </defs>
+      <!-- connectors -->
+      <line x1="190" y1="130" x2="295" y2="130" stroke="rgba(247,147,26,0.2)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <path d="M 575 105 C 640 75 670 68 730 68" fill="none" stroke="rgba(247,147,26,0.2)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <path d="M 575 155 C 640 190 670 198 730 198" fill="none" stroke="rgba(0,180,255,0.25)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <line x1="915" y1="198" x2="955" y2="198" stroke="rgba(0,255,136,0.25)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <line x1="435" y1="185" x2="435" y2="240" stroke="rgba(170,136,255,0.3)" stroke-width="1.2" stroke-dasharray="3 4"/>
+      <!-- investors -->
+      <rect x="25" y="90" width="165" height="80" rx="12" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="107" y="122" text-anchor="middle" fill="#7BA8CC" font-family="Space Grotesk,sans-serif" font-size="20" font-weight="700">€</text>
+      <text x="107" y="140" text-anchor="middle" fill="#7BA8CC" font-family="Space Mono,monospace" font-size="8.5" letter-spacing="1.2">INVESTIDORES</text>
+      <text x="107" y="156" text-anchor="middle" fill="#3D6080" font-family="Space Mono,monospace" font-size="6.6">PREFERENCIAIS CONVERTÍVEIS</text>
+      <!-- holdco -->
+      <rect x="295" y="75" width="280" height="110" rx="12" fill="rgba(247,147,26,0.07)" stroke="rgba(247,147,26,0.45)" stroke-width="1.5"/>
+      <text x="435" y="115" text-anchor="middle" fill="#F7931A" font-family="Space Grotesk,sans-serif" font-size="15" font-weight="700">BBRF-PT HOLDING S.A.</text>
+      <text x="435" y="136" text-anchor="middle" fill="rgba(247,147,26,0.75)" font-family="Space Mono,monospace" font-size="8.5" letter-spacing="1.2">SOPARFI · LUXEMBOURG</text>
+      <text x="435" y="155" text-anchor="middle" fill="#3D6080" font-family="Space Mono,monospace" font-size="7">EMITENTE · DETÉM A RESERVA</text>
+      <!-- btc reserve -->
+      <rect x="730" y="28" width="185" height="80" rx="12" fill="rgba(247,147,26,0.05)" stroke="rgba(247,147,26,0.35)" stroke-width="1.5"/>
+      <text x="822" y="60" text-anchor="middle" fill="#F7931A" font-family="Space Grotesk,sans-serif" font-size="18" font-weight="700">₿</text>
+      <text x="822" y="78" text-anchor="middle" fill="#F7931A" font-family="Space Mono,monospace" font-size="8.5" letter-spacing="1.2">RESERVA BTC</text>
+      <text x="822" y="94" text-anchor="middle" fill="rgba(247,147,26,0.5)" font-family="Space Mono,monospace" font-size="6.6">NUNCA VENDIDA · MULTISIG</text>
+      <!-- opco -->
+      <rect x="730" y="158" width="185" height="80" rx="12" fill="rgba(0,180,255,0.04)" stroke="rgba(0,180,255,0.3)" stroke-width="1.5"/>
+      <text x="822" y="190" text-anchor="middle" fill="#00B4FF" font-family="Space Grotesk,sans-serif" font-size="14" font-weight="700">🏠</text>
+      <text x="822" y="208" text-anchor="middle" fill="#00B4FF" font-family="Space Mono,monospace" font-size="8.5" letter-spacing="1.2">OPCO PORTUGUESA</text>
+      <text x="822" y="224" text-anchor="middle" fill="#3D6080" font-family="Space Mono,monospace" font-size="6.6">ORIGINA · EXECUTA · GERE</text>
+      <!-- SPVs -->
+      <rect x="955" y="130" width="120" height="38" rx="8" fill="rgba(0,255,136,0.04)" stroke="rgba(0,255,136,0.25)" stroke-width="1"/>
+      <text x="1015" y="153" text-anchor="middle" fill="#00FF88" font-family="Space Mono,monospace" font-size="8">SPV Lda. 01</text>
+      <rect x="955" y="179" width="120" height="38" rx="8" fill="rgba(0,255,136,0.04)" stroke="rgba(0,255,136,0.25)" stroke-width="1"/>
+      <text x="1015" y="202" text-anchor="middle" fill="#00FF88" font-family="Space Mono,monospace" font-size="8">SPV Lda. 02</text>
+      <rect x="955" y="228" width="120" height="38" rx="8" fill="rgba(0,255,136,0.04)" stroke="rgba(0,255,136,0.25)" stroke-width="1"/>
+      <text x="1015" y="251" text-anchor="middle" fill="rgba(0,255,136,0.55)" font-family="Space Mono,monospace" font-size="8">SPV Lda. 0n</text>
+      <!-- on-chain mirror -->
+      <rect x="255" y="240" width="360" height="40" rx="8" fill="rgba(170,136,255,0.04)" stroke="rgba(170,136,255,0.35)" stroke-width="1.2" stroke-dasharray="5 4"/>
+      <text x="435" y="264" text-anchor="middle" fill="#AA88FF" font-family="Space Mono,monospace" font-size="7.5" letter-spacing="0.8">bbrf-pt.eth · ESPELHO ON-CHAIN — PROBATÓRIO, NÃO CONSTITUTIVO</text>
+      <!-- particles -->
+      <circle r="4.5" fill="#7BA8CC" filter="url(#sg-o)"><animateMotion dur="1.4s" repeatCount="indefinite" begin="0s"><mpath href="#stp1"/></animateMotion></circle>
+      <circle r="3" fill="#7BA8CC" filter="url(#sg-o)" opacity="0.5"><animateMotion dur="1.4s" repeatCount="indefinite" begin="0.7s"><mpath href="#stp1"/></animateMotion></circle>
+      <circle r="4.5" fill="#F7931A" filter="url(#sg-o)"><animateMotion dur="1.6s" repeatCount="indefinite" begin="0.2s"><mpath href="#stp2"/></animateMotion></circle>
+      <circle r="4.5" fill="#00B4FF" filter="url(#sg-o)"><animateMotion dur="1.6s" repeatCount="indefinite" begin="0.5s"><mpath href="#stp3"/></animateMotion></circle>
+      <circle r="3.5" fill="#00FF88" filter="url(#sg-o)"><animateMotion dur="1.2s" repeatCount="indefinite" begin="0.3s"><mpath href="#stp4"/></animateMotion></circle>
+    </svg>
+  </div>
+
+
+  <div class="struct-grid reveal">
+    <div class="struct-card c1">
+      <div class="struct-tag">Emitente · Luxemburgo</div>
+      <h4>Sociedade Holding SOPARFI</h4>
+      <p>BBRF-PT Holding S.A. Emite as ações preferenciais convertíveis. Detém o capital angariado e a reserva Bitcoin. Detém as subsidiárias portuguesas. Regime europeu de isenção de participação.</p>
+    </div>
+    <div class="struct-card c2">
+      <div class="struct-tag">Ativo de reserva</div>
+      <h4>Reserva Bitcoin</h4>
+      <p>Custódia institucional regulada (ex. Sygnum ou Anchorage). Multisig desde o início. Nunca numa exchange. Garantia de financiamento prudente em dólares. Nunca vendida.</p>
+    </div>
+    <div class="struct-card c3">
+      <div class="struct-tag">Operações · Portugal</div>
+      <h4>OpCo portuguesa + SPVs</h4>
+      <p>Origina, executa e gere aquisições. Uma Lda. por ativo para isolamento limpo de responsabilidades e opcionalidade de alienação.</p>
+    </div>
+    <div class="struct-card c4">
+      <div class="struct-tag">Camada de transparência</div>
+      <h4>bbrf-pt.eth · On-Chain</h4>
+      <p>Registo de ações tokenizado, registos de governação e aquisição publicados. Probatório e de reporte — não altera os direitos legais das preferenciais.</p>
+    </div>
+    <div class="struct-card c5">
+      <div class="struct-tag">Serviços independentes</div>
+      <h4>Bancada de profissionais</h4>
+      <p>Jurídico, administração de fundos, custódia regulada, auditoria de smart contracts, avaliação independente — todos externos, vinculados por mandato. Cinco funções permanentemente independentes.</p>
+    </div>
+    <div class="struct-card c6">
+      <div class="struct-tag">Instrument</div>
+      <h4>Preferenciais Convertíveis</h4>
+      <p>Preferência de liquidação 1× não participante. Dividendo PIK cumulativo de ~8%. Converte em ordinárias num financiamento qualificado, venda ou cotação.</p>
+    </div>
+  </div>
+
+  <h3 style="font-size:1.2rem;font-weight:700;margin:3rem 0 .5rem;">Termos indicativos do instrumento.</h3>
+  <div class="terms-wrap reveal">
+    <table class="terms-table">
+      <thead><tr><th>Termo</th><th>Detalhe</th></tr></thead>
+      <tbody>
+        <tr><td>Título</td><td>Ações preferenciais convertíveis · sociedade holding luxemburguesa (SOPARFI)</td></tr>
+        <tr><td>Pref. de liquidação</td><td>1× não participante, sénior face às ordinárias</td></tr>
+        <tr><td>Dividendo preferencial</td><td>~8% ao ano, cumulativo, capitalizado (PIK) até conversão ou evento de liquidez</td></tr>
+        <tr><td>Avaliação</td><td>€100M pré-money (indicativo) — preço fixado agora, não via cap/desconto</td></tr>
+        <tr><td>Conversão</td><td>1:1 em ordinárias num financiamento qualificado, venda ou cotação; o titular recebe o maior entre o valor de conversão e a preferência de liquidação</td></tr>
+        <tr><td>Direitos dos investidores</td><td>Participação pro-rata, direitos de informação, consentimentos protetores em matérias relevantes</td></tr>
+        <tr><td>Liquidez</td><td>Lock-up de 12 meses → resgates trimestrais até ~10% do pool → transmissões secundárias a partir do ano 2 → liquidação possível a partir do ano 8</td></tr>
+        <tr><td>Elegibilidade</td><td>Apenas investidores profissionais e bem informados · colocação privada luxemburguesa</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- FEES & TAX -->
+<div class="stripe" id="fees">
+  <div class="section">
+    <div class="eyebrow">09 — Comissões &amp; Estrutura Fiscal (Indicativo)</div>
+    <h2 class="section-h">Cada custo,<br><span class="accent">em cima da mesa.</span></h2>
+    <p class="lead">Tabela completa de comissões e desenho fiscal preliminar — a validar por parecer formal da VdA ou Morais Leitão (Portugal) e Arendt &amp; Medernach ou Loyens &amp; Loeff (Luxemburgo) antes do primeiro closing. Não é aconselhamento fiscal.</p>
+    <div class="terms-wrap reveal">
+      <table class="terms-table">
+        <thead><tr><th>Comissão</th><th>Detalhe</th></tr></thead>
+        <tbody>
+          <tr><td>Comissão de gestão</td><td>1,5% dos AUM por ano</td></tr>
+          <tr><td>Comissão de assessoria</td><td>1% por aquisição (imputada à SPV no closing)</td></tr>
+          <tr><td>Carried interest</td><td>20% acima de um hurdle anual de 8%</td></tr>
+          <tr><td>Custódia Bitcoin</td><td>~0,1% dos AUM em BTC por ano</td></tr>
+          <tr><td>Jurídico / auditoria / infraestrutura</td><td>~€150 000 por ano</td></tr>
+          <tr><td>Avaliação independente</td><td>~€3 000–5 000 por aquisição</td></tr>
+          <tr><td>Custos de transação portugueses</td><td>IMT 6–8% + closing 1–2% + notário — incluídos na subscrição do negócio</td></tr>
+          <tr><td>Gestão de arrendamento</td><td>~10% da renda bruta por imóvel</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3 style="font-size:1.2rem;font-weight:700;margin:3rem 0 .5rem;">Estrutura fiscal (indicativa).</h3>
+    <div class="terms-wrap reveal">
+      <table class="terms-table">
+        <thead><tr><th>Nível</th><th>Tratamento</th></tr></thead>
+        <tbody>
+          <tr><td>Sociedade holding</td><td>SOPARFI luxemburguesa — regime de isenção de participação sobre dividendos e mais-valias elegíveis; ampla rede de convenções</td></tr>
+          <tr><td>SPVs de ativos</td><td>Lda. portuguesa por ativo — IRC de 21% sobre o rendimento líquido de arrendamento; IMT 6–8% e imposto do selo 0,8% por aquisição; IMI ~0,3–0,45% do VPT por ano</td></tr>
+          <tr><td>SPV → holding</td><td>Dividendos geralmente isentos de retenção na fonte portuguesa ao abrigo da diretiva mães-filiais da UE (participação de 10%+, 12+ meses)</td></tr>
+          <tr><td>Reserva Bitcoin</td><td>Detida diretamente pela holding em custódia regulada; tratamento luxemburguês confirmado por parecer</td></tr>
+          <tr><td>Distribuições</td><td>EUR / EURC — o Luxemburgo geralmente não retém na fonte dividendos a não residentes; cada investidor é tributado na sua jurisdição</td></tr>
+          <tr><td>Carry / comissões</td><td>Alocação de performance de 20% acima de um hurdle de 8%; comissão de gestão de 1,5%; comissões de assessoria imputadas ao nível das SPVs</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<div class="stripe">
+  <div class="section">
+    <div class="eyebrow">10 — Os Fundadores</div>
+    <h2 class="section-h">Dois fundadores.<br><span class="accent">Uma equipa reunida.</span></h2>
+    <div class="team-grid">
+      <div class="team-card t1 reveal">
+        <div class="team-role">Imobiliário · Multijurisdicional</div>
+        <h3>Eytan Benzeno</h3>
+        <p>Profissional imobiliário baseado em Lisboa. Licença de broker na Florida. Opera em Portugal, Israel, Luxemburgo e EUA. Multiativos: residencial, hotelaria, distressed, agrícola. Cofundador da Bogen.ai. Multilingue.</p>
+        <div class="brings">Traz: originação de negócios · execução de transações · acesso ao mercado português · redes de FO em LU/IL/PT/EAU</div>
+      </div>
+      <div class="team-card t2 reveal">
+        <div class="team-role">Estruturação On-Chain &amp; Operações · Bittrees</div>
+        <h3>Jonathan Hineline</h3>
+        <p>Arquiteto de governação e operações on-chain. Desenha a mecânica de reserva e alavancagem, o registo de ações tokenizado e a camada de transparência. Rede profunda de auditores de smart contracts e engenheiros de infraestrutura. Autor de orientações operacionais para organizações blockchain-nativas (bittrees.eth.limo).</p>
+        <div class="brings">Traz: mecânica de reserva · design de smart contracts · bancada de engenharia blockchain · relações com LPs cripto-nativos</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OPEN ITEMS / COMPETITIVE / ROADMAP -->
+<div class="section">
+  <div class="eyebrow">11 — Panorama Competitivo</div>
+  <h2 class="section-h">Mais ninguém<br><span class="accent">faz os cinco.</span></h2>
+  <div class="comp-wrap reveal">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th style="text-align:left;">Plataforma</th>
+          <th>Reserva BTC</th><th>Instrumento inst.</th><th>Imob. português</th><th>Tickets FO</th><th>On-chain</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>RealT</td><td class="xmark">—</td><td class="xmark">—</td><td class="xmark">—</td><td class="xmark">—</td><td class="chk">✓</td></tr>
+        <tr><td>Lofty</td><td class="xmark">—</td><td class="xmark">—</td><td class="xmark">—</td><td class="xmark">—</td><td class="chk">✓</td></tr>
+        <tr><td>Roofstock onChain</td><td class="xmark">—</td><td class="xmark">—</td><td class="xmark">—</td><td class="xmark">—</td><td class="chk">✓</td></tr>
+        <tr><td>Centrifuge / Goldfinch / Maple</td><td class="xmark">—</td><td class="xmark">—</td><td class="xmark">—</td><td class="xmark">—</td><td class="chk">✓</td></tr>
+        <tr class="us"><td><strong style="color:var(--btc)">BBRF-PT ↗</strong></td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- OPEN ITEMS & ROADMAP -->
+<div class="section">
+  <div class="eyebrow">12 — Pontos em Aberto &amp; Roteiro</div>
+  <h2 class="section-h">Em aberto antes da constituição.<br><span class="accent">Nada é bloqueante.</span></h2>
+  <p class="lead">Decisões estruturais a confirmar antes da constituição jurídica, e o roteiro dos advogados ao primeiro closing.</p>
+  <div class="open-grid reveal">
+    <div class="open-card"><div class="open-n">01</div><h4>Classes de ações &amp; conversão</h4><p>Finalizar os termos preferenciais, o cap de avaliação e os gatilhos de conversão nos documentos constitutivos.</p></div>
+    <div class="open-card"><div class="open-n">02</div><h4>Custódia &amp; contrapartes de crédito</h4><p>Selecionar 2–3 prestadores regulados; documentar a política de LTV e o protocolo de redução de risco.</p></div>
+    <div class="open-card"><div class="open-n">03</div><h4>Âmbito da camada on-chain</h4><p>Confirmar o que é espelhado on-chain e que permanece probatório, não constitutivo.</p></div>
+    <div class="open-card"><div class="open-n">04</div><h4>Seleção da assessoria</h4><p>Nomear o assessor imobiliário institucional; acordar por escrito o âmbito do mandato e a política de conflitos.</p></div>
+    <div class="open-card"><div class="open-n">05</div><h4>Política de rácio</h4><p>Alocação fixa à entrada vs um rácio BTC/imobiliário gerido; impacto na equidade para investidores posteriores.</p></div>
+  </div>
+  <div class="roadmap reveal">
+    <div class="road-step"><div class="road-num">1</div><h4>Jurídico &amp; entidade</h4><p>Contratar advogados luxemburgueses e portugueses; constituir a holding SOPARFI; confirmar a sociedade operacional e o modelo de SPV; finalizar os termos preferenciais.</p></div>
+    <div class="road-step"><div class="road-num">2</div><h4>Custódia &amp; alavancagem</h4><p>Estabelecer custódia multisig regulada; testar a linha de financiamento em pequena escala antes de comprometer a reserva.</p></div>
+    <div class="road-step"><div class="road-num">3</div><h4>Piloto</h4><p>Adquirir a Pebble Stone Farm numa SPV; comprovar toda a estrutura de ponta a ponta; emitir as primeiras preferenciais aos investidores fundadores.</p></div>
+    <div class="road-step"><div class="road-num">4</div><h4>Distribuição</h4><p>Nomear um agente de colocação licenciado para o Luxemburgo, Israel e EAU; garantir compromissos-âncora; abrir a angariação.</p></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="section">
+  <div class="cta-section reveal">
+    <h2 class="cta-h">O Bitcoin nunca<br><span>é vendido.</span></h2>
+    <p class="cta-p">Estamos a falar com um pequeno número de investidores-âncora e parceiros de constituição. Se a tese ressoa, a conversa começa agora.</p>
+    <div class="cta-buttons">
+      <a href="mailto:eytan@benzeno.com?subject=BBRF-PT%20%E2%80%94%20Pedido%20de%20investidor&body=Venho%20manifestar%20interesse%20na%20BBRF-PT%20e%20pedir%20o%20memorando%20completo%20do%20investidor." class="btn-fire">Pedir o memorando completo →</a>
+      <a href="mailto:eytan@benzeno.com?subject=BBRF-PT%20%E2%80%94%20Chamada%20introdut%C3%B3ria" class="btn-ghost">Agendar uma chamada</a>
+      <button onclick="openPdfModal()" class="btn-ghost" style="border-color:rgba(247,147,26,0.3);color:var(--btc);">⬇ Descarregar PDF</button>
+    </div>
+    <div class="contacts">
+      <div class="contact-p">
+        <h4>Eytan Benzeno</h4>
+        <p>Profissional Imobiliário · Lisboa</p>
+        <p><a href="mailto:eytan@benzeno.com">eytan@benzeno.com</a></p>
+      </div>
+      <div class="contact-p">
+        <h4>Jonathan Hineline</h4>
+        <p>Estruturação On-chain · Bittrees</p>
+        <p><a href="mailto:jhineline@bittrees.io">jhineline@bittrees.io</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FLOATING PDF DOWNLOAD BUTTON -->
+<button id="pdfFloatBtn" onclick="openPdfModal()" style="
+  position:fixed;bottom:32px;right:32px;z-index:999;
+  background:var(--btc);color:#000;
+  padding:14px 26px;border-radius:50px;border:none;cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:.88rem;
+  display:flex;align-items:center;gap:.5rem;
+  box-shadow:0 6px 28px rgba(247,147,26,0.45);
+  transition:all .25s;letter-spacing:.02em;
+">
+  <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+    <path d="M10 13L5 8L6.41 6.59L9 9.17V2H11V9.17L13.59 6.59L15 8L10 13Z" fill="currentColor"/>
+    <path d="M18 16V18H2V16H18Z" fill="currentColor"/>
+  </svg>
+  Descarregar PDF
+</button>
+
+<!-- PDF PREVIEW MODAL -->
+<div id="pdf-modal" style="
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0.88);backdrop-filter:blur(8px);
+  flex-direction:column;align-items:center;justify-content:center;padding:1.25rem;
+  opacity:0;transition:opacity .25s;
+">
+  <div style="
+    background:#fff;border-radius:16px;width:100%;max-width:1050px;
+    height:90vh;display:flex;flex-direction:column;overflow:hidden;
+    box-shadow:0 24px 80px rgba(0,0,0,0.6);
+    transform:scale(.92);transition:transform .25s;
+  " id="pdf-modal-inner">
+    <!-- Header -->
+    <div style="
+      display:flex;align-items:center;justify-content:space-between;
+      padding:1rem 1.5rem;border-bottom:1px solid #e5e9ec;
+      background:#fff;flex-shrink:0;
+    ">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;color:#0d1620;">
+        BBRF-PT — Memorando do Investidor
+      </div>
+      <div style="display:flex;align-items:center;gap:.75rem;">
+        <a id="pdf-download-link" href="BBRF-PT-Memorando-Investidor.pdf?v=aligned2" download
+          style="display:inline-flex;align-items:center;gap:.5rem;background:#B85F00;color:#fff;
+          text-decoration:none;padding:.55rem 1.1rem;border-radius:8px;
+          font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.83rem;
+          box-shadow:0 4px 14px rgba(184,95,0,.35);transition:all .2s;"
+          onmouseover="this.style.background='#9E5200'" onmouseout="this.style.background='#B85F00'">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="none">
+            <path d="M10 13L5 8L6.41 6.59L9 9.17V2H11V9.17L13.59 6.59L15 8L10 13Z" fill="currentColor"/>
+            <path d="M18 16V18H2V16H18Z" fill="currentColor"/>
+          </svg>
+          Descarregar
+        </a>
+        <button onclick="closePdfModal()" style="
+          background:#f0f4f8;border:none;color:#555;cursor:pointer;
+          width:34px;height:34px;border-radius:8px;font-size:1rem;
+          display:flex;align-items:center;justify-content:center;transition:background .2s;
+        " onmouseover="this.style.background='#e5e9ec'" onmouseout="this.style.background='#f0f4f8'">✕</button>
+      </div>
+    </div>
+    <!-- PDF iframe -->
+    <iframe id="pdf-iframe" src="" style="flex:1;width:100%;border:none;background:#f0f2f5;" title="Pré-visualização do Memorando do Investidor BBRF-PT"></iframe>
+  </div>
+</div>
+
+<footer>
+  <p><strong style="color:var(--text2);">BBRF-PT</strong> · Fundo Imobiliário Garantido por Bitcoin (Portugal) · Uma iniciativa Bittrees · bbrf-pt.eth · Junho 2026</p>
+  <p>Confidencial. Não é uma oferta de valores mobiliários, um prospeto ou aconselhamento de investimento, jurídico ou fiscal. Qualquer oferta será feita apenas a investidores profissionais e bem informados elegíveis, nos termos de documentação definitiva. Os cenários de retorno são ilustrativos e não são previsões; o capital está em risco, incluindo perda total.</p>
+</footer>
+
+<script>
+// ── THEME (LIGHT/DARK) ──
+let _charts = {};
+function chartTheme(){
+  const l = document.documentElement.getAttribute('data-theme')==='light';
+  return l
+    ? {green:'#00875A',btc:'#B85F00',tick:'#6b7280',grid:'rgba(10,30,50,0.08)',legend:'#374151',slate:'#64748b',ttBg:'#ffffff',ttBody:'#374151',ttTitle:'#111827',warn:'#B45309',orange2:'#C2410C',red:'#DC2626',blue:'#0077CC'}
+    : {green:'#00FF88',btc:'#F7931A',tick:'#3D6080',grid:'rgba(255,255,255,0.04)',legend:'#7BA8CC',slate:'#7BA8CC',ttBg:'#061220',ttBody:'#7BA8CC',ttTitle:'#F0F6FF',warn:'#FFB84D',orange2:'#FF8844',red:'#FF4444',blue:'#00B4FF'};
+}
+function updateThemeButton(){
+  const b = document.getElementById('themeToggle');
+  if(b) b.textContent = document.documentElement.getAttribute('data-theme')==='light' ? '🌙' : '☀️';
+}
+function toggleTheme(){
+  const next = document.documentElement.getAttribute('data-theme')==='light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  try{localStorage.setItem('bbrf-theme', next);}catch(e){}
+  updateThemeButton();
+  if(window._rebuildCharts) window._rebuildCharts();
+  if(window._stressUpdate) window._stressUpdate();
+}
+updateThemeButton();
+
+// ── AUDIENCE GATE ──
+function pickAudience(a){
+  try{localStorage.setItem('bbrf-audience', a);}catch(e){}
+  if(a==='crypto') document.getElementById('aud-gate').style.display='none';
+}
+function showAudienceGate(force){
+  let seen=null; try{seen=localStorage.getItem('bbrf-audience');}catch(e){}
+  if(force || !seen) document.getElementById('aud-gate').style.display='flex';
+}
+
+// ── CHART.JS GLOBAL DEFAULTS ──
+if(typeof Chart !== 'undefined'){
+  Chart.defaults.color = '#3D6080';
+  Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+  Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+}
+
+
+// ── DOLLAR DECAY DIVIDEND CHART ──
+function buildDollarChart(){
+  const el = document.getElementById('dollarChart');
+  if(!el) return;
+  if(_charts.dollar) _charts.dollar.destroy();
+  const T = chartTheme();
+  const labels = ['Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'];
+  const nominal = [12,12,12,12,12,12,12,12,12,12,12];
+  const real = labels.map((_,i)=>+(12*Math.pow(0.93,i)).toFixed(2));
+  _charts.dollar = new Chart(el,{
+    type:'line',
+    data:{labels,datasets:[
+      {label:'Empréstimo nominal (o que deve)',data:nominal,borderColor:'rgba(255,80,80,0.65)',borderWidth:2,borderDash:[6,4],
+       fill:{target:1, above:'rgba(0,255,136,0.1)'},tension:0,pointRadius:0,pointHoverRadius:4,backgroundColor:'transparent'},
+      {label:'Valor real do empréstimo (desvalorização do dólar −7%/ano)',data:real,borderColor:T.green,borderWidth:2.5,fill:true,
+       backgroundColor:(ctx)=>{const g=ctx.chart.ctx.createLinearGradient(0,0,0,ctx.chart.height);g.addColorStop(0,'rgba(0,255,136,0.12)');g.addColorStop(1,'rgba(0,255,136,0.01)');return g;},
+       tension:0.4,pointBackgroundColor:T.green,pointRadius:3,pointHoverRadius:6}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top',align:'start',labels:{color:T.legend,font:{size:10},usePointStyle:true,pointStyleWidth:18,padding:16}},
+        tooltip:{backgroundColor:T.ttBg,borderColor:'rgba(0,255,136,0.2)',borderWidth:1,titleColor:T.green,bodyColor:T.ttBody,padding:12,
+          callbacks:{label:(c)=>{const saving=(nominal[c.dataIndex]-real[c.dataIndex]).toFixed(2);
+            if(c.datasetIndex===1) return ` Valor real: €${c.parsed.y}M  ·  Erosão: €${saving}M`;
+            return ` Nominal: €${c.parsed.y}M`;}}}},
+      scales:{x:{grid:{color:T.grid},ticks:{color:T.tick,font:{size:10}}},
+              y:{grid:{color:T.grid},min:4,max:13,ticks:{color:T.tick,font:{size:10},callback:(v)=>'€'+v+'M'}}},
+      animation:{duration:2000,easing:'easeInOutQuart'}}
+  });
+}
+buildDollarChart();
+
+// ── SPREAD CHART ──
+function buildSpreadChart(){
+  const el = document.getElementById('spreadChart');
+  if(!el) return;
+  if(_charts.spread) _charts.spread.destroy();
+  const T = chartTheme();
+  const labels = ['Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'];
+  _charts.spread = new Chart(el,{
+    type:'line',
+    data:{
+      labels,
+      datasets:[
+        {
+          label:'BTC Caso Base (CAGR 50%)',
+          data:[1,1.50,2.25,3.38,5.06,7.59,11.39,17.09,25.63,38.44,57.67],
+          borderColor:T.btc,
+          backgroundColor:(ctx)=>{
+            const g=ctx.chart.ctx.createLinearGradient(0,0,0,ctx.chart.height);
+            g.addColorStop(0,'rgba(247,147,26,0.22)');
+            g.addColorStop(1,'rgba(247,147,26,0.01)');
+            return g;
+          },
+          fill:true,tension:0.4,borderWidth:2.5,
+          pointBackgroundColor:T.btc,pointRadius:3,pointHoverRadius:7,
+        },{
+          label:'BTC Prudente (CAGR 30%)',
+          data:[1,1.30,1.69,2.20,2.86,3.71,4.83,6.27,8.16,10.60,13.79],
+          borderColor:T.warn,
+          backgroundColor:'transparent',
+          fill:false,tension:0.4,borderWidth:1.5,borderDash:[6,4],
+          pointBackgroundColor:T.warn,pointRadius:2.5,pointHoverRadius:5,
+        },{
+          label:'Custo de financiamento (~3,5%)',
+          data:[1,1.035,1.071,1.109,1.148,1.188,1.229,1.272,1.317,1.363,1.411],
+          borderColor:'rgba(255,80,80,0.65)',
+          fill:false,tension:0,borderWidth:1.5,borderDash:[5,5],
+          pointRadius:0,pointHoverRadius:4,
+        }
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{
+          position:'top',align:'start',
+          labels:{color:T.legend,font:{size:10},usePointStyle:true,pointStyleWidth:18,padding:18}
+        },
+        tooltip:{
+          backgroundColor:T.ttBg,borderColor:'rgba(247,147,26,0.25)',borderWidth:1,
+          titleColor:T.btc,bodyColor:T.ttBody,padding:12,
+          callbacks:{label:(c)=>` ${c.dataset.label}: ${c.parsed.y.toFixed(2)}×`}
+        }
+      },
+      scales:{
+        x:{grid:{color:T.grid},ticks:{color:T.tick,font:{size:10}}},
+        y:{
+          grid:{color:T.grid},
+          ticks:{color:T.tick,font:{size:10},callback:(v)=>v+'×'}
+        }
+      },
+      animation:{duration:2200,easing:'easeInOutQuart'}
+    }
+  });
+}
+buildSpreadChart();
+
+// ── RETURNS CHART ──
+function buildReturnsChart(){
+  const el = document.getElementById('returnsChart');
+  if(!el) return;
+  if(_charts.returns) _charts.returns.destroy();
+  const T = chartTheme();
+  _charts.returns = new Chart(el,{
+    type:'bar',
+    data:{
+      labels:['Prudente','Caso Base ⭐','Otimista 🚀'],
+      datasets:[{
+        label:'Valor de €1M após 10 anos',
+        data:[2.8,6.0,9.5],
+        backgroundColor:['rgba(123,168,204,0.32)','rgba(247,147,26,0.55)','rgba(0,255,136,0.42)'],
+        borderColor:[T.slate,T.btc,T.green],
+        borderWidth:[1.5,2.5,2],
+        borderRadius:8,
+        borderSkipped:false,
+      }]
+    },
+    options:{
+      indexAxis:'y',
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:T.ttBg,borderColor:'rgba(247,147,26,0.2)',borderWidth:1,
+          titleColor:T.ttTitle,bodyColor:T.ttBody,
+          callbacks:{label:(c)=>` €${c.parsed.x}M  ·  ${c.parsed.x}× sobre €1M`}
+        }
+      },
+      scales:{
+        x:{
+          grid:{color:T.grid},
+          ticks:{color:T.tick,font:{size:10},callback:(v)=>'€'+v+'M'},
+          max:11,
+        },
+        y:{
+          grid:{display:false},
+          ticks:{color:T.legend,font:{size:13,weight:'700'}}
+        }
+      },
+      animation:{duration:1400,easing:'easeOutQuart',delay:(c)=>c.dataIndex*160}
+    }
+  });
+}
+buildReturnsChart();
+
+// ── PORTFOLIO CHART ──
+function buildPortfolioChart(){
+  const el = document.getElementById('portfolioChart');
+  if(!el) return;
+  if(_charts.portfolio) _charts.portfolio.destroy();
+  const T = chartTheme();
+  const labels = ['Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'];
+  const makeGrad = (ctx,r,g,b)=>{
+    const gr = ctx.chart.ctx.createLinearGradient(0,0,0,ctx.chart.height);
+    gr.addColorStop(0,`rgba(${r},${g},${b},0.18)`);
+    gr.addColorStop(1,`rgba(${r},${g},${b},0.01)`);
+    return gr;
+  };
+  _charts.portfolio = new Chart(el,{
+    type:'line',
+    data:{
+      labels,
+      datasets:[
+        {
+          label:'Angariação €100M',
+          data:[100,122,155,200,262,336,415,492,560,632,715],
+          borderColor:T.btc,
+          backgroundColor:(ctx)=>makeGrad(ctx,247,147,26),
+          fill:true,tension:0.4,borderWidth:2.5,
+          pointBackgroundColor:T.btc,pointRadius:3,pointHoverRadius:7,
+        },{
+          label:'Angariação €50M',
+          data:[50,60,77,100,132,170,208,246,280,316,356],
+          borderColor:T.blue,
+          backgroundColor:(ctx)=>makeGrad(ctx,0,180,255),
+          fill:true,tension:0.4,borderWidth:2,
+          pointBackgroundColor:T.blue,pointRadius:2.5,pointHoverRadius:5,
+        },{
+          label:'Angariação €25M',
+          data:[25,29,37,48,62,78,95,110,124,138,153],
+          borderColor:T.slate,
+          backgroundColor:(ctx)=>makeGrad(ctx,123,168,204),
+          fill:true,tension:0.4,borderWidth:1.5,
+          pointBackgroundColor:T.slate,pointRadius:2.5,pointHoverRadius:5,
+        }
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{
+          position:'top',align:'end',
+          labels:{color:T.legend,font:{size:10},usePointStyle:true,padding:16}
+        },
+        tooltip:{
+          backgroundColor:T.ttBg,borderColor:'rgba(247,147,26,0.2)',borderWidth:1,
+          titleColor:T.btc,bodyColor:T.ttBody,
+          callbacks:{label:(c)=>` ${c.dataset.label}: €${c.parsed.y}M`}
+        }
+      },
+      scales:{
+        x:{grid:{color:T.grid},ticks:{color:T.tick,font:{size:10}}},
+        y:{
+          grid:{color:T.grid},
+          ticks:{color:T.tick,font:{size:10},callback:(v)=>'€'+v+'M'}
+        }
+      },
+      animation:{duration:2200,easing:'easeInOutQuart'}
+    }
+  });
+}
+buildPortfolioChart();
+window._rebuildCharts = function(){buildDollarChart();buildSpreadChart();buildReturnsChart();buildPortfolioChart();};
+
+// ── DONUT ANIMATION (SVG stroke-dasharray) ──
+(function(){
+  const circ = 603.2;
+  const btcDash = +(circ*0.6).toFixed(1); // 361.9
+  const reDash  = +(circ*0.4).toFixed(1); // 241.3
+  const btcEl = document.getElementById('btcArc');
+  const reEl  = document.getElementById('reArc');
+  if(!btcEl || !reEl) return;
+
+  const donutObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      btcEl.style.transition = 'stroke-dasharray 1.4s cubic-bezier(0.25,0,0,1)';
+      btcEl.setAttribute('stroke-dasharray',`${btcDash} ${(circ-btcDash).toFixed(1)}`);
+      setTimeout(()=>{
+        reEl.setAttribute('stroke-dashoffset', `-${btcDash}`);
+        reEl.style.transition = 'stroke-dasharray 1.1s cubic-bezier(0.25,0,0,1)';
+        reEl.setAttribute('stroke-dasharray',`${reDash} ${(circ-reDash).toFixed(1)}`);
+      },200);
+      donutObs.unobserve(e.target);
+    });
+  },{threshold:0.4});
+  const donutWrap = btcEl.closest('.donut-ring');
+  if(donutWrap) donutObs.observe(donutWrap);
+})();
+
+// ── PDF MODAL ──
+const _pdfModal = document.getElementById('pdf-modal');
+const _pdfInner = document.getElementById('pdf-modal-inner');
+const _pdfIframe = document.getElementById('pdf-iframe');
+
+function openPdfModal(){
+  // Load iframe lazily
+  if(!_pdfIframe.dataset.loaded){
+    _pdfIframe.src = 'BBRF-PT-Memorando-Investidor.pdf?v=aligned2';
+    _pdfIframe.dataset.loaded = '1';
+  }
+  _pdfModal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  // Animate in
+  requestAnimationFrame(() => {
+    _pdfModal.style.opacity = '1';
+    _pdfInner.style.transform = 'scale(1)';
+  });
+}
+function closePdfModal(){
+  _pdfModal.style.opacity = '0';
+  _pdfInner.style.transform = 'scale(.92)';
+  setTimeout(() => {
+    _pdfModal.style.display = 'none';
+    document.body.style.overflow = '';
+  }, 250);
+}
+_pdfModal.addEventListener('click', function(e){ if(e.target === this) closePdfModal(); });
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closePdfModal(); });
+
+// Floating button hover
+const _pdfBtn = document.getElementById('pdfFloatBtn');
+if(_pdfBtn){
+  _pdfBtn.addEventListener('mouseover', () => {
+    _pdfBtn.style.transform = 'translateY(-3px)';
+    _pdfBtn.style.boxShadow = '0 10px 36px rgba(247,147,26,0.55)';
+  });
+  _pdfBtn.addEventListener('mouseout', () => {
+    _pdfBtn.style.transform = 'translateY(0)';
+    _pdfBtn.style.boxShadow = '0 6px 28px rgba(247,147,26,0.45)';
+  });
+}
+
+
+// ── STRESS TEST SLIDER ──
+(function(){
+  const slider   = document.getElementById('btcSlider');
+  const priceEl  = document.getElementById('btcPriceDisplay');
+  const changeEl = document.getElementById('changeDisplay');
+  const resEl    = document.getElementById('reserveVal');
+  const ltvEl    = document.getElementById('ltvVal');
+  const statEl   = document.getElementById('statusVal');
+  const subEl    = document.getElementById('statusSub');
+  const gaugeEl  = document.getElementById('gaugeFill');
+  const wfEl     = document.getElementById('waterfallMsg');
+  if(!slider) return;
+
+  const BASE_BTC_PRICE = 85714;
+  const BTC_AMOUNT     = 350;
+  const LOAN_OUTSTANDING = 12;
+
+  function fmt(n){ return '€'+n.toLocaleString('pt-PT',{maximumFractionDigits:0}); }
+
+  function update(){
+    const T = chartTheme();
+    const pct = parseInt(slider.value);
+    const price = Math.round(BASE_BTC_PRICE * pct / 100);
+    const change = pct - 100;
+    const reserveM = +(BTC_AMOUNT * price / 1e6).toFixed(1);
+    const ltv = +(LOAN_OUTSTANDING / reserveM * 100).toFixed(1);
+
+    priceEl.textContent = fmt(price);
+    changeEl.textContent = change === 0 ? 'Preço atual (0%)' : change + '%';
+    changeEl.style.color = change < -50 ? T.red : change < -25 ? T.warn : T.green;
+    resEl.textContent  = '€' + reserveM + 'M';
+    ltvEl.textContent  = ltv + '%';
+
+    let statusHTML, subText, wfClass, wfHTML;
+    gaugeEl.style.width = Math.min(ltv, 100) + '%';
+
+    if(ltv < 65){
+      gaugeEl.style.background = T.green;
+      ltvEl.style.color = T.green;
+      statusHTML = '<span class="stress-status" style="background:rgba(0,255,136,.12);color:'+T.green+';">● SEGURO</span>';
+      subText = Math.round(65 - ltv) + ' pp de margem até ao primeiro gatilho';
+      wfClass = '';
+      wfHTML = "<strong>Estado: ZONA SEGURA.</strong> A estrutura opera dentro dos parâmetros de conceção. Nenhuma ação de redução de risco necessária. O Bitcoin compõe intocado.";
+    } else if(ltv < 75){
+      gaugeEl.style.background = T.warn;
+      ltvEl.style.color = T.warn;
+      statusHTML = '<span class="stress-status" style="background:rgba(255,184,77,.12);color:'+T.warn+';">⚠ VIGILÂNCIA</span>';
+      subText = 'Primeiro nível de redução de risco — sob vigilância';
+      wfClass = 'warn';
+      wfHTML = "<strong>Redução de risco ativa (LTV 65–75%).</strong> A exposição ao empréstimo é reduzida via venda parcial de imobiliário ou entrada adicional de capital. <strong>Nenhum Bitcoin é vendido.</strong> A reserva é protegida desalavancando primeiro a posição imobiliária mais líquida.";
+    } else if(ltv < 85){
+      gaugeEl.style.background = T.orange2;
+      ltvEl.style.color = T.orange2;
+      statusHTML = '<span class="stress-status" style="background:rgba(255,136,68,.12);color:'+T.orange2+';">⚠ ELEVADO</span>';
+      subText = 'Segundo nível — redução mais profunda';
+      wfClass = 'warn';
+      wfHTML = "<strong>Redução de risco reforçada (LTV 75–85%).</strong> O empréstimo é reduzido ainda mais; um ativo SPV pode ser liquidado para desalavancar significativamente a estrutura. <strong>O Bitcoin continua a não ser vendido.</strong> A prioridade é reembolsar o empréstimo com o produto imobiliário, não com a reserva.";
+    } else {
+      gaugeEl.style.background = T.red;
+      ltvEl.style.color = T.red;
+      statusHTML = '<span class="stress-status" style="background:rgba(255,68,68,.14);color:'+T.red+';">🚨 MARGIN CALL</span>';
+      subText = 'Reembolso integral do empréstimo exigido';
+      wfClass = 'danger';
+      wfHTML = "<strong>Zona de margin call (LTV &gt;85%).</strong> Os ativos imobiliários são liquidados para reembolsar o empréstimo. A este preço, o valor residual da reserva é de €" + reserveM + "M. <strong>O Bitcoin é libertado do colateral após o reembolso</strong> — vendido apenas se todas as outras opções estiverem esgotadas. O imobiliário absorve o impacto primeiro.";
+    }
+
+    statEl.innerHTML = statusHTML;
+    subEl.textContent = subText;
+    wfEl.className = 'stress-waterfall' + (wfClass ? ' '+wfClass : '');
+    wfEl.innerHTML = wfHTML;
+  }
+
+  slider.addEventListener('input', update);
+  update();
+  window._stressUpdate = update;
+})();
+
+// ── SCROLL REVEAL ──
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      // animate return bars
+      e.target.querySelectorAll('.return-bar-fill').forEach(b=>b.classList.add('animate'));
+    }
+  });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ── COUNT-UP NUMBERS ──
+function countUp(el){
+  const target = parseFloat(el.dataset.count);
+  const prefix = el.dataset.prefix||'';
+  const suffix = el.dataset.suffix||'';
+  const isDecimal = target % 1 !== 0;
+  const duration = 1600;
+  const start = performance.now();
+  function frame(now){
+    const p = Math.min((now-start)/duration,1);
+    const eased = 1-Math.pow(1-p,3);
+    const val = eased*target;
+    el.textContent = prefix+(isDecimal ? val.toFixed(1) : Math.round(val))+suffix;
+    if(p<1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+const countIO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting && e.target.dataset.count){
+      countUp(e.target);
+      countIO.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('[data-count]').forEach(el=>countIO.observe(el));
+
+// ── BTC PRICE ──
+async function fetchBTC(){
+  try{
+    const r = await fetch('https://api.coinbase.com/v2/prices/BTC-USD/spot');
+    const d = await r.json();
+    const price = parseFloat(d.data.amount);
+    const fmt = '$'+price.toLocaleString('en-US',{maximumFractionDigits:0});
+    document.querySelectorAll('#btcPrice,#btcPrice2').forEach(el=>el.textContent=fmt);
+    document.querySelector('#btcChange').textContent='↑';
+  }catch(e){}
+}
+fetchBTC();
+setInterval(fetchBTC,30000);
+
+showAudienceGate(new URLSearchParams(location.search).has('choose'));
+</script>
+</body>
+</html>

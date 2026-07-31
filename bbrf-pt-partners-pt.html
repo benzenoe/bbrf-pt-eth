@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BBRF-PT — Programa de Parceiros para Profissionais Imobiliários</title>
+<meta name="description" content="Traga imobiliário português off-market — ou introduções qualificadas — a um fundo que fecha. Para mediadores e facilitadores.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --surface:#f7f8fa; --navy:#12283e; --ink:#1a2634; --ink2:#44556a; --ink3:#7b8a9a;
+  --accent:#B85F00; --accent2:#E8820E; --green:#00704F; --border:#e3e8ee;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.65;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;height:62px;background:rgba(255,255,255,0.95);border-bottom:1px solid var(--border);backdrop-filter:blur(14px);}
+.nav-logo{font-family:'Space Mono',monospace;font-size:.9rem;font-weight:700;color:var(--navy);text-decoration:none;letter-spacing:.06em;}
+.nav-logo span{color:var(--accent);}
+.nav-right{display:flex;align-items:center;gap:1rem;}
+.nav-alt{font-size:.7rem;color:var(--ink3);text-decoration:none;}
+.nav-alt:hover{color:var(--accent);}
+.nav-cta{background:var(--accent);color:#fff;border-radius:6px;padding:.5rem 1.3rem;font-size:.78rem;font-weight:700;text-decoration:none;}
+.nav-cta:hover{background:var(--accent2);}
+
+.hero{background:linear-gradient(180deg,#f7f8fa 0%,#fff 100%);padding:10rem 2rem 4.5rem;text-align:center;border-bottom:1px solid var(--border);}
+.hero-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--green);border:1px solid rgba(0,112,79,.3);border-radius:4px;padding:.35rem 1rem;margin-bottom:1.8rem;background:rgba(0,112,79,.05);}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,5vw,3.6rem);font-weight:700;line-height:1.12;color:var(--navy);margin-bottom:1.2rem;letter-spacing:-.01em;}
+.hero h1 span{color:var(--accent);}
+.hero p{font-size:1.05rem;color:var(--ink2);max-width:640px;margin:0 auto 2rem;}
+.hero .btn{display:inline-block;background:var(--accent);color:#fff;font-weight:700;font-size:.92rem;padding:.85rem 2.1rem;border-radius:8px;text-decoration:none;margin:0 .3rem;}
+.hero .btn:hover{background:var(--accent2);}
+.hero .btn.ghost{background:transparent;border:1px solid var(--border);color:var(--ink2);}
+.hero .btn.ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+.section{max-width:1000px;margin:0 auto;padding:4.5rem 2rem;}
+.kicker{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem;}
+h2.head{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,3.2vw,2.3rem);font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:1rem;}
+.lead{font-size:1rem;color:var(--ink2);max-width:680px;margin-bottom:2.4rem;}
+.rule{border:none;border-top:1px solid var(--border);max-width:1000px;margin:0 auto;}
+
+.tracks{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;}
+.track{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:2.2rem;border-top:4px solid var(--accent2);}
+.track.t2{border-top-color:var(--green);}
+.track .tag{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem;}
+.track.t2 .tag{color:var(--green);}
+.track h3{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:.7rem;}
+.track p{font-size:.9rem;color:var(--ink2);margin-bottom:1rem;}
+.track ul{list-style:none;margin:1rem 0 0;}
+.track li{font-size:.87rem;color:var(--ink2);padding:.5rem 0 .5rem 1.5rem;position:relative;border-bottom:1px solid var(--border);}
+.track li:last-child{border-bottom:none;}
+.track li::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.track.t2 li::before{color:var(--green);}
+.track .comp{margin-top:1.3rem;background:#fff;border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.3rem;}
+.track .comp .c-label{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.3rem;}
+.track .comp .c-val{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:700;color:var(--navy);}
+.track .comp .c-note{font-size:.72rem;color:var(--ink3);margin-top:.3rem;}
+
+.crit{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+.crit .card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1.6rem;}
+.crit .card h4{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.4rem;}
+.crit .card p{font-size:.85rem;color:var(--ink2);}
+
+.steps{max-width:720px;}
+.stp{display:flex;gap:1.3rem;padding:1.1rem 0;border-bottom:1px solid var(--border);}
+.stp:last-child{border-bottom:none;}
+.stp .n{width:2.4rem;height:2.4rem;border-radius:8px;background:rgba(184,95,0,.08);border:1px solid rgba(184,95,0,.25);
+  display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-weight:700;font-size:.85rem;color:var(--accent);flex-shrink:0;}
+.stp h4{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:.2rem;}
+.stp p{font-size:.87rem;color:var(--ink2);}
+
+.legal{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.6rem 1.9rem;margin-top:2.4rem;}
+.legal h4{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;}
+.legal p{font-size:.8rem;color:var(--ink2);line-height:1.7;}
+
+.cta{background:var(--navy);border-radius:14px;max-width:1000px;margin:0 auto;padding:3.6rem 3rem;text-align:center;}
+.cta h2{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:#fff;margin-bottom:.8rem;}
+.cta h2 span{color:var(--accent2);}
+.cta p{color:#b9c5d1;font-size:.95rem;max-width:520px;margin:0 auto 2rem;}
+.cta .btn{display:inline-block;background:var(--accent);color:#fff;font-weight:700;font-size:.92rem;padding:.85rem 2.1rem;border-radius:8px;text-decoration:none;margin:0 .3rem;}
+.cta .btn:hover{background:var(--accent2);}
+
+footer{max-width:1000px;margin:0 auto;padding:3rem 2rem;font-size:.72rem;color:var(--ink3);line-height:1.7;text-align:center;}
+
+@media(max-width:860px){
+  .tracks,.crit{grid-template-columns:1fr;}
+}
+</style>
+<link rel="alternate" hreflang="en" href="https://eytan.com/pitches/bbrf-pt-partners.html">
+<link rel="alternate" hreflang="fr" href="https://eytan.com/pitches/bbrf-pt-partners-fr.html">
+<link rel="alternate" hreflang="pt" href="https://eytan.com/pitches/bbrf-pt-partners-pt.html">
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">BBRF<span>-PT</span> · Parceiros</a>
+  <div class="nav-right">
+    <a class="nav-alt" href="bbrf-pt-partners.html">EN</a>
+    <a class="nav-alt" href="bbrf-pt-partners-fr.html">FR</a>
+    <a class="nav-alt" href="bbrf-pt-pt.html?choose=1">Mudar de perfil</a>
+    <a class="nav-cta" href="mailto:eytan@benzeno.com?subject=BBRF-PT%20%E2%80%94%20Pedido%20de%20parceiro">Tornar-se parceiro →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Programa de Parceiros · Mediadores &amp; Facilitadores · Focado em Portugal</div>
+  <h1>Conhece o mercado.<br><span>Nós somos o comprador que fecha.</span></h1>
+  <p>A BBRF-PT está a construir uma carteira de €25–100M de imobiliário português gerador de rendimento — adquirido ativo a ativo, cada um na sua própria SPV, com capital já estruturado por trás. Duas formas de trabalhar connosco: traga-nos negócios, ou apresente as pessoas certas.</p>
+  <a class="btn" href="mailto:eytan@benzeno.com?subject=BBRF-PT%20%E2%80%94%20Pedido%20de%20parceiro&body=Gostaria%20de%20discutir%20o%20programa%20de%20parceiros%20BBRF-PT.">Falar com o Eytan</a>
+  <a class="btn ghost" href="bbrf-pt-private-pt.html">Ler a visão geral para investidores</a>
+</div>
+
+<!-- TRACKS -->
+<div class="section">
+  <div class="kicker">Duas Formas de Ganhar</div>
+  <h2 class="head">Traga negócios. Ou traga pessoas.</h2>
+  <p class="lead">Ambas as vias são reais, ambas são remuneradas, e ambas são estruturadas corretamente — através da sua licença profissional no lado imobiliário, e através do quadro de colocação licenciado do fundo no lado do capital.</p>
+  <div class="tracks">
+    <div class="track">
+      <div class="tag">Via 1 · Deal Flow — Aberto</div>
+      <h3>Origine os ativos</h3>
+      <p>O fundo compra através de um pipeline disciplinado: a assessoria origina o negócio, é preparado um dossier de subscrição, o comité de investimento aprova segundo critérios definidos, uma avaliação independente confirma o preço, e a SPV fecha. O seu conhecimento local e o seu acesso off-market são exatamente o que alimenta esse pipeline.</p>
+      <ul>
+        <li>Oportunidades off-market e pré-mercado priorizadas</li>
+        <li>Subscrição totalmente assegurada — traz o ativo, nós fazemos o dossier</li>
+        <li>Decisões rápidas, por critérios, de um comité permanente</li>
+        <li>Mantém a sua relação com o cliente do lado vendedor</li>
+      </ul>
+      <div class="comp">
+        <div class="c-label">Remuneração</div>
+        <div class="c-val">Comissão de originação por aquisição fechada</div>
+        <div class="c-note">Acordada por mandato, paga no closing da SPV no quadro da estrutura de comissão de assessoria de 1% do fundo. A mediação imobiliária padrão na transação permanece sua, quando aplicável.</div>
+      </div>
+    </div>
+    <div class="track t2">
+      <div class="tag">Via 2 · Introduções — Via Agente Licenciado</div>
+      <h3>Apresente investidores</h3>
+      <p>A angariação é liderada a partir do Luxemburgo com um agente de colocação licenciado em cada jurisdição, numa estrutura de success fee de 1–2%. Introduções qualificadas de profissionais são bem-vindas — e remuneradas — através desse quadro licenciado, de acordo com as regras de cada jurisdição.</p>
+      <ul>
+        <li>Apenas investidores profissionais e bem informados (ticket mínimo €50K)</li>
+        <li>Introduções formalizadas através do agente de colocação licenciado</li>
+        <li>Remuneração de referência definida por escrito antes de qualquer introdução</li>
+        <li>Nunca lida com fundos, documentação ou aconselhamento de investimento</li>
+      </ul>
+      <div class="comp">
+        <div class="c-label">Remuneração</div>
+        <div class="c-val">Parte da success fee de colocação</div>
+        <div class="c-note">Indicativo — finalizado com o agente de colocação licenciado e os advogados luxemburgueses, por jurisdição. Não é oferecida remuneração transacional direta fora de canais licenciados.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- CRITERIA -->
+<div class="section">
+  <div class="kicker">O Que Compramos</div>
+  <h2 class="head">Os critérios de aquisição.</h2>
+  <p class="lead">Imobiliário português gerador de rendimento, detido a longo prazo, uma SPV por ativo. O piloto — uma herdade de ~€11M e 1 000 hectares no Alentejo — dá o tom: escala institucional, off-market, ativos de especialidade com múltiplos fluxos de receita.</p>
+  <div class="crit">
+    <div class="card"><h4>Lisboa &amp; rendimento urbano</h4><p>Apartamentos e pequenos prédios com ~3–5% de rendimento líquido após gestão — o exemplo prático do memorando é um apartamento em Lisboa de €750K a 4,2% líquido.</p></div>
+    <div class="card"><h4>Herdades de especialidade</h4><p>Herdades de caça, agrícolas e com opção hoteleira a escala institucional — título único, rendimento defensável, alinhadas com um horizonte de dez anos.</p></div>
+    <div class="card"><h4>Off-market primeiro</h4><p>Prioridade ao acesso off-market e pré-mercado onde uma relação — a sua — é a porta de entrada. Rapidez e discrição de ambos os lados.</p></div>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- PROCESS -->
+<div class="section">
+  <div class="kicker">Como Funciona</div>
+  <h2 class="head">Da sua chamada a uma SPV fechada.</h2>
+  <div class="steps">
+    <div class="stp"><div class="n">01</div><div><h4>Registe-se como parceiro</h4><p>Uma conversa, um acordo de parceria assinado a definir âmbito e remuneração antes de qualquer passo.</p></div></div>
+    <div class="stp"><div class="n">02</div><div><h4>Submeta a oportunidade</h4><p>Teaser do negócio ou introdução de investidor — uma página basta para começar.</p></div></div>
+    <div class="stp"><div class="n">03</div><div><h4>Nós subscrevemos</h4><p>Dossier completo: localização, rendimento líquido, condições de financiamento, cenários de saída. Uma avaliação portuguesa independente confirma o preço.</p></div></div>
+    <div class="stp"><div class="n">04</div><div><h4>O comité decide</h4><p>Aprovação segundo critérios definidos; a decisão e a fundamentação são documentadas e publicadas aos investidores.</p></div></div>
+    <div class="stp"><div class="n">05</div><div><h4>Closing e pagamento</h4><p>A SPV fecha o ativo; as comissões de originação são pagas no closing. As comissões de introdução são liquidadas através do agente de colocação licenciado segundo a tabela acordada.</p></div></div>
+  </div>
+  <div class="legal">
+    <h4>As letras pequenas, à cabeça.</h4>
+    <p>Esta página descreve um programa de parceiros, não uma oferta de valores mobiliários. Qualquer investimento na BBRF-PT está disponível exclusivamente a investidores profissionais e bem informados por colocação privada, com base em documentação definitiva. A remuneração de introduções de capital é estruturada exclusivamente através de agentes de colocação licenciados na jurisdição relevante e formalizada por escrito antes de qualquer introdução; o fundo não paga a intermediários não licenciados remuneração transacional pela colocação de valores mobiliários. A remuneração de originação imobiliária é paga por serviços imobiliários ao abrigo da sua licença profissional. Todos os termos são indicativos, pendentes de validação pelos advogados luxemburgueses e portugueses.</p>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="section">
+  <div class="cta">
+    <h2>Já tem um negócio — ou um nome — <span>em mente?</span></h2>
+    <p>Comece com uma chamada de 20 minutos com o Eytan. Traga o teaser do ativo ou a introdução; nós trazemos a estrutura, a subscrição e o capital.</p>
+    <a class="btn" href="mailto:eytan@benzeno.com?subject=BBRF-PT%20%E2%80%94%20Pedido%20de%20parceiro&body=Gostaria%20de%20me%20registar%20como%20parceiro%20BBRF-PT.%0A%0ANome%3A%0AEmpresa%20%2F%20licen%C3%A7a%3A%0AVia%20(neg%C3%B3cios%20%2F%20introdu%C3%A7%C3%B5es)%3A%0AO%20que%20tenho%20em%20mente%3A">Tornar-se parceiro</a>
+  </div>
+</div>
+
+<footer>
+  <p><b>BBRF-PT</b> · Bitcoin-Backed Real-Estate Fund (Portugal) · A Bittrees venture · bbrf-pt.eth · June 2026</p>
+  <p>Confidencial. Não é uma oferta de valores mobiliários, um prospeto ou aconselhamento de investimento, jurídico ou fiscal. Os termos de parceria são indicativos e sujeitos a acordos definitivos e à lei aplicável em cada jurisdição. Eytan Benzeno · eytan@benzeno.com · Jonathan Hineline · jhineline@bittrees.io</p>
+</footer>
+
+</body>
+</html>

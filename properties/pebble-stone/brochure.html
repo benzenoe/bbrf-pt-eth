@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pebble Stone Hunting Preserve — Property Brochure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --forest: #0A1A10;
+    --gold: #C4A35A;
+    --gold-lt: #D9BC82;
+    --cream: #F5EFE6;
+    --warm: #F9F5EE;
+    --stone: #9B8B78;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Montserrat', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: #e8e4df;
+  }
+
+  /* ─── SCREEN: page preview container ─── */
+  .brochure-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 40px 20px;
+  }
+
+  /* ─── PAGE ─── */
+  .page {
+    width: 297mm;
+    height: 210mm;
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
+    box-shadow: 0 8px 48px rgba(0,0,0,0.28);
+    flex-shrink: 0;
+  }
+
+  /* ─── PRINT RULES ─── */
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+  @media print {
+    body { background: none; }
+    .brochure-wrap { gap: 0; padding: 0; }
+    .print-btn { display: none !important; }
+    .page {
+      box-shadow: none;
+      page-break-after: always;
+      page-break-inside: avoid;
+      break-after: page;
+    }
+    .page:last-child { page-break-after: auto; }
+  }
+
+  /* ─── PRINT BUTTON (screen only) ─── */
+  .print-btn {
+    position: fixed; top: 20px; right: 20px; z-index: 999;
+    background: var(--gold); color: #fff; border: none; cursor: pointer;
+    font-family: var(--sans); font-size: 0.65rem; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 14px 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transition: background 0.2s;
+  }
+  .print-btn:hover { background: #b8923f; }
+
+  /* ════════════════════════════════════════════
+     PAGE 1 — COVER
+  ════════════════════════════════════════════ */
+  .cover {
+    background: var(--forest);
+  }
+  .cover .bg {
+    position: absolute; inset: 0;
+    background-image: url('images/aerial-14.jpg');
+    background-size: cover; background-position: center 40%;
+  }
+  .cover .vignette {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(10,26,16,0.82) 0%,
+      rgba(10,26,16,0.45) 50%,
+      rgba(10,26,16,0.7) 100%
+    );
+  }
+  .cover .content {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    padding: 18mm 18mm 14mm;
+  }
+  .cover .top-bar {
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .cover .logo-wrap img {
+    height: 56px; width: 56px; object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+  }
+  .cover .agency {
+    text-align: right;
+    font-family: var(--sans); font-size: 6pt; letter-spacing: 0.25em;
+    text-transform: uppercase; color: rgba(196,163,90,0.8); line-height: 1.8;
+  }
+  .cover .main-text { max-width: 180mm; }
+  .cover .eyebrow {
+    font-family: var(--sans); font-size: 6.5pt; letter-spacing: 0.35em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 6mm;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .cover .eyebrow::before {
+    content: ''; display: block; width: 24px; height: 1px; background: var(--gold);
+  }
+  .cover h1 {
+    font-family: var(--serif); font-weight: 300; font-size: 40pt;
+    color: #fff; line-height: 1.1; margin-bottom: 4mm;
+  }
+  .cover h1 em { font-style: italic; color: var(--gold-lt); }
+  .cover .sub {
+    font-family: var(--serif); font-size: 16pt; font-weight: 300;
+    color: rgba(255,255,255,0.65); letter-spacing: 0.04em; margin-bottom: 8mm;
+  }
+  .cover .bottom-bar {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    border-top: 1px solid rgba(196,163,90,0.25); padding-top: 5mm;
+  }
+  .cover .price-block .label {
+    font-family: var(--sans); font-size: 6pt; letter-spacing: 0.3em;
+    text-transform: uppercase; color: rgba(196,163,90,0.7); margin-bottom: 2mm;
+  }
+  .cover .price-block .value {
+    font-family: var(--serif); font-size: 28pt; font-weight: 300; color: #fff;
+    letter-spacing: 0.02em;
+  }
+  .cover .stats-mini {
+    display: flex; gap: 8mm; text-align: right;
+  }
+  .cover .stat-m .n {
+    font-family: var(--serif); font-size: 18pt; font-weight: 300;
+    color: var(--gold-lt); display: block;
+  }
+  .cover .stat-m .l {
+    font-family: var(--sans); font-size: 5pt; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+  }
+  .cover .gold-bar {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  }
+
+  /* ════════════════════════════════════════════
+     PAGE 2 — PROPERTY AT A GLANCE
+  ════════════════════════════════════════════ */
+  .overview {
+    display: grid; grid-template-columns: 1fr 1fr;
+  }
+  .overview .img-col {
+    position: relative; overflow: hidden;
+  }
+  .overview .img-col img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .overview .img-col .img-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(10,26,16,0.8), transparent);
+    padding: 8mm 6mm 4mm;
+    font-family: var(--sans); font-size: 5.5pt; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.6);
+  }
+  .overview .text-col {
+    background: var(--forest); padding: 14mm 12mm;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .overview .text-col .tag {
+    font-family: var(--sans); font-size: 6pt; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 3mm;
+  }
+  .overview .text-col h2 {
+    font-family: var(--serif); font-size: 24pt; font-weight: 300;
+    color: #fff; line-height: 1.2; margin-bottom: 4mm;
+  }
+  .overview .text-col h2 em { font-style: italic; color: var(--gold-lt); }
+  .overview .divider {
+    width: 36px; height: 1px; background: var(--gold); margin-bottom: 5mm;
+  }
+  .overview .text-col p {
+    font-family: var(--serif); font-size: 10pt; color: rgba(255,255,255,0.72);
+    line-height: 1.75; margin-bottom: 6mm;
+  }
+  .stats-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 4mm; border-top: 1px solid rgba(196,163,90,0.15); padding-top: 5mm;
+  }
+  .stat-box { padding: 3mm 0; }
+  .stat-box .n {
+    font-family: var(--serif); font-size: 20pt; font-weight: 300;
+    color: var(--gold); display: block; line-height: 1;
+  }
+  .stat-box .l {
+    font-family: var(--sans); font-size: 5pt; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 1.5mm;
+  }
+
+  /* ════════════════════════════════════════════
+     PAGE 3 — THE ESTATE LAND
+  ════════════════════════════════════════════ */
+  .land-page {
+    background: var(--warm);
+    display: grid; grid-template-rows: 60% 40%;
+  }
+  .land-page .aerial-top {
+    position: relative; overflow: hidden;
+  }
+  .land-page .aerial-top img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center 30%;
+  }
+  .land-page .aerial-top .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(249,245,238,1) 100%);
+  }
+  .land-page .aerial-top .title-over {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    text-align: center;
+  }
+  .land-page .aerial-top .title-over .tag {
+    font-family: var(--sans); font-size: 6pt; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold);
+    background: rgba(10,26,16,0.6); padding: 3px 10px; margin-bottom: 3mm; display: inline-block;
+  }
+  .land-page .aerial-top .title-over h2 {
+    font-family: var(--serif); font-size: 30pt; font-weight: 300;
+    color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.5); white-space: nowrap;
+  }
+  .land-page .aerial-top .title-over h2 em { font-style: italic; color: var(--gold-lt); }
+  .land-page .features-row {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    padding: 8mm 12mm; gap: 4mm; align-items: center;
+  }
+  .feat-item {
+    text-align: center; padding: 3mm;
+    border-left: 1px solid rgba(196,163,90,0.2);
+  }
+  .feat-item:first-child { border-left: none; }
+  .feat-item .icon {
+    width: 20px; height: 20px; margin: 0 auto 2mm;
+    stroke: var(--gold); fill: none; stroke-width: 1.5;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  .feat-item .fn {
+    font-family: var(--serif); font-size: 16pt; font-weight: 300;
+    color: var(--forest); display: block; line-height: 1;
+  }
+  .feat-item .fl {
+    font-family: var(--sans); font-size: 5pt; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--stone); margin-top: 1mm;
+    display: block;
+  }
+
+  /* ════════════════════════════════════════════
+     PAGE 4 — THE LODGE
+  ════════════════════════════════════════════ */
+  .lodge-page {
+    display: grid; grid-template-columns: 55% 45%;
+  }
+  .lodge-page .img-panel {
+    position: relative; overflow: hidden;
+    display: grid; grid-template-rows: 55% 45%;
+  }
+  .lodge-page .img-panel .img-top {
+    position: relative; overflow: hidden;
+  }
+  .lodge-page .img-panel .img-top img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .lodge-page .img-panel .img-bot {
+    position: relative; overflow: hidden;
+    border-top: 3px solid rgba(196,163,90,0.3);
+  }
+  .lodge-page .img-panel .img-bot img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .lodge-page .info-panel {
+    background: var(--forest); padding: 12mm 11mm;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .lodge-page .info-panel .tag {
+    font-family: var(--sans); font-size: 6pt; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .lodge-page .info-panel h2 {
+    font-family: var(--serif); font-size: 22pt; font-weight: 300;
+    color: #fff; line-height: 1.2; margin: 3mm 0 2mm;
+  }
+  .lodge-page .info-panel h2 em { font-style: italic; color: var(--gold-lt); }
+  .lodge-page .info-panel .divider {
+    width: 36px; height: 1px; background: var(--gold); margin-bottom: 4mm;
+  }
+  .lodge-page .info-panel p {
+    font-family: var(--serif); font-size: 9.5pt; color: rgba(255,255,255,0.68);
+    line-height: 1.8; margin-bottom: 5mm;
+  }
+  .lodge-specs {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3mm;
+  }
+  .spec-row {
+    display: flex; align-items: baseline; gap: 6px;
+    border-bottom: 1px solid rgba(196,163,90,0.1); padding-bottom: 2.5mm;
+  }
+  .spec-row .sv {
+    font-family: var(--serif); font-size: 14pt; font-weight: 300;
+    color: var(--gold); min-width: 22px;
+  }
+  .spec-row .sl {
+    font-family: var(--sans); font-size: 5pt; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.45);
+  }
+  .lodge-amenities {
+    border-top: 1px solid rgba(196,163,90,0.15); padding-top: 4mm; margin-top: 2mm;
+  }
+  .lodge-amenities .am-title {
+    font-family: var(--sans); font-size: 5pt; letter-spacing: 0.25em;
+    text-transform: uppercase; color: rgba(196,163,90,0.5); margin-bottom: 2mm;
+  }
+  .am-list {
+    display: flex; flex-wrap: wrap; gap: 2mm;
+  }
+  .am-item {
+    font-family: var(--sans); font-size: 5pt; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+    background: rgba(196,163,90,0.06); border: 1px solid rgba(196,163,90,0.15);
+    padding: 1.5mm 3mm;
+  }
+
+  /* ════════════════════════════════════════════
+     PAGE 5 — WILDLIFE RESERVE
+  ════════════════════════════════════════════ */
+  .wildlife-page {
+    background: var(--forest);
+    display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr;
+    position: relative;
+  }
+  .wildlife-page .photo-col {
+    position: relative; overflow: hidden;
+  }
+  .wildlife-page .photo-col img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: none;
+  }
+  .wildlife-page .photo-col .col-fade {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, transparent 60%, var(--forest) 100%);
+  }
+  .wildlife-page .photo-col:last-child .col-fade {
+    background: linear-gradient(to left, transparent 60%, var(--forest) 100%);
+  }
+  .wildlife-page .center-col {
+    background: var(--forest); padding: 12mm 10mm;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; z-index: 2;
+  }
+  .wildlife-page .center-col .tag {
+    font-family: var(--sans); font-size: 6pt; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 3mm;
+    text-align: center;
+  }
+  .wildlife-page .center-col h2 {
+    font-family: var(--serif); font-size: 22pt; font-weight: 300;
+    color: #fff; line-height: 1.2; text-align: center; margin-bottom: 2mm;
+  }
+  .wildlife-page .center-col h2 em { font-style: italic; color: var(--gold-lt); }
+  .wildlife-page .center-col .divider {
+    width: 36px; height: 1px; background: var(--gold); margin: 3mm auto 5mm;
+  }
+  .wildlife-list {
+    display: flex; flex-direction: column; gap: 3mm;
+  }
+  .wildlife-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid rgba(196,163,90,0.1); padding-bottom: 2.5mm;
+  }
+  .wildlife-row .species {
+    font-family: var(--serif); font-size: 10pt; color: rgba(255,255,255,0.8);
+  }
+  .wildlife-row .count {
+    font-family: var(--serif); font-size: 12pt; font-weight: 300; color: var(--gold);
+  }
+  .wildlife-page .exotic-note {
+    margin-top: 5mm; text-align: center;
+    background: rgba(196,163,90,0.08); border: 1px solid rgba(196,163,90,0.2);
+    padding: 3mm 4mm;
+  }
+  .wildlife-page .exotic-note .en-val {
+    font-family: var(--serif); font-size: 16pt; font-weight: 300; color: var(--gold);
+  }
+  .wildlife-page .exotic-note .en-lbl {
+    font-family: var(--sans); font-size: 5pt; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 1mm;
+    display: block;
+  }
+
+  /* ════════════════════════════════════════════
+     PAGE 6 — HUNTING EXPERIENCE
+  ════════════════════════════════════════════ */
+  .hunt-page {
+    display: grid; grid-template-columns: 40% 60%;
+  }
+  .hunt-page .hunt-img {
+    position: relative; overflow: hidden;
+  }
+  .hunt-page .hunt-img img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .hunt-page .hunt-img .img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, transparent 50%, rgba(249,245,238,1) 100%);
+  }
+  .hunt-page .hunt-info {
+    background: var(--warm); padding: 12mm 14mm 12mm 10mm;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .hunt-page .hunt-info .tag {
+    font-family: var(--sans); font-size: 6pt; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 3mm;
+  }
+  .hunt-page .hunt-info h2 {
+    font-family: var(--serif); font-size: 24pt; font-weight: 300;
+    color: var(--forest); line-height: 1.2; margin-bottom: 2mm;
+  }
+  .hunt-page .hunt-info h2 em { font-style: italic; }
+  .hunt-page .hunt-info .divider {
+    width: 36px; height: 1px; background: var(--gold); margin-bottom: 5mm;
+  }
+  .activities-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4mm;
+  }
+  .act-item {
+    padding: 4mm 4mm; background: rgba(10,26,16,0.04);
+    border-left: 2px solid var(--gold);
+  }
+  .act-item .at {
+    font-family: var(--sans); font-size: 6pt; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--forest); margin-bottom: 1.5mm;
+  }
+  .act-item .ad {
+    font-family: var(--serif); font-size: 9pt; color: #555; line-height: 1.6;
+  }
+  .hunt-note {
+    margin-top: 5mm; padding: 4mm;
+    background: var(--forest);
+  }
+  .hunt-note p {
+    font-family: var(--serif); font-size: 9pt; color: rgba(255,255,255,0.65);
+    line-height: 1.6; font-style: italic;
+  }
+  .hunt-note span { color: var(--gold); }
+
+  /* ════════════════════════════════════════════
+     PAGE 7 — PHOTO SPREAD
+  ════════════════════════════════════════════ */
+  .photo-spread {
+    background: var(--forest);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+  }
+  .photo-spread .ps-item {
+    position: relative; overflow: hidden;
+  }
+  .photo-spread .ps-item img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .photo-spread .ps-item.tall {
+    grid-row: span 2;
+  }
+  .photo-spread .ps-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(10,26,16,0.7), transparent);
+    padding: 6mm 4mm 2.5mm;
+    font-family: var(--sans); font-size: 5pt; letter-spacing: 0.15em;
+    text-transform: uppercase; color: rgba(255,255,255,0.55);
+  }
+  .photo-spread .ps-overlay {
+    position: absolute; inset: 0;
+    background: rgba(10,26,16,0.0);
+  }
+
+  /* ════════════════════════════════════════════
+     PAGE 8 — INVESTMENT
+  ════════════════════════════════════════════ */
+  .invest-page {
+    display: grid; grid-template-columns: 45% 55%;
+  }
+  .invest-page .img-side {
+    position: relative; overflow: hidden;
+  }
+  .invest-page .img-side img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .invest-page .img-side .img-ov {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(10,26,16,0.3) 0%, rgba(10,26,16,0.0) 100%);
+  }
+  .invest-page .invest-info {
+    background: #fff; padding: 12mm 14mm;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .invest-page .invest-info .tag {
+    font-family: var(--sans); font-size: 6pt; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .invest-page .invest-info h2 {
+    font-family: var(--serif); font-size: 22pt; font-weight: 300;
+    color: var(--forest); line-height: 1.2; margin: 3mm 0 2mm;
+  }
+  .invest-page .invest-info h2 em { font-style: italic; }
+  .invest-page .invest-info .divider {
+    width: 36px; height: 1px; background: var(--gold); margin-bottom: 5mm;
+  }
+  .revenue-list {
+    display: flex; flex-direction: column; gap: 3mm; flex: 1;
+  }
+  .rev-row {
+    display: flex; gap: 4mm; align-items: flex-start;
+    border-bottom: 1px solid rgba(196,163,90,0.15); padding-bottom: 3mm;
+  }
+  .rev-row .rn {
+    font-family: var(--serif); font-size: 18pt; font-weight: 300;
+    color: var(--gold); min-width: 18px; line-height: 1;
+  }
+  .rev-row .rt {
+    font-family: var(--sans); font-size: 6pt; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--forest); margin-bottom: 1mm;
+  }
+  .rev-row .rd {
+    font-family: var(--serif); font-size: 8.5pt; color: #666; line-height: 1.5;
+  }
+  .price-footer {
+    background: var(--forest); padding: 5mm 6mm;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 4mm;
+  }
+  .price-footer .pf-label {
+    font-family: var(--sans); font-size: 5.5pt; letter-spacing: 0.25em;
+    text-transform: uppercase; color: rgba(196,163,90,0.6);
+  }
+  .price-footer .pf-price {
+    font-family: var(--serif); font-size: 24pt; font-weight: 300; color: #fff;
+  }
+  .price-footer .pf-note {
+    font-family: var(--sans); font-size: 5pt; letter-spacing: 0.15em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35); text-align: right;
+  }
+
+  /* ════════════════════════════════════════════
+     PAGE 9 — LOCATION & INFRASTRUCTURE
+  ════════════════════════════════════════════ */
+  .location-page {
+    display: grid; grid-template-columns: 55% 45%;
+  }
+  .location-page .map-col {
+    position: relative; overflow: hidden;
+  }
+  .location-page .map-col img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .location-page .map-col .map-label {
+    position: absolute; top: 4mm; left: 4mm;
+    background: rgba(10,26,16,0.85); padding: 2mm 4mm;
+    font-family: var(--sans); font-size: 5.5pt; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .location-page .loc-info {
+    background: var(--warm); padding: 12mm 12mm;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .location-page .loc-info .tag {
+    font-family: var(--sans); font-size: 6pt; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .location-page .loc-info h2 {
+    font-family: var(--serif); font-size: 22pt; font-weight: 300;
+    color: var(--forest); line-height: 1.2; margin: 3mm 0 2mm;
+  }
+  .location-page .loc-info h2 em { font-style: italic; }
+  .location-page .loc-info .divider {
+    width: 36px; height: 1px; background: var(--gold); margin-bottom: 5mm;
+  }
+  .infra-list {
+    display: flex; flex-direction: column; gap: 3.5mm; flex: 1;
+  }
+  .infra-row {
+    display: flex; gap: 3mm; align-items: flex-start;
+    padding-bottom: 3mm; border-bottom: 1px solid rgba(10,26,16,0.08);
+  }
+  .infra-row .ir-icon {
+    width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px;
+    stroke: var(--gold); fill: none; stroke-width: 1.5;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  .infra-row .ir-text .irt {
+    font-family: var(--sans); font-size: 6pt; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--forest); margin-bottom: 0.5mm;
+  }
+  .infra-row .ir-text .ird {
+    font-family: var(--serif); font-size: 9pt; color: #666; line-height: 1.5;
+  }
+  .distances {
+    background: var(--forest); padding: 4mm 5mm;
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 3mm;
+  }
+  .dist-item .dv {
+    font-family: var(--serif); font-size: 14pt; font-weight: 300; color: var(--gold);
+    display: block;
+  }
+  .dist-item .dl {
+    font-family: var(--sans); font-size: 5pt; letter-spacing: 0.15em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+  }
+
+  /* ════════════════════════════════════════════
+     PAGE 10 — BACK COVER / CONTACT
+  ════════════════════════════════════════════ */
+  .back-cover {
+    background: var(--forest);
+    display: grid; grid-template-columns: 1fr 1fr;
+  }
+  .back-cover .img-half {
+    position: relative; overflow: hidden;
+  }
+  .back-cover .img-half img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center;
+  }
+  .back-cover .img-half .fade-r {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, transparent 40%, var(--forest) 100%);
+  }
+  .back-cover .contact-half {
+    padding: 14mm 16mm; display: flex; flex-direction: column;
+    justify-content: space-between;
+  }
+  .back-cover .logo-area {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 4mm;
+  }
+  .back-cover .logo-area img {
+    height: 64px; width: 64px; object-fit: contain;
+  }
+  .back-cover .estate-name {
+    font-family: var(--serif); font-size: 18pt; font-weight: 300;
+    color: #fff; line-height: 1.3;
+  }
+  .back-cover .estate-name em { font-style: italic; color: var(--gold-lt); }
+  .back-cover .tagline {
+    font-family: var(--sans); font-size: 5.5pt; letter-spacing: 0.25em;
+    text-transform: uppercase; color: rgba(196,163,90,0.6);
+    margin-top: 1mm;
+  }
+  .back-cover .contact-block { }
+  .back-cover .contact-label {
+    font-family: var(--sans); font-size: 5.5pt; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 4mm;
+  }
+  .back-cover .agent-name {
+    font-family: var(--serif); font-size: 18pt; font-weight: 300; color: #fff;
+    margin-bottom: 2mm;
+  }
+  .back-cover .contact-details {
+    font-family: var(--sans); font-size: 7pt; color: rgba(255,255,255,0.55);
+    line-height: 2.2; letter-spacing: 0.05em;
+  }
+  .back-cover .contact-details a { color: var(--gold); text-decoration: none; }
+  .back-cover .footer-bar {
+    border-top: 1px solid rgba(196,163,90,0.2); padding-top: 4mm;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .back-cover .footer-bar .agency-brand {
+    font-family: var(--sans); font-size: 6pt; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.25);
+  }
+  .back-cover .footer-bar .ami {
+    font-family: var(--sans); font-size: 6pt; letter-spacing: 0.12em;
+    color: rgba(196,163,90,0.4);
+  }
+  .back-cover .gold-accent {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: linear-gradient(to bottom, transparent 10%, var(--gold) 50%, transparent 90%);
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">⬇ Save as PDF</button>
+
+<div class="brochure-wrap">
+
+  <!-- ══════════════════════════════════════════════
+       PAGE 1 — COVER
+  ══════════════════════════════════════════════ -->
+  <div class="page cover">
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="gold-bar"></div>
+    <div class="content">
+      <div class="top-bar">
+        <div class="logo-wrap">
+          <img src="images/logo-badge.png" alt="Pebble Stone" />
+        </div>
+        <div class="agency">
+          <strong style="color:rgba(255,255,255,0.5); font-weight:400;">SoldHere Real Estate</strong><br />
+          Exclusively Presented By<br />
+          Eytan Benzeno · AMI 25285<br />
+          huntportugal.com
+        </div>
+      </div>
+
+      <div class="main-text">
+        <div class="eyebrow">Alentejo, Portugal — Herdade do Seixo e Aldinha</div>
+        <h1>Pebble Stone<br /><em>Hunting Preserve</em></h1>
+        <p class="sub">A Generational Asset. 1,000 Hectares of Untouched Alentejo.</p>
+      </div>
+
+      <div class="bottom-bar">
+        <div class="price-block">
+          <div class="label">Asking Price</div>
+          <div class="value">€12,000,000</div>
+        </div>
+        <div class="stats-mini">
+          <div class="stat-m">
+            <span class="n">1,000</span>
+            <span class="l">Hectares</span>
+          </div>
+          <div class="stat-m">
+            <span class="n">11</span>
+            <span class="l">Suites</span>
+          </div>
+          <div class="stat-m">
+            <span class="n">23</span>
+            <span class="l">Private Lakes</span>
+          </div>
+          <div class="stat-m">
+            <span class="n">700+</span>
+            <span class="l">Animals</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       PAGE 2 — PROPERTY AT A GLANCE
+  ══════════════════════════════════════════════ -->
+  <div class="page overview">
+    <div class="img-col">
+      <img src="images/aerial-22.jpg" alt="Aerial view of the estate" />
+      <div class="img-caption">Aerial view — Pebble Stone Hunting Preserve, Alentejo</div>
+    </div>
+    <div class="text-col">
+      <div>
+        <div class="tag">Property Overview</div>
+        <h2>An Estate <em>Without Equal</em><br />in Southern Europe</h2>
+        <div class="divider"></div>
+        <p>Herdade do Seixo e Aldinha is one of the most extraordinary privately held hunting estates on the Iberian Peninsula. Spanning 1,000 fully enclosed hectares in the heart of Alentejo, it combines a world-class wildlife reserve, a luxury 11-suite hunting lodge, and a self-sustaining agricultural enterprise — all within a single, impeccably managed property.</p>
+        <p>The estate is completely gated and secured with electric perimeter fencing, 24/7 CCTV surveillance, and controlled access — offering absolute privacy to its residents and guests. Existing hunting contracts with international groups and social media influencers provide immediate recurring revenue from day one of ownership.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <span class="n">1,000</span>
+          <span class="l">Hectares Total</span>
+        </div>
+        <div class="stat-box">
+          <span class="n">11</span>
+          <span class="l">Modern Suites</span>
+        </div>
+        <div class="stat-box">
+          <span class="n">23</span>
+          <span class="l">Private Lakes</span>
+        </div>
+        <div class="stat-box">
+          <span class="n">700+</span>
+          <span class="l">Animals on Estate</span>
+        </div>
+        <div class="stat-box">
+          <span class="n">€250K</span>
+          <span class="l">Exotic Wildlife</span>
+        </div>
+        <div class="stat-box">
+          <span class="n">150T</span>
+          <span class="l">Cork Biannually</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       PAGE 3 — THE ESTATE LAND
+  ══════════════════════════════════════════════ -->
+  <div class="page land-page">
+    <div class="aerial-top">
+      <img src="images/aerial-16.jpg" alt="Estate aerial" />
+      <div class="overlay"></div>
+      <div class="title-over">
+        <div class="tag">The Land</div>
+        <h2>1,000 Hectares of <em>Alentejo Wilderness</em></h2>
+      </div>
+    </div>
+    <div class="features-row">
+      <div class="feat-item">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        <span class="fn">100%</span>
+        <span class="fl">Gated & Secured</span>
+      </div>
+      <div class="feat-item">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+        <span class="fn">23</span>
+        <span class="fl">Private Lakes</span>
+      </div>
+      <div class="feat-item">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span class="fn">24/7</span>
+        <span class="fl">CCTV Security</span>
+      </div>
+      <div class="feat-item">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.43a4.24 4.24 0 01-1.55 1.49M8 19.5A8 8 0 0021 12"/></svg>
+        <span class="fn">Cork</span>
+        <span class="fl">Oak Forest</span>
+      </div>
+      <div class="feat-item">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span class="fn">Coruche</span>
+        <span class="fl">Alentejo, PT</span>
+      </div>
+      <div class="feat-item">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <span class="fn">Starlink</span>
+        <span class="fl">+ LAN in Every Room</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       PAGE 4 — THE LODGE
+  ══════════════════════════════════════════════ -->
+  <div class="page lodge-page">
+    <div class="img-panel">
+      <div class="img-top">
+        <img src="images/pool.jpg" alt="Pool terrace with panoramic views" />
+      </div>
+      <div class="img-bot">
+        <img src="images/porch.jpg" alt="Covered outdoor terrace" />
+      </div>
+    </div>
+    <div class="info-panel">
+      <div>
+        <div class="tag">The Lodge</div>
+        <h2>11 Modern Suites.<br /><em>Newly Renovated.</em></h2>
+        <div class="divider"></div>
+        <p>The lodge has been entirely refurbished to international luxury standards. Eleven individually appointed guest suites surround a central hunting lodge hub, connected by covered terraces and outdoor living areas that capitalise on the Alentejo's extraordinary light and panoramic views.</p>
+      </div>
+      <div>
+        <div class="lodge-specs">
+          <div class="spec-row"><span class="sv">11</span><span class="sl">Modern Suites</span></div>
+          <div class="spec-row"><span class="sv">12</span><span class="sl">Bathrooms</span></div>
+          <div class="spec-row"><span class="sv">2</span><span class="sl">Indoor Kitchens</span></div>
+          <div class="spec-row"><span class="sv">1</span><span class="sl">Outdoor Kitchen</span></div>
+          <div class="spec-row"><span class="sv">2</span><span class="sl">Kitchenettes</span></div>
+          <div class="spec-row"><span class="sv">1</span><span class="sl">Large Private Pool</span></div>
+        </div>
+        <div class="lodge-amenities">
+          <div class="am-title">Amenities & Technology</div>
+          <div class="am-list">
+            <span class="am-item">Starlink Internet</span>
+            <span class="am-item">LAN Every Room</span>
+            <span class="am-item">Guest TV System</span>
+            <span class="am-item">Guest Billing Module</span>
+            <span class="am-item">Indoor Dining Room</span>
+            <span class="am-item">Outdoor Dining</span>
+            <span class="am-item">Outdoor Lounge</span>
+            <span class="am-item">Parking Lot</span>
+            <span class="am-item">Electric Gates</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       PAGE 5 — WILDLIFE RESERVE
+  ══════════════════════════════════════════════ -->
+  <div class="page wildlife-page">
+    <div class="photo-col">
+      <img src="images/gallery/WechatIMG80.jpeg" alt="Zebras on the estate" />
+      <div class="col-fade"></div>
+    </div>
+    <div class="center-col">
+      <div class="tag">Wildlife Reserve</div>
+      <h2>Europe's Most Diverse<br /><em>Private Game Reserve</em></h2>
+      <div class="divider"></div>
+      <div class="wildlife-list">
+        <div class="wildlife-row">
+          <span class="species">Red Deer (Cervus elaphus)</span>
+          <span class="count">400+</span>
+        </div>
+        <div class="wildlife-row">
+          <span class="species">Wild Boar (Sus scrofa)</span>
+          <span class="count">300+</span>
+        </div>
+        <div class="wildlife-row">
+          <span class="species">Zebra (Equus quagga)</span>
+          <span class="count">Herd</span>
+        </div>
+        <div class="wildlife-row">
+          <span class="species">Impala (Aepyceros melampus)</span>
+          <span class="count">Herd</span>
+        </div>
+        <div class="wildlife-row">
+          <span class="species">Alpaca (Vicugna pacos)</span>
+          <span class="count">Group</span>
+        </div>
+        <div class="wildlife-row">
+          <span class="species">Sheep & Goats</span>
+          <span class="count">Flock</span>
+        </div>
+        <div class="wildlife-row">
+          <span class="species">Horses</span>
+          <span class="count">Stud</span>
+        </div>
+        <div class="wildlife-row">
+          <span class="species">Free-Range Chickens</span>
+          <span class="count">50</span>
+        </div>
+      </div>
+      <div class="exotic-note">
+        <div class="en-val">€250,000</div>
+        <span class="en-lbl">Invested in Exotic Wildlife — Included in Sale</span>
+      </div>
+    </div>
+    <div class="photo-col">
+      <img src="images/stag.jpg" alt="Red deer stag" />
+      <div class="col-fade"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       PAGE 6 — HUNTING EXPERIENCE
+  ══════════════════════════════════════════════ -->
+  <div class="page hunt-page">
+    <div class="hunt-img">
+      <img src="images/deer-herd.jpg" alt="Deer herd in cork oak forest" />
+      <div class="img-overlay"></div>
+    </div>
+    <div class="hunt-info">
+      <div class="tag">The Hunting Experience</div>
+      <h2>Hunt, Safari, Fish.<br /><em>Year-Round.</em></h2>
+      <div class="divider"></div>
+      <div class="activities-grid">
+        <div class="act-item">
+          <div class="at">Big Game Hunting</div>
+          <div class="ad">Red deer, wild boar, and small game across 1,000 hectares. Licensed hunting seasons with professional guides.</div>
+        </div>
+        <div class="act-item">
+          <div class="at">Safari & Wildlife Tours</div>
+          <div class="ad">Open vehicle safaris through the estate. Zebra, impala, and exotic wildlife encounters unique to Portugal.</div>
+        </div>
+        <div class="act-item">
+          <div class="at">Fly Fishing — 23 Lakes</div>
+          <div class="ad">Private fishing across 23 fully stocked freshwater lakes. No neighbours, no noise, no limits.</div>
+        </div>
+        <div class="act-item">
+          <div class="at">Stargazing Retreats</div>
+          <div class="ad">Zero light pollution, zero noise. Some of the darkest skies in Europe above 1,000 hectares of pristine Alentejo.</div>
+        </div>
+        <div class="act-item">
+          <div class="at">Influencer Contracts</div>
+          <div class="ad">Existing signed contracts with hunting influencers and content creators. Immediate revenue-generating partnerships.</div>
+        </div>
+        <div class="act-item">
+          <div class="at">Private Events</div>
+          <div class="ad">Corporate retreats, private dinners, and exclusive group experiences under ancient cork oaks.</div>
+        </div>
+      </div>
+      <div class="hunt-note">
+        <p><span>Active hunting contracts</span> with international groups are in place and transfer with the property — generating income from the first day of ownership.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       PAGE 7 — PHOTO SPREAD
+  ══════════════════════════════════════════════ -->
+  <div class="page photo-spread">
+    <div class="ps-item tall">
+      <img src="images/gallery/WechatIMG77.jpeg" alt="Impala at the water" />
+      <div class="ps-overlay"></div>
+      <div class="ps-caption">Impala — Estate Wildlife</div>
+    </div>
+    <div class="ps-item">
+      <img src="images/gallery/farm-house-pool.jpg" alt="Lodge and pool" />
+      <div class="ps-overlay"></div>
+      <div class="ps-caption">Lodge & Pool</div>
+    </div>
+    <div class="ps-item">
+      <img src="images/gallery/DJI_20251012171110_0179_D.JPG" alt="Aerial drone view" />
+      <div class="ps-overlay"></div>
+      <div class="ps-caption">Aerial — 1,000 Hectares</div>
+    </div>
+    <div class="ps-item">
+      <img src="images/gallery/WechatIMG108.jpeg" alt="Covered terrace" />
+      <div class="ps-overlay"></div>
+      <div class="ps-caption">Outdoor Terrace & Dining</div>
+    </div>
+    <div class="ps-item">
+      <img src="images/gallery/WechatIMG109.jpeg" alt="Lakes and landscape" />
+      <div class="ps-overlay"></div>
+      <div class="ps-caption">One of 23 Private Lakes</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       PAGE 8 — INVESTMENT OPPORTUNITY
+  ══════════════════════════════════════════════ -->
+  <div class="page invest-page">
+    <div class="img-side">
+      <img src="images/aerial-34.jpg" alt="Estate aerial view" />
+      <div class="img-ov"></div>
+    </div>
+    <div class="invest-info">
+      <div>
+        <div class="tag">Investment Opportunity</div>
+        <h2>A Business in Motion.<br /><em>A Legacy in the Making.</em></h2>
+        <div class="divider"></div>
+      </div>
+      <div class="revenue-list">
+        <div class="rev-row">
+          <span class="rn">01</span>
+          <div><div class="rt">Hunting & Safari Revenue</div><div class="rd">Existing contracts with hunting groups, tour operators, and international clients generating recurring income.</div></div>
+        </div>
+        <div class="rev-row">
+          <span class="rn">02</span>
+          <div><div class="rt">Boutique Lodge — 11 Suites</div><div class="rd">Fully equipped for commercial hospitality. Operates as a luxury hunting lodge with guest billing infrastructure in place.</div></div>
+        </div>
+        <div class="rev-row">
+          <span class="rn">03</span>
+          <div><div class="rt">Cork Production</div><div class="rd">150,000 kg of premium cork harvested biannually. A sustainable, tangible, recurring natural income stream.</div></div>
+        </div>
+        <div class="rev-row">
+          <span class="rn">04</span>
+          <div><div class="rt">Government Subsidies</div><div class="rd">Active EU agricultural and reforestation subsidies — qualifying for significant annual payments.</div></div>
+        </div>
+        <div class="rev-row">
+          <span class="rn">05</span>
+          <div><div class="rt">Farm Production</div><div class="rd">Chickens, sheep, goats, and horses producing farm revenues. Fully self-sustaining food supply for the lodge.</div></div>
+        </div>
+        <div class="rev-row">
+          <span class="rn">06</span>
+          <div><div class="rt">Events & Experiences</div><div class="rd">Private corporate events, exclusive retreats, content creation contracts, and influencer partnerships.</div></div>
+        </div>
+      </div>
+      <div class="price-footer">
+        <div>
+          <div class="pf-label">Asking Price</div>
+        </div>
+        <div class="pf-price">€12,000,000</div>
+        <div class="pf-note">Negotiable · VAT Status<br />Subject to Due Diligence</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       PAGE 9 — LOCATION & INFRASTRUCTURE
+  ══════════════════════════════════════════════ -->
+  <div class="page location-page">
+    <div class="map-col">
+      <img src="images/gallery/google-earth.jpg" alt="Satellite map of Pebble Stone estate" />
+      <div class="map-label">Herdade do Seixo e Aldinha · Coruche, Alentejo</div>
+    </div>
+    <div class="loc-info">
+      <div>
+        <div class="tag">Location & Infrastructure</div>
+        <h2>Alentejo, Portugal.<br /><em>Perfectly Positioned.</em></h2>
+        <div class="divider"></div>
+      </div>
+      <div class="infra-list">
+        <div class="infra-row">
+          <svg class="ir-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div class="ir-text">
+            <div class="irt">Fully Gated & Secured</div>
+            <div class="ird">Electric perimeter fencing, CCTV, electric gates. Complete privacy and wildlife containment.</div>
+          </div>
+        </div>
+        <div class="infra-row">
+          <svg class="ir-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013 4.18 2 2 0 015 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <div class="ir-text">
+            <div class="irt">State-of-the-Art Water Treatment</div>
+            <div class="ird">Self-sufficient water supply. Treatment plant, 23 lakes, and full irrigation network. Independent of municipal supply.</div>
+          </div>
+        </div>
+        <div class="infra-row">
+          <svg class="ir-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <div class="ir-text">
+            <div class="irt">Connectivity — Starlink & LAN</div>
+            <div class="ird">High-speed Starlink satellite internet. Wired LAN in every room. Full WiFi coverage mapped across the property.</div>
+          </div>
+        </div>
+        <div class="infra-row">
+          <svg class="ir-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          <div class="ir-text">
+            <div class="irt">Licensed Hunting Reserve</div>
+            <div class="ird">Full hunting licences, wildlife management plan, and ICNF registration in place. Transferable with sale.</div>
+          </div>
+        </div>
+      </div>
+      <div class="distances">
+        <div class="dist-item">
+          <span class="dv">1.5h</span>
+          <span class="dl">From Lisbon</span>
+        </div>
+        <div class="dist-item">
+          <span class="dv">45min</span>
+          <span class="dl">From Coruche</span>
+        </div>
+        <div class="dist-item">
+          <span class="dv">2h</span>
+          <span class="dl">From Faro Airport</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       PAGE 10 — BACK COVER / CONTACT
+  ══════════════════════════════════════════════ -->
+  <div class="page back-cover">
+    <div class="img-half">
+      <img src="images/aerial-14.jpg" alt="Pebble Stone Estate" />
+      <div class="fade-r"></div>
+    </div>
+    <div class="contact-half" style="position:relative;">
+      <div class="gold-accent"></div>
+      <div class="logo-area">
+        <img src="images/logo-badge.png" alt="Pebble Stone" />
+        <div>
+          <div class="estate-name">Pebble Stone<br /><em>Hunting Preserve</em></div>
+          <div class="tagline">Herdade do Seixo e Aldinha · Alentejo, Portugal</div>
+        </div>
+      </div>
+
+      <div class="contact-block">
+        <div class="contact-label">For Private Viewings & Enquiries</div>
+        <div class="agent-name">Eytan Benzeno</div>
+        <div class="contact-details">
+          Luxury Rural & Hunting Properties<br />
+          <a href="mailto:eytan@benzeno.com">eytan@benzeno.com</a><br />
+          <a href="https://huntportugal.com">huntportugal.com</a><br />
+          <a href="https://soldhere.pt">soldhere.pt</a><br />
+          <a href="https://benzenoe.github.io/pebble-stone/">benzenoe.github.io/pebble-stone</a>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <span class="agency-brand">SoldHere Real Estate · Portugal & USA</span>
+        <span class="ami">AMI 25285</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /brochure-wrap -->
+
+</body>
+</html>

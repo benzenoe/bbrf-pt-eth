@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo Gallery — Pebble Stone Hunting Preserve | 102 Photos | Alentejo, Portugal</title>
+  <meta name="description" content="102 photos of Pebble Stone Hunting Preserve — 1,000 hectares of wildlife (zebras, deer, impala), aerial drone surveys, luxury lodge, pool, and Alentejo landscape. Estate offered at €12,000,000." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://benzenoe.github.io/pebble-stone/gallery.html" />
+
+  <!-- ─── OPEN GRAPH ───────────────────────────────────────────── -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://benzenoe.github.io/pebble-stone/gallery.html" />
+  <meta property="og:title" content="Photo Gallery — Pebble Stone Hunting Preserve | €12,000,000 | Alentejo" />
+  <meta property="og:description" content="102 photos: wildlife, aerial drones, luxury lodge & pool, Alentejo landscapes. 1,000-hectare private hunting estate offered at €12,000,000." />
+  <meta property="og:image" content="https://benzenoe.github.io/pebble-stone/images/gallery/WechatIMG77.jpeg" />
+  <meta property="og:image:width" content="1600" />
+  <meta property="og:image:height" content="1200" />
+  <meta property="og:image:alt" content="Impala at the water's edge — Pebble Stone Hunting Preserve, Alentejo" />
+  <meta property="og:site_name" content="Pebble Stone Hunting Preserve" />
+
+  <!-- ─── TWITTER CARD ────────────────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Photo Gallery — Pebble Stone Hunting Preserve | €12,000,000" />
+  <meta name="twitter:description" content="102 photos: wildlife, aerial drones, luxury lodge & pool, Alentejo landscapes. Estate offered at €12,000,000." />
+  <meta name="twitter:image" content="https://benzenoe.github.io/pebble-stone/images/gallery/WechatIMG77.jpeg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest: #0A1A10;
+      --forest-mid: #0F2218;
+      --gold: #C4A35A;
+      --gold-light: #D4B878;
+      --cream: #F5F0E8;
+      --warm: #F0EBE0;
+      --white: #FDFCF9;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Montserrat', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--forest); color: var(--white); font-family: var(--sans); }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(5,14,9,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196,163,90,0.12);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px;
+    }
+    .nav-logo { display:flex; align-items:center; gap:14px; text-decoration:none; }
+    .nav-logo img { height:42px; width:42px; object-fit:contain; }
+    .nav-logo-text { font-family:var(--serif); font-size:1.1rem; color:var(--cream); letter-spacing:0.05em; }
+    .nav-back { font-family:var(--sans); font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); text-decoration:none; display:flex; align-items:center; gap:8px; }
+    .nav-back:hover { color:var(--gold-light); }
+    .nav-back svg { width:14px; height:14px; }
+
+    /* HERO */
+    .gallery-hero {
+      padding: 160px 80px 80px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(10,26,16,0) 0%, rgba(10,26,16,1) 100%),
+                  url('images/gallery/DJI_20251012171110_0179_D.JPG') center/cover no-repeat;
+      min-height: 480px;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    }
+    .gallery-hero .tag {
+      font-family:var(--sans); font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:16px;
+    }
+    .gallery-hero h1 {
+      font-family:var(--serif); font-size:clamp(2.4rem,5vw,4rem); font-weight:300; color:var(--cream);
+      line-height:1.15; margin-bottom:16px;
+    }
+    .gallery-hero h1 em { font-style:italic; color:var(--gold-light); }
+    .gallery-hero p {
+      font-family:var(--sans); font-size:0.75rem; letter-spacing:0.12em; color:rgba(255,255,255,0.45);
+      text-transform:uppercase;
+    }
+    .divider-gold {
+      width:48px; height:1px; background:var(--gold); margin:20px auto;
+    }
+
+    /* FILTER TABS */
+    .filter-bar {
+      background: rgba(5,14,9,0.97); position:sticky; top:73px; z-index:90;
+      border-bottom:1px solid rgba(196,163,90,0.1);
+      padding: 0 48px;
+      display:flex; align-items:center; gap:4px; overflow-x:auto;
+      scrollbar-width:none;
+    }
+    .filter-bar::-webkit-scrollbar { display:none; }
+    .filter-btn {
+      flex-shrink:0; padding:16px 20px;
+      font-family:var(--sans); font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase;
+      color:rgba(255,255,255,0.35); background:transparent; border:none; cursor:pointer;
+      border-bottom:2px solid transparent; transition:all 0.2s; white-space:nowrap;
+    }
+    .filter-btn:hover { color:rgba(255,255,255,0.7); }
+    .filter-btn.active { color:var(--gold); border-bottom-color:var(--gold); }
+    .filter-count {
+      display:inline-block; margin-left:6px; background:rgba(196,163,90,0.15);
+      color:var(--gold); font-size:0.55rem; padding:1px 6px; border-radius:8px;
+    }
+
+    /* MASONRY GRID */
+    .gallery-wrap {
+      padding: 60px 40px 80px;
+      columns: 4 280px; column-gap: 10px;
+    }
+    .gallery-item {
+      break-inside: avoid; margin-bottom: 10px;
+      position: relative; overflow: hidden; cursor: pointer;
+      border-radius: 2px;
+      background: #0A1A10;
+    }
+    .gallery-item img {
+      width: 100%; display:block;
+      transition: transform 0.6s ease, filter 0.3s ease;
+      filter: brightness(0.95);
+    }
+    .gallery-item:hover img { transform: scale(1.04); filter:brightness(1.05); }
+    .gallery-item .overlay {
+      position:absolute; inset:0;
+      background: linear-gradient(to top, rgba(5,14,9,0.7) 0%, transparent 50%);
+      opacity:0; transition:opacity 0.3s ease;
+      display:flex; flex-direction:column; justify-content:flex-end;
+      padding:16px;
+    }
+    .gallery-item:hover .overlay { opacity:1; }
+    .overlay-tag {
+      font-family:var(--sans); font-size:0.5rem; letter-spacing:0.18em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:4px;
+    }
+    .overlay-cap {
+      font-family:var(--serif); font-size:0.85rem; color:rgba(255,255,255,0.9); line-height:1.3;
+    }
+    .overlay-zoom {
+      position:absolute; top:12px; right:12px; width:28px; height:28px;
+      background:rgba(196,163,90,0.15); border:1px solid rgba(196,163,90,0.3);
+      border-radius:50%; display:flex; align-items:center; justify-content:center;
+    }
+    .overlay-zoom svg { width:12px; height:12px; stroke:var(--gold); }
+    .gallery-item.hidden { display:none; }
+
+    /* INSTAGRAM SECTION */
+    .ig-section {
+      background:#050E09; padding:80px 80px 60px;
+      border-top:1px solid rgba(196,163,90,0.08);
+    }
+    .ig-header { text-align:center; margin-bottom:48px; }
+    .ig-header .tag { font-family:var(--sans); font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; display:block; }
+    .ig-header h2 { font-family:var(--serif); font-size:2.4rem; font-weight:300; color:var(--cream); }
+    .ig-header h2 em { font-style:italic; color:var(--gold-light); }
+    #ig-feed {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:6px;
+    }
+    .ig-item { position:relative; aspect-ratio:1; overflow:hidden; cursor:pointer; background:#0A1A10; }
+    .ig-item img, .ig-item video { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.5s ease; }
+    .ig-item:hover img, .ig-item:hover video { transform:scale(1.06); }
+    .ig-item .ig-overlay {
+      position:absolute; inset:0; background:rgba(5,14,9,0.4);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; transition:opacity 0.3s;
+    }
+    .ig-item:hover .ig-overlay { opacity:1; }
+    .ig-video-badge {
+      position:absolute; top:10px; left:10px;
+      background:rgba(5,14,9,0.7); border:1px solid rgba(196,163,90,0.3);
+      font-family:var(--sans); font-size:0.5rem; letter-spacing:0.15em; color:var(--gold);
+      padding:3px 8px; text-transform:uppercase;
+    }
+    .ig-cta { text-align:center; margin-top:36px; }
+    .btn-ghost {
+      display:inline-flex; align-items:center; gap:10px;
+      font-family:var(--sans); font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase;
+      color:rgba(255,255,255,0.5); border:1px solid rgba(196,163,90,0.25); padding:14px 28px;
+      text-decoration:none; transition:all 0.3s;
+    }
+    .btn-ghost:hover { color:var(--gold); border-color:var(--gold); }
+
+    /* LIGHTBOX */
+    .lightbox {
+      position:fixed; inset:0; z-index:999;
+      background:rgba(5,14,9,0.97);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; pointer-events:none; transition:opacity 0.3s;
+    }
+    .lightbox.open { opacity:1; pointer-events:all; }
+    .lb-img-wrap { position:relative; max-width:92vw; max-height:88vh; }
+    .lb-img-wrap img { max-width:92vw; max-height:88vh; object-fit:contain; display:block; }
+    .lb-close {
+      position:fixed; top:24px; right:32px; font-family:var(--sans); font-size:0.7rem;
+      letter-spacing:0.2em; color:rgba(255,255,255,0.4); background:transparent; border:none;
+      cursor:pointer; text-transform:uppercase;
+    }
+    .lb-close:hover { color:var(--gold); }
+    .lb-nav {
+      position:fixed; top:50%; transform:translateY(-50%);
+      width:48px; height:48px; background:rgba(5,14,9,0.7);
+      border:1px solid rgba(196,163,90,0.2); cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:border-color 0.2s;
+    }
+    .lb-nav:hover { border-color:var(--gold); }
+    .lb-nav svg { width:18px; height:18px; stroke:rgba(255,255,255,0.6); }
+    .lb-prev { left:24px; }
+    .lb-next { right:24px; }
+    .lb-info {
+      position:fixed; bottom:0; left:0; right:0; padding:20px 48px;
+      background:linear-gradient(to top, rgba(5,14,9,0.95), transparent);
+      display:flex; justify-content:space-between; align-items:flex-end;
+    }
+    .lb-info-left .lb-cat { font-family:var(--sans); font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:4px; }
+    .lb-info-left .lb-cap { font-family:var(--serif); font-size:1.1rem; color:rgba(255,255,255,0.85); }
+    .lb-counter { font-family:var(--sans); font-size:0.6rem; color:rgba(255,255,255,0.3); letter-spacing:0.1em; }
+
+    /* FOOTER */
+    footer {
+      background:#050E09; padding:32px 48px;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+      border-top:1px solid rgba(196,163,90,0.08);
+    }
+    footer a { color:var(--gold); text-decoration:none; font-family:var(--sans); font-size:0.6rem; letter-spacing:0.12em; }
+    footer span { font-family:var(--sans); font-size:0.6rem; color:rgba(255,255,255,0.2); letter-spacing:0.1em; }
+
+    @media (max-width:768px) {
+      nav { padding:14px 20px; }
+      .gallery-hero { padding:120px 24px 60px; }
+      .filter-bar { padding:0 20px; }
+      .gallery-wrap { padding:32px 16px; columns:2 150px; column-gap:6px; }
+      .gallery-item { margin-bottom:6px; }
+      #ig-feed { grid-template-columns:repeat(2,1fr); }
+      .ig-section { padding:48px 24px; }
+      footer { padding:24px 20px; flex-direction:column; text-align:center; }
+      .lb-prev { left:8px; }
+      .lb-next { right:8px; }
+      .lb-info { padding:16px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo-badge.png" alt="Pebble Stone" />
+      <span class="nav-logo-text">Pebble Stone Hunting Preserve</span>
+    </a>
+    <a href="index.html" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back to Estate
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="gallery-hero">
+    <p class="tag">Herdade do Seixo e Aldinha · Alentejo, Portugal</p>
+    <h1>The Estate <em>Through the Lens</em></h1>
+    <div class="divider-gold"></div>
+    <p>102 photographs · Wildlife · Aerial · Lodge · Landscape · Events</p>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="all" onclick="filterGallery('all',this)">
+      All <span class="filter-count" id="count-all">102</span>
+    </button>
+    <button class="filter-btn" data-filter="wildlife" onclick="filterGallery('wildlife',this)">
+      Wildlife &amp; Animals <span class="filter-count" id="count-wildlife">0</span>
+    </button>
+    <button class="filter-btn" data-filter="aerial" onclick="filterGallery('aerial',this)">
+      Aerial &amp; Drone <span class="filter-count" id="count-aerial">0</span>
+    </button>
+    <button class="filter-btn" data-filter="lodge" onclick="filterGallery('lodge',this)">
+      Lodge &amp; Pool <span class="filter-count" id="count-lodge">0</span>
+    </button>
+    <button class="filter-btn" data-filter="landscape" onclick="filterGallery('landscape',this)">
+      Landscape <span class="filter-count" id="count-landscape">0</span>
+    </button>
+    <button class="filter-btn" data-filter="events" onclick="filterGallery('events',this)">
+      Events &amp; Life <span class="filter-count" id="count-events">0</span>
+    </button>
+  </div>
+
+  <!-- MASONRY GALLERY -->
+  <div class="gallery-wrap" id="galleryWrap"></div>
+
+  <!-- INSTAGRAM SECTION -->
+  <section class="ig-section">
+    <div class="ig-header">
+      <span class="tag">Live from the Estate</span>
+      <h2>Follow on <em>Instagram</em></h2>
+      <div class="divider-gold"></div>
+    </div>
+    <div id="ig-feed">
+      <div style="grid-column:span 4; text-align:center; padding:40px; color:rgba(255,255,255,0.25); font-family:var(--sans); font-size:0.7rem; letter-spacing:0.1em;">Loading Instagram…</div>
+    </div>
+    <div class="ig-cta">
+      <a href="https://www.instagram.com/pebble_stone_hunting_preserve/" target="_blank" rel="noopener" class="btn-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="var(--gold)" stroke="none"/></svg>
+        @pebble_stone_hunting_preserve
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="index.html">← Back to Pebble Stone Estate</a>
+    <span>Alentejo, Portugal · 1,000 Hectares · €12,000,000</span>
+    <a href="mailto:eytan@benzeno.com">eytan@benzeno.com</a>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLbBg(event)">
+    <button class="lb-close" onclick="closeLb()">Close ×</button>
+    <button class="lb-nav lb-prev" onclick="navLb(-1)">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="lb-img-wrap">
+      <img id="lbImg" src="" alt="" />
+    </div>
+    <button class="lb-nav lb-next" onclick="navLb(1)">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <div class="lb-info">
+      <div class="lb-info-left">
+        <div class="lb-cat" id="lbCat"></div>
+        <div class="lb-cap" id="lbCap"></div>
+      </div>
+      <div class="lb-counter" id="lbCounter"></div>
+    </div>
+  </div>
+
+  <script>
+    // ─── PHOTO DATA ───────────────────────────────────────────────
+    const photos = [
+      // === WILDLIFE ===
+      { src:'images/gallery/WechatIMG77.jpeg', cat:'wildlife', cap:'Impala at the water\'s edge' },
+      { src:'images/gallery/WechatIMG78.jpeg', cat:'wildlife', cap:'Impala herd — Alentejo savanna' },
+      { src:'images/gallery/WechatIMG79.jpeg', cat:'wildlife', cap:'Antelope beneath an ancient shade tree' },
+      { src:'images/gallery/WechatIMG80.jpeg', cat:'wildlife', cap:'Zebras grazing under cork oaks' },
+      { src:'images/gallery/WechatIMG81.jpeg', cat:'wildlife', cap:'Farm life — hand-fed animals' },
+      { src:'images/gallery/WechatIMG125.jpeg', cat:'wildlife', cap:'Sheep herd under the oaks' },
+      { src:'images/gallery/WechatIMG126.jpeg', cat:'wildlife', cap:'Goats and sheep on the estate' },
+      { src:'images/gallery/WechatIMG127.jpeg', cat:'wildlife', cap:'Animal husbandry — estate flock' },
+      { src:'images/gallery/14d32cf1-09b7-45de-91d1-6c375fc9d816.jpg', cat:'wildlife', cap:'Impala herd grazing at dusk' },
+      { src:'images/gallery/229dd4a7-d115-426c-8665-068c2b52a494.jpg', cat:'wildlife', cap:'Free-range chickens — farm fresh eggs daily' },
+      { src:'images/gallery/2969d41a-41fe-4ada-ab83-f978639f52ee.jpg', cat:'wildlife', cap:'Zebras crossing the Alentejo plain' },
+      { src:'images/gallery/4ccea559-bf30-4038-9323-36ce1f536261.jpg', cat:'wildlife', cap:'Red deer in the cork oak forest' },
+      { src:'images/gallery/53542758-133c-4ca5-a217-a2708827d291.jpg', cat:'wildlife', cap:'Impala — one of €250K in exotic wildlife' },
+      { src:'images/gallery/9a8f67b5-5d9c-49d0-8ce5-4f6acd4087c6.jpg', cat:'wildlife', cap:'Antelope in the dry grassland' },
+      { src:'images/gallery/d369bc33-e060-41c1-b81a-36b9514aae5f.jpg', cat:'wildlife', cap:'Deer family under the trees' },
+      { src:'images/gallery/f57e84a6-ae21-4043-96d7-07168a6b0ac6.jpg', cat:'wildlife', cap:'Estate chickens — 50-bird flock, daily production' },
+
+      // === LODGE & POOL ===
+      { src:'images/gallery/WechatIMG104.jpeg', cat:'lodge', cap:'The lodge and pool terrace' },
+      { src:'images/gallery/WechatIMG105.jpeg', cat:'lodge', cap:'Lodge balcony overlooking the valley' },
+      { src:'images/gallery/WechatIMG106.jpeg', cat:'lodge', cap:'Pool terrace — panoramic Alentejo views' },
+      { src:'images/gallery/WechatIMG107.jpeg', cat:'lodge', cap:'Covered patio with pool and flowering bougainvillea' },
+      { src:'images/gallery/WechatIMG108.jpeg', cat:'lodge', cap:'Grand outdoor terrace — dining for groups' },
+      { src:'images/gallery/farm-house-distance.jpg', cat:'lodge', cap:'The lodge at dusk, set in the Alentejo hills' },
+      { src:'images/gallery/farm-house-pool.jpg', cat:'lodge', cap:'Luxury lodge and pool from above' },
+
+      // === LANDSCAPE ===
+      { src:'images/gallery/WechatIMG99.jpeg', cat:'landscape', cap:'Ancient cork oak on open grassland' },
+      { src:'images/gallery/WechatIMG100.jpeg', cat:'landscape', cap:'Estate entrance framed by oaks' },
+      { src:'images/gallery/WechatIMG101.jpeg', cat:'landscape', cap:'Cork oak savanna — 1,000 hectares of nature' },
+      { src:'images/gallery/WechatIMG102.jpeg', cat:'landscape', cap:'Reforestation — sustainable land stewardship' },
+      { src:'images/gallery/WechatIMG103.jpeg', cat:'landscape', cap:'Panoramic Alentejo savanna vista' },
+      { src:'images/gallery/WechatIMG109.jpeg', cat:'landscape', cap:'Lake and woodland panorama' },
+      { src:'images/gallery/WechatIMG110.jpeg', cat:'landscape', cap:'Estate infrastructure — off-grid ready' },
+      { src:'images/gallery/WechatIMG111.jpeg', cat:'landscape', cap:'Mature cork oaks on the estate' },
+      { src:'images/gallery/WechatIMG113.jpeg', cat:'landscape', cap:'One of 23 private lakes on the estate' },
+      { src:'images/gallery/WechatIMG114.jpeg', cat:'landscape', cap:'Native flora — prickly pear in bloom' },
+      { src:'images/gallery/WechatIMG115.jpeg', cat:'landscape', cap:'Wild cacti — untouched Alentejo terrain' },
+      { src:'images/gallery/WechatIMG116.jpeg', cat:'landscape', cap:'Wetland reserve — estate water management' },
+      { src:'images/gallery/IMG_2340.jpeg', cat:'landscape', cap:'Cork oak forest with granite formations' },
+      { src:'images/gallery/IMG_2351.jpeg', cat:'landscape', cap:'Surveying the 1,000-hectare estate' },
+      { src:'images/gallery/IMG_2354.jpeg', cat:'landscape', cap:'Scattered oaks across the plains' },
+      { src:'images/gallery/IMG_2355.jpeg', cat:'landscape', cap:'Dominant oaks on open grassland' },
+      { src:'images/gallery/IMG_2362.jpeg', cat:'landscape', cap:'Woodland with lake in the distance' },
+      { src:'images/gallery/google-earth.jpg', cat:'landscape', cap:'Satellite view — Pebble Stone Estate, Alentejo' },
+
+      // === EVENTS ===
+      { src:'images/gallery/WechatIMG118.jpeg', cat:'events', cap:'Estate event setup under the oaks' },
+      { src:'images/gallery/WechatIMG119.jpeg', cat:'events', cap:'Private gathering on the estate grounds' },
+      { src:'images/gallery/WechatIMG120.jpeg', cat:'events', cap:'Catered outdoor dining — estate events' },
+      { src:'images/gallery/WechatIMG121.jpeg', cat:'events', cap:'Exclusive event under a 200-year oak' },
+      { src:'images/gallery/WechatIMG122.jpeg', cat:'events', cap:'Hunting party gathering on the estate' },
+      { src:'images/gallery/WechatIMG124.jpeg', cat:'events', cap:'Marquee dining — al fresco entertainment' },
+
+      // === AERIAL (August 2025) ===
+      { src:'images/gallery/DJI_20250829102723_0010_D.JPG', cat:'aerial', cap:'Estate barn and outbuildings — drone survey' },
+      { src:'images/gallery/DJI_20250829102726_0011_D.JPG', cat:'aerial', cap:'Agricultural infrastructure from above' },
+      { src:'images/gallery/DJI_20250829102823_0013_D.JPG', cat:'aerial', cap:'Main estate complex with pool and pond' },
+      { src:'images/gallery/DJI_20250829102825_0014_D.JPG', cat:'aerial', cap:'Lodge, pool and gardens — aerial view' },
+      { src:'images/gallery/DJI_20250829102844_0016_D.JPG', cat:'aerial', cap:'Aerial survey — full estate footprint' },
+      { src:'images/gallery/DJI_20250829102846_0017_D.JPG', cat:'aerial', cap:'Drone perspective — estate grounds' },
+      { src:'images/gallery/DJI_20250829102901_0019_D.JPG', cat:'aerial', cap:'Aerial view — Alentejo plains extend to horizon' },
+      { src:'images/gallery/DJI_20250829102903_0020_D.JPG', cat:'aerial', cap:'Estate boundary — 1,000 hectares fully enclosed' },
+      { src:'images/gallery/DJI_20250829102925_0022_D.JPG', cat:'aerial', cap:'Drone view over the main driveway' },
+      { src:'images/gallery/DJI_20250829102927_0023_D.JPG', cat:'aerial', cap:'Aerial approach to the lodge' },
+      { src:'images/gallery/DJI_20250829102936_0025_D.JPG', cat:'aerial', cap:'Drone survey — wooded sections' },
+      { src:'images/gallery/DJI_20250829102937_0026_D.JPG', cat:'aerial', cap:'Forest canopy from above' },
+      { src:'images/gallery/DJI_20250829102954_0028_D.JPG', cat:'aerial', cap:'Cork oak plantation — aerial overview' },
+      { src:'images/gallery/DJI_20250829102957_0029_D.JPG', cat:'aerial', cap:'Mixed woodland — aerial perspective' },
+      { src:'images/gallery/DJI_20250829103027_0031_D.JPG', cat:'aerial', cap:'Lodge rooftop and pool — drone shot' },
+      { src:'images/gallery/DJI_20250829103030_0032_D.JPG', cat:'aerial', cap:'Estate complex from 50 metres altitude' },
+      { src:'images/gallery/DJI_20250829103052_0034_D.JPG', cat:'aerial', cap:'Parkland and grazing — aerial view' },
+      { src:'images/gallery/DJI_20250829103108_0035_D.JPG', cat:'aerial', cap:'Wide-angle drone view over rolling terrain' },
+      { src:'images/gallery/DJI_20250829103216_0037_D.JPG', cat:'aerial', cap:'Estate in landscape context — aerial' },
+      { src:'images/gallery/DJI_20250829103219_0038_D.JPG', cat:'aerial', cap:'Alentejo plains from drone altitude' },
+      { src:'images/gallery/DJI_20250829103227_0040_D.JPG', cat:'aerial', cap:'Terrain diversity — lakes, forest, plains' },
+      { src:'images/gallery/DJI_20250829103229_0041_D.JPG', cat:'aerial', cap:'Elevated perspective — panoramic coverage' },
+      { src:'images/gallery/DJI_20250829103251_0043_D.JPG', cat:'aerial', cap:'Remote terrain — no neighbours visible' },
+      { src:'images/gallery/DJI_20250829103253_0044_D.JPG', cat:'aerial', cap:'Estate boundary sweep — absolute privacy' },
+      { src:'images/gallery/DJI_20250829103314_0046_D.JPG', cat:'aerial', cap:'Aerial view — cork harvest zones' },
+      { src:'images/gallery/DJI_20250829103330_0049_D.JPG', cat:'aerial', cap:'Open plains from above — wild boar territory' },
+      { src:'images/gallery/DJI_20250829103350_0052_D.JPG', cat:'aerial', cap:'Drone survey — southern estate sections' },
+      { src:'images/gallery/DJI_20250829103403_0055_D.JPG', cat:'aerial', cap:'Aerial of estate roads and tracks' },
+      { src:'images/gallery/DJI_20250829103415_0058_D.JPG', cat:'aerial', cap:'Flight path over the estate at dawn' },
+      { src:'images/gallery/DJI_20250829103427_0061_D.JPG', cat:'aerial', cap:'Drone view — central estate plains' },
+      { src:'images/gallery/DJI_20250829103443_0064_D.JPG', cat:'aerial', cap:'Aerial perspective — lake and woodland' },
+      { src:'images/gallery/DJI_20250829103506_0067_D.JPG', cat:'aerial', cap:'Wide estate panorama from altitude' },
+      { src:'images/gallery/DJI_20250829103541_0070_D.JPG', cat:'aerial', cap:'Drone view — western estate boundary' },
+      { src:'images/gallery/DJI_20250829103549_0073_D.JPG', cat:'aerial', cap:'Alentejo horizon at golden hour' },
+      { src:'images/gallery/DJI_20250829103558_0076_D.JPG', cat:'aerial', cap:'Estate roads and access tracks — aerial' },
+      { src:'images/gallery/DJI_20250829103604_0079_D.JPG', cat:'aerial', cap:'Final approach — estate entrance from above' },
+
+      // === AERIAL (October 2025) ===
+      { src:'images/gallery/DJI_20251012171110_0179_D.JPG', cat:'aerial', cap:'October survey — full estate in autumn light' },
+      { src:'images/gallery/DJI_20251012171120_0181_D.JPG', cat:'aerial', cap:'Autumn aerial — estate from new angle' },
+      { src:'images/gallery/DJI_20251012171215_0183_D.JPG', cat:'aerial', cap:'Tree plantations from above — sustainable forestry' },
+      { src:'images/gallery/DJI_20251012171237_0185_D.JPG', cat:'aerial', cap:'Reforestation zones — aerial view' },
+      { src:'images/gallery/DJI_20251012171300_0187_D.JPG', cat:'aerial', cap:'Aerial survey — eastern sections, October' },
+      { src:'images/gallery/DJI_20251012171335_0189_D.JPG', cat:'aerial', cap:'Landscape aerial — ochre and green' },
+      { src:'images/gallery/DJI_20251012171356_0191_D.JPG', cat:'aerial', cap:'Planted zone with lodge complex visible' },
+      { src:'images/gallery/DJI_20251012171417_0193_D.JPG', cat:'aerial', cap:'Drone view — mixed terrain, October light' },
+      { src:'images/gallery/DJI_20251012171430_0195_D.JPG', cat:'aerial', cap:'Estate infrastructure aerial — water system' },
+      { src:'images/gallery/DJI_20251012171444_0197_D.JPG', cat:'aerial', cap:'Northern terrain — drone survey' },
+      { src:'images/gallery/DJI_20251012171523_0199_D.JPG', cat:'aerial', cap:'Aerial view — boundary fence line' },
+      { src:'images/gallery/DJI_20251012171533_0201_D.JPG', cat:'aerial', cap:'Main complex and surroundings from above' },
+      { src:'images/gallery/DJI_20251012171559_0203_D.JPG', cat:'aerial', cap:'Water infrastructure — lake and treatment plant' },
+      { src:'images/gallery/DJI_20251012171622_0205_D.JPG', cat:'aerial', cap:'Wide autumn panorama — estate at full extent' },
+      { src:'images/gallery/DJI_20251012171634_0207_D.JPG', cat:'aerial', cap:'Outbuildings aerial — barn complex' },
+      { src:'images/gallery/DJI_20251012171652_0209_D.JPG', cat:'aerial', cap:'Water management — 23 lakes visible from air' },
+      { src:'images/gallery/DJI_20251012171742_0211_D.JPG', cat:'aerial', cap:'Vast scale — Alentejo plain stretching to horizon' },
+      { src:'images/gallery/DJI_20251012171751_0213_D.JPG', cat:'aerial', cap:'Estate in full — 1,000 hectares in one frame' },
+      { src:'images/gallery/DJI_20251012171817_0215_D.JPG', cat:'aerial', cap:'Final drone shot — outbuildings and access' },
+    ];
+
+    // ─── RENDER GALLERY ───────────────────────────────────────────
+    const wrap = document.getElementById('galleryWrap');
+    let visiblePhotos = [...photos];
+    let currentLbIdx = 0;
+
+    function catLabel(cat) {
+      const map = { wildlife:'Wildlife', aerial:'Aerial & Drone', lodge:'Lodge & Pool', landscape:'Landscape', events:'Events & Life' };
+      return map[cat] || cat;
+    }
+
+    function renderGallery(list) {
+      wrap.innerHTML = '';
+      list.forEach((p, i) => {
+        const div = document.createElement('div');
+        div.className = 'gallery-item';
+        div.dataset.cat = p.cat;
+        div.innerHTML = `
+          <img src="${p.src}" alt="${p.cap}" loading="lazy" />
+          <div class="overlay">
+            <div class="overlay-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+            <div class="overlay-tag">${catLabel(p.cat)}</div>
+            <div class="overlay-cap">${p.cap}</div>
+          </div>`;
+        div.addEventListener('click', () => openLb(i, list));
+        wrap.appendChild(div);
+      });
+    }
+
+    function filterGallery(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      visiblePhotos = cat === 'all' ? [...photos] : photos.filter(p => p.cat === cat);
+      renderGallery(visiblePhotos);
+    }
+
+    // Count badges
+    function updateCounts() {
+      const cats = ['wildlife','aerial','lodge','landscape','events'];
+      cats.forEach(c => {
+        const el = document.getElementById('count-' + c);
+        if (el) el.textContent = photos.filter(p => p.cat === c).length;
+      });
+      document.getElementById('count-all').textContent = photos.length;
+    }
+
+    // ─── LIGHTBOX ────────────────────────────────────────────────
+    function openLb(idx, list) {
+      currentLbIdx = idx;
+      updateLb(list || visiblePhotos);
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function updateLb(list) {
+      const p = list[currentLbIdx];
+      document.getElementById('lbImg').src = p.src;
+      document.getElementById('lbCat').textContent = catLabel(p.cat);
+      document.getElementById('lbCap').textContent = p.cap;
+      document.getElementById('lbCounter').textContent = (currentLbIdx + 1) + ' / ' + list.length;
+    }
+    function closeLb() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function closeLbBg(e) { if (e.target.id === 'lightbox') closeLb(); }
+    function navLb(dir) {
+      currentLbIdx = (currentLbIdx + dir + visiblePhotos.length) % visiblePhotos.length;
+      updateLb(visiblePhotos);
+    }
+    document.addEventListener('keydown', e => {
+      const lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowLeft') navLb(-1);
+      if (e.key === 'ArrowRight') navLb(1);
+    });
+
+    // ─── INSTAGRAM FEED ──────────────────────────────────────────
+    async function loadInstagram() {
+      try {
+        const res = await fetch('https://api.eytan.com/api/social/instagram/page-feed?page_id=122770464254132&limit=16');
+        const data = await res.json();
+        const posts = data.posts || [];
+        if (!posts.length) return;
+        const feed = document.getElementById('ig-feed');
+        feed.innerHTML = '';
+        posts.forEach(post => {
+          const div = document.createElement('div');
+          div.className = 'ig-item';
+          const url = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url;
+          if (post.media_type === 'VIDEO') {
+            div.innerHTML = `
+              <img src="${url || post.media_url}" alt="Instagram video" loading="lazy" />
+              <div class="ig-video-badge">Video</div>
+              <div class="ig-overlay"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>`;
+            div.onclick = () => window.open(post.permalink, '_blank');
+          } else {
+            div.innerHTML = `
+              <img src="${url}" alt="${(post.caption||'').slice(0,80)}" loading="lazy" />
+              <div class="ig-overlay"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/></svg></div>`;
+            div.onclick = () => window.open(post.permalink, '_blank');
+          }
+          feed.appendChild(div);
+        });
+      } catch(e) { console.warn('Instagram load failed', e); }
+    }
+
+    // ─── INIT ────────────────────────────────────────────────────
+    updateCounts();
+    renderGallery(photos);
+    loadInstagram();
+  </script>
+</body>
+</html>
