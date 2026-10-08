@@ -1,22 +1,21 @@
 # Contributing to BBRF-PT
 
-This guide proposes a small, reviewable contribution process for the BBRF-PT site. Start with documentation and modest usability improvements; keep investment decisions with the project principals.
+This guide describes a small, reviewable contribution process for the BBRF-PT site. Start with documentation and modest usability improvements; keep investment decisions with the project principals.
 
-## Status and source of truth
+## Source of truth
 
-**Proposed policy — awaiting Eytan's acceptance.** The current [README](README.md) identifies eytan.com as the content source and this repository as its on-chain mirror. That remains the documented process until the maintainer explicitly approves a transition.
+**Decided.** https://eytan.com/pitches/bbrf-pt.html is the canonical source for BBRF-PT content. This repository is a *generated mirror* of that content, packaged as a portable static bundle. GitHub is not a separate source of truth: eytan.com is itself a GitHub repository, so the distinction that matters is which repository owns these pages, and that is the eytan.com repository.
 
-The proposed model is:
+What that means for contributions here:
 
-- `benzenoe/bbrf-pt-eth` becomes the canonical, version-controlled source for site content and assets.
-- Contributors submit changes through pull requests to `main`; Eytan or a maintainer he designates reviews and merges them.
-- Published copies, including eytan.com and the on-chain site, are synchronized from an approved repository revision rather than edited independently.
-- Before switching, the maintainer identifies the current authoritative copy, reconciles any newer content, confirms publishing destinations and ownership, and updates the README's source-of-truth and deployment instructions.
-- The transition is complete only when the maintainer records that decision and the README reflects the agreed process. Adding this guide alone does not change hosting, automation, or publication behavior.
+- Investor-facing content and investment copy change on eytan.com first and are then synced into this repository. Pull requests that rewrite that content here will be redirected rather than merged.
+- Mirror-side work belongs here: documentation, packaging and relative-link correctness, bounded accessibility and usability fixes, and the ENS/IPFS deployment path.
+- The mirror is not a byte-for-byte copy. eytan.com serves the pitch from `/pitches/` with shared assets at the site root and so uses absolute asset paths, while this bundle must stay root-relative to work from any directory or IPFS CID. Syncing a page includes rewriting `/properties/pebble-stone/...` to `properties/pebble-stone/...`.
+- The editable PDF layout sources (`*-pdf-source.html`) and the generator (`generate-bbrf-pdf.js`) live in the eytan.com repository, not here. Only the exported memoranda are committed here, so a PDF cannot be revised from this repository alone.
 
 ## Before starting
 
-Read the README, this guide, and any existing discussion or pull request for the same change. Confirm the audience, language, problem, and intended outcome. For work with a contributor sponsor, resolve the sponsor's scope questions before submitting site code for Eytan's review.
+Read the [README](README.md), this guide, and any existing issue or pull request for the same change (this repository uses Issues; Discussions are disabled). Confirm the audience, language, problem, and intended outcome.
 
 Ask before changing substantive content when the answer is uncertain, especially:
 
@@ -40,17 +39,17 @@ Avoid unrelated formatting churn, new dependencies without a clear need, or chan
 2. Make the smallest change that addresses the agreed problem. Keep local planning notes, credentials, and unrelated files out of the commit.
 3. Review the complete diff and validate the affected behavior. State any checks you could not perform.
 4. Open a pull request from your fork to `benzenoe/bbrf-pt-eth:main`. Use a draft for unresolved policy proposals or incomplete validation; explain what is needed before it is ready.
-5. Resolve Eytan's review feedback on the same branch. Do not merge or publish on the maintainer's behalf unless separately authorized.
+5. Resolve the maintainer's review feedback on the same branch. Do not merge or publish on the maintainer's behalf unless separately authorized.
 
-Use your own GitHub identity and accurate commit attribution. Do not push contributions directly to upstream `main`.
+Use your own GitHub identity and accurate commit attribution. Do not push contributions directly to upstream `main`, and do not merge your own pull request. `main` is intentionally left unprotected, so these are honor-system rules rather than enforced ones.
 
 ## Audience, language, and document consistency
 
 The bundle has crypto-investor, traditional-investor, and real-estate-partner pages in English, French, and Portuguese, plus the entry page, memoranda, and pilot-property materials.
 
-For each change, identify which copies are affected. Check `index.html` and the corresponding English landing page for divergence. Keep meaning, link destinations, audience selection, and language switching consistent across the affected variants. If translation or PDF updates are deferred, name them explicitly and obtain the maintainer's agreement before merging content that would leave conflicting versions.
+For each change, identify which copies are affected. `index.html` is a hand-maintained copy of `bbrf-pt.html`; a change to either must be applied to both in the same pull request. Keep meaning, link destinations, audience selection, and language switching consistent across the affected variants. If translation or PDF updates are deferred, name them explicitly and obtain the maintainer's agreement before merging content that would leave conflicting versions.
 
-Do not edit investment terms merely to simplify wording. Preserve the approved meaning and obtain confirmation of substantive changes. PDF revisions should include their editable source when available, a version/date, and a visual review of the exported file.
+Do not edit investment terms merely to simplify wording. Preserve the approved meaning and obtain confirmation of substantive changes. PDF revisions cannot be made here: raise them against the eytan.com repository, which holds the editable layout sources and the generator. A regenerated PDF synced into this repository should carry a version/date and a visual review of the exported file.
 
 ## Validation proportional to the change
 
@@ -64,6 +63,8 @@ For site changes, inspect the relevant pages and paths:
 - Contact links, download destinations, and the behavior promised by their labels.
 - Relative links and assets when the site is served below a path prefix.
 - Any affected charts or calculators, including initial state and unavailable data.
+
+Preview locally before submitting: run `python3 -m http.server 8000` from the repository root, then run it again from the parent directory and open `/bbrf-pt-eth/` to confirm nothing depends on being at a domain root.
 
 Include before/after screenshots for visible changes when possible. Run existing relevant checks if present; add tests only when they meaningfully protect behavior. Do not report a check as passed unless it was performed. Avoid submitting real inquiries or transactions as a test.
 
@@ -81,6 +82,9 @@ For small documentation changes, a few short paragraphs are sufficient.
 
 ## Review and publishing
 
-Eytan, or a maintainer he designates, decides acceptance and publication. A merged contribution and a verified release are separate outcomes. The README describes hosting setups that may publish on push; confirm the actual trigger before a merge or release, rather than assuming a merge has no deployment effect.
+The maintainer (Eytan Benzeno), or someone he designates, decides acceptance and publication. A merged contribution and a verified release are normally separate outcomes, with one exception that matters here:
+
+- **GitHub Pages is live and publishes on merge.** This repository is served from `main` at the root to https://benzenoe.github.io/bbrf-pt-eth/. Merging republishes that public site immediately, with no further approval step, so treat every merge as a publication.
+- **The ENS/IPFS deployment is pending.** `bbrf-pt.eth` does not currently resolve and no automatic pinning is connected. The README runbook describes intended steps, not the present state; do not describe the on-chain site as live.
 
 Contributors should not change hosting settings, IPFS pins, ENS records, or deployment credentials as part of a usability contribution. After an authorized release, record the source revision and verify the affected published destinations. If a regression occurs, propose a focused revert or fix through the same review process.
